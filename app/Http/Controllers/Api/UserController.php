@@ -1,0 +1,200 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Helpers\FormatConverter;
+use App\Helpers\ImageHelper;
+use App\Http\Controllers\Controller;
+use App\User;
+use File;
+use Illuminate\Http\Request;
+use JWTAuth;
+
+class UserController extends Controller
+{
+	/**
+	 * @param Request $request
+	 * @return type
+	 */
+    public function show($code)
+	{
+        $user = JWTAuth::parseToken()->authenticate();
+        if ($user->id != $code) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Invalid credentials'
+            ], 401);
+        }
+		
+		if ($user->token != JWTAuth::getToken()) {
+			return response()->json([
+				'status' => 401,
+				'message' => 'Invalid credentials'
+			], 401);
+		}
+        
+        $user = User::whereId($code)->roleMobileApp()->first();
+        
+        if ($user->gender == User::GENDER_MALE) {
+            $relation = $user->maleUserRelation->toArray();
+            $relation['partner'] = $relation['female_user'];
+            unset($user->maleUserRelation);
+            unset($relation['male_user']);
+            unset($relation['female_user']);
+        } else {
+            $relation = $user->femaleUserRelation->toArray();
+            $relation['partner'] = $relation['male_user'];
+            unset($user->femaleUserRelation);
+            unset($relation['male_user']);
+            unset($relation['female_user']);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'success',
+            'data' => array_merge($user->toArray(), [
+                'relation' => $relation
+            ]),
+        ], 200);
+	}
+    
+    /**
+     * update profile
+     * 
+     * @param type $code
+     * @param Request $request
+     * @return json
+     */
+    public function update($code, Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        if ($user->id != $code) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Invalid credentials'
+            ], 401);
+        }
+		
+		if ($user->token != JWTAuth::getToken()) {
+			return response()->json([
+				'status' => 401,
+				'message' => 'Invalid credentials'
+			], 401);
+		}
+        
+        $user = User::whereId($code)->roleMobileApp()->first();
+        
+        $validator = \Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:user,email,'.$user->id,
+            'gender' => 'required|in:'.User::GENDER_MALE.','.User::GENDER_FEMALE,
+            'phone' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+			return response()->json([
+				'status' => 400,
+				'message' => 'Some Parameters is required',
+				'validators' => FormatConverter::parseValidatorErrors($validator),
+			], 400);
+		}
+
+        $user->fill($request->only([
+            'name',
+            'email',
+            'gender',
+            'phone',
+        ]));
+        $user->save();
+        
+        if ($user->gender == User::GENDER_MALE) {
+            $relation = $user->maleUserRelation->toArray();
+            $relation['partner'] = $relation['female_user'];
+            unset($user->maleUserRelation);
+            unset($relation['male_user']);
+            unset($relation['female_user']);
+        } else {
+            $relation = $user->femaleUserRelation->toArray();
+            $relation['partner'] = $relation['male_user'];
+            unset($user->femaleUserRelation);
+            unset($relation['male_user']);
+            unset($relation['female_user']);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Update Success',
+            'data' => array_merge($user->toArray(), [
+                'relation' => $relation
+            ]),
+        ], 200);
+    }
+    
+    /**
+     * @param type $code
+     * @param Request $request
+     * @return type
+     */
+    public function updatePhoto($code, Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        if ($user->code != $code) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Invalid credentials'
+            ], 401);
+        }
+		
+		if ($user->token != JWTAuth::getToken()) {
+			return response()->json([
+				'status' => 401,
+				'message' => 'Invalid credentials'
+			], 401);
+		}
+
+        $validator = \Validator::make($request->all(), [
+            'photo_base64' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+			return response()->json([
+				'status' => 400,
+				'message' => 'Some Parameters is required',
+				'validators' => FormatConverter::parseValidatorErrors($validator),
+			], 400);
+		}
+
+        $imageBase64 = $request->photo_base64;
+        if (!ImageHelper::isImageBase64($imageBase64)) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Some Parameters is invalid',
+                'validators' => [
+                    'photo_base64' => 'format is invalid',
+                ],
+            ], 400);
+        }
+
+        $data = ImageHelper::getImageBase64Information($imageBase64);
+        $img = base64_decode($data['data']);
+
+        // jika image sebelumnya ada, maka delete
+        if ($user->photo != null || $user->photo != '') {
+            File::delete($user->getPath() . $user->photo);
+        }
+
+        $imageFilename = $user->generateFilename('avatar', $data['extension']);
+        ImageHelper::base64_to_jpeg($request->photo_base64, $user->getPath() . $imageFilename);
+
+        $request['photo'] = $imageFilename;
+
+        $only = $request->only(['image']);
+        $user->update($only);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Update Photo success',
+            'data' => $user,
+        ]);
+    }
+}
