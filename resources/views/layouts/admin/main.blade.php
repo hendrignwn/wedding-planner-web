@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{{ asset('vendor/bower-jvectormap/jquery-jvectormap-1.2.2.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendor/nvd3/build/nv.d3.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendor/datatables/media/css/jquery.dataTables.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css') }}" />
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.1/css/responsive.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css" />
     
@@ -75,6 +76,7 @@
     <script src="{{ asset('vendor/nvd3/build/nv.d3.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery.sparkline/index.js') }}"></script>
     <script src="{{ asset('vendor/chart.js/dist/Chart.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}"></script>
     <script src="{{ asset('admin-assets/js/app.min.js') }}"></script>
 
     <!-- page js -->

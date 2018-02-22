@@ -16,11 +16,8 @@ use Session;
 class UserRelationController extends Controller
 {
 	protected $rules = [
-		'name' => 'required',
-		'email' => 'required|unique:user,email|email',
-		'password' => 'required|min:6',
-		'status' => 'required',
-		'role' => 'required',
+		'wedding_day' => 'required',
+		'venue' => 'required',
 	];
 
 	/**
@@ -89,57 +86,11 @@ class UserRelationController extends Controller
      */
     public function edit($id)
     {
-        $model = \App\User::findOrFail($id);
+        $model = \App\UserRelation::findOrFail($id);
 
         return view('admin.user-relation.edit', compact('model'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @return View
-     */
-    public function profile()
-    {
-        $model = \App\User::findOrFail(\Auth::user-relation()->id);
-
-        return view('admin.user-relation.profile', compact('model'));
-    }
-    
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse|Redirector
-     */
-    public function updateProfile(Request $request)
-    {
-		$rules = $this->rules;
-        $rules['email'] = 'required|unique:user-relation,email,' . \Auth::user-relation()->id;
-		unset($rules['password']);
-		unset($rules['status']);
-		unset($rules['role']);
-        $this->validate($request, $rules);
-		
-		$model = \App\User::findOrFail(\Auth::user-relation()->id);
-		$oldPassword = $model->password;
-		
-        $requestData = $request->all();
-		
-		$model->fill($requestData);
-		if (!empty($request->password)) {
-			$model->password = bcrypt($requestData['password']);
-		} else {
-			$model->password = $oldPassword;
-		}
-        $model->save();
-		
-        Session::flash('success', 'User updated!');
-
-        return redirect('admin/user-relation/profile');
-    }
-    
     /**
      * Update the specified resource in storage.
      *
@@ -151,24 +102,15 @@ class UserRelationController extends Controller
     public function update($id, Request $request)
     {
 		$rules = $this->rules;
-        $rules['email'] = 'required|unique:user-relation,email,' . $id;
-		unset($rules['password']);
         $this->validate($request, $rules);
 		
-		$model = \App\User::findOrFail($id);
-		$oldPassword = $model->password;
+		$model = \App\UserRelation::findOrFail($id);
 		
         $requestData = $request->all();
-		
 		$model->fill($requestData);
-		if (!empty($request->password)) {
-			$model->password = bcrypt($requestData['password']);
-		} else {
-			$model->password = $oldPassword;
-		}
         $model->save();
 		
-        Session::flash('success', 'User updated!');
+        Session::flash('success', 'Partner updated!');
 
         return redirect('admin/user-relation');
     }

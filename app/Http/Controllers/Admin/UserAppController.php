@@ -94,52 +94,6 @@ class UserAppController extends Controller
 
         return view('admin.user-app.edit', compact('model'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @return View
-     */
-    public function profile()
-    {
-        $model = \App\User::findOrFail(\Auth::user-app()->id);
-
-        return view('admin.user-app.profile', compact('model'));
-    }
-    
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse|Redirector
-     */
-    public function updateProfile(Request $request)
-    {
-		$rules = $this->rules;
-        $rules['email'] = 'required|unique:user-app,email,' . \Auth::user-app()->id;
-		unset($rules['password']);
-		unset($rules['status']);
-		unset($rules['role']);
-        $this->validate($request, $rules);
-		
-		$model = \App\User::findOrFail(\Auth::user-app()->id);
-		$oldPassword = $model->password;
-		
-        $requestData = $request->all();
-		
-		$model->fill($requestData);
-		if (!empty($request->password)) {
-			$model->password = bcrypt($requestData['password']);
-		} else {
-			$model->password = $oldPassword;
-		}
-        $model->save();
-		
-        Session::flash('success', 'User updated!');
-
-        return redirect('admin/user-app/profile');
-    }
     
     /**
      * Update the specified resource in storage.

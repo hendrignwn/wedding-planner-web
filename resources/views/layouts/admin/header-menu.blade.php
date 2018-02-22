@@ -89,10 +89,6 @@
         <div class="footer">
             <div class="copyright">
                 <span>Copyright © 2018 {!! date('Y') == '2018' ? '' : '- ' . date('Y')   !!} <a href="http://hendrign.id" target="_blank"><b class="text-dark">Hendri Gunawan</b></a>. All rights reserved.</span>
-                <span class="go-right">
-                    <a href="index.html" class="text-gray mrg-right-15">Term &amp; Conditions</a>
-                    <a href="index.html" class="text-gray">Privacy &amp; Policy</a>
-                </span>
             </div>
         </div>
     </footer>

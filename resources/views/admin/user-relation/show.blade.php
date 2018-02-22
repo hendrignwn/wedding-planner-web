@@ -71,6 +71,10 @@
                                             <td>{{ $model->maleUser->email }}</td>
                                         </tr>
                                         <tr>
+                                            <th> Phone </th>
+                                            <td>{{ $model->maleUser->phone }}</td>
+                                        </tr>
+                                        <tr>
                                             <th> Last Login At </th>
                                             <td>{{ $model->maleUser->last_login_at }}</td>
                                         </tr>
@@ -114,6 +118,10 @@
                                         <tr>
                                             <th> Email </th>
                                             <td>{{ $model->femaleUser->email }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th> Phone </th>
+                                            <td>{{ $model->femaleUser->phone }}</td>
                                         </tr>
                                         <tr>
                                             <th> Last Login At </th>

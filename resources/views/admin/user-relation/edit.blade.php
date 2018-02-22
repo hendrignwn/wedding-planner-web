@@ -1,12 +1,12 @@
 @extends('layouts.admin.main')
-@section('headerTitle', 'Update User #' . $model->id)
-@section('pageTitle', 'Update User #' . $model->id)
+@section('headerTitle', 'Update Partner #' . $model->id)
+@section('pageTitle', 'Update Partner #' . $model->id)
 @section('content')
 
 
     {!! Form::model($model, [
             'method' => 'PATCH',
-            'url' => ['/admin/user', $model->id],
+            'url' => ['/admin/user-relation', $model->id],
             'files' => true,
             'id' => 'formValidate',
         ]) !!}
@@ -17,10 +17,10 @@
                     <div class="card-block">
                         
                         <div class="mrg-btm-20">
-                            <a href="{{ route('user.index') }}" class="btn btn-primary btn-rounded btn-sm"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
+                            <a href="{{ route('user-relation.index') }}" class="btn btn-primary btn-rounded btn-sm"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
                         </div>
                         
-                        @include ('admin.user.form', ['submitButtonText' => 'Update'])
+                        @include ('admin.user-relation.form', ['submitButtonText' => 'Update'])
                     </div>
                 </div>
             </div>

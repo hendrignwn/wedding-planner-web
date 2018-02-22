@@ -29,6 +29,10 @@
                                     <td> {{ $model->getGenderLabel() }} </td>
                                 </tr>
                                 <tr>
+                                    <th> Phone </th>
+                                    <td> {{ $model->phone }} </td>
+                                </tr>
+                                <tr>
                                     <th> Email </th>
                                     <td> {{ $model->email }} </td>
                                 </tr>
@@ -89,6 +93,10 @@
                                         <tr>
                                             <th> Email </th>
                                             <td>{{ $model->getIsGenderMale() ? $model->userRelation->femaleUser->email : $model->userRelation->maleUser->email }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th> Phone </th>
+                                            <td>{{ $model->getIsGenderMale() ? $model->userRelation->femaleUser->phone : $model->userRelation->maleUser->phone }}</td>
                                         </tr>
                                         <tr>
                                             <th> Status </th>
