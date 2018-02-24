@@ -37,9 +37,21 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::get('/user-relation/data', ['as' => 'user-relation.data', 'uses' => 'Admin\\UserRelationController@listIndex']);
 	Route::resource('/user-relation', 'Admin\\UserRelationController');
     
+    Route::get('/procedure/data', ['as' => 'procedure.data', 'uses' => 'Admin\\ProcedureController@listIndex']);
+	Route::resource('/procedure', 'Admin\\ProcedureController');
+    
+    Route::get('/term-of-use/data', ['as' => 'term-of-use.data', 'uses' => 'Admin\\TermOfUseController@listIndex']);
+	Route::resource('/term-of-use', 'Admin\\TermOfUseController');
+    
+    Route::get('/about-us/data', ['as' => 'about-us.data', 'uses' => 'Admin\\AboutUsController@listIndex']);
+	Route::resource('/about-us', 'Admin\\AboutUsController');
+    
     Route::get('/content/data/{id}', ['as' => 'content.data', 'uses' => 'Admin\\ContentController@listIndex']);
     Route::get('/content/{id}', ['as' => 'content.show', 'uses' => 'Admin\\ContentController@show']);
     
     Route::get('/content-detail/data/{id}', ['as' => 'content-detail.data', 'uses' => 'Admin\\ContentDetailController@listIndex']);
     Route::get('/content-detail/{id}', ['as' => 'content-detail.show', 'uses' => 'Admin\\ContentDetailController@show']);
+    
+    Route::get('/content-detail-list/data/{id}', ['as' => 'content-detail-list.data', 'uses' => 'Admin\\ContentDetailListController@listIndex']);
+    Route::get('/content-detail-list/{id}', ['as' => 'content-detail-list.show', 'uses' => 'Admin\\ContentDetailListController@show']);
 });

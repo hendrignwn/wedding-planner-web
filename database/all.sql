@@ -1,4 +1,4 @@
--- Adminer 4.5.0 MySQL dump
+-- Adminer 4.2.5 MySQL dump
 
 SET NAMES utf8;
 SET time_zone = '+00:00';
@@ -182,6 +182,21 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
+DROP TABLE IF EXISTS `page`;
+CREATE TABLE `page` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category` smallint(6) NOT NULL,
+  `name` varchar(600) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `page` (`id`, `category`, `name`, `description`, `created_at`, `updated_at`) VALUES
+(1,	1,	'Term of Use',	'<p>Lorem ipsum dolor de</p><p>Test</p>',	'2018-02-24 02:48:34',	'2018-02-24 02:08:13'),
+(2,	2,	'About Us',	'<p>Lorem ipsum dolor de about</p><p>sdsdfsd</p>',	'2018-02-24 02:48:50',	'2018-02-24 02:10:06');
+
 DROP TABLE IF EXISTS `procedure`;
 CREATE TABLE `procedure` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -195,7 +210,7 @@ CREATE TABLE `procedure` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `procedure` (`id`, `name`, `description`, `file`, `status`, `created_at`, `updated_at`) VALUES
-(1,	'Prosedur',	NULL,	'procedure.png',	1,	'2018-02-20 03:00:00',	NULL);
+(1,	'Prosedur',	NULL,	'prosedur-085359.jpg',	1,	'2018-02-20 03:00:00',	'2018-02-24 01:54:01');
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
@@ -244,4 +259,4 @@ CREATE TABLE `user_relation` (
 INSERT INTO `user_relation` (`id`, `male_user_id`, `female_user_id`, `wedding_day`, `venue`, `photo`, `created_at`, `updated_at`) VALUES
 (1,	2,	3,	'2018-09-05',	'Braja Mustika, Bogor',	NULL,	'2018-02-20',	'2018-02-20');
 
--- 2018-02-21 12:42:01
+-- 2018-02-24 09:10:50

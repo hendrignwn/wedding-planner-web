@@ -51,4 +51,9 @@ class ContentDetail extends BaseModel
     {
         return $this->hasOne('\App\ContentDetailList', 'id', 'content_detail_id');
     }
+    
+    public function getLinkIsTrue()
+    {
+        return $this->is_link == true;
+    }
 }

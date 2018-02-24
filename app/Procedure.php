@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Carbon\Carbon;
+
 class Procedure extends BaseModel
 {
     const UPLOAD_DESTINATION_PATH = 'files/procedures/';
@@ -54,6 +56,11 @@ class Procedure extends BaseModel
      */
     public function generateFilename($ext)
     {
-        return str_slug($this->name . ' ' . \Carbon\Carbon::now()->toTimeString()) . '.' . $ext;
+        return str_slug($this->name . ' ' . Carbon::now()->toTimeString()) . '.' . $ext;
+    }
+    
+    public function getFileUrl()
+    {
+        return url(self::UPLOAD_DESTINATION_PATH . $this->file);
     }
 }

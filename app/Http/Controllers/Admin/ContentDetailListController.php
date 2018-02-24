@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\ContentDetail;
+use App\ContentDetailList;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class ContentDetailController extends Controller
+class ContentDetailListController extends Controller
 {
     /**
      * Display the specified resource.
@@ -19,9 +19,9 @@ class ContentDetailController extends Controller
      */
     public function show($id)
     {
-        $model = ContentDetail::findOrFail($id);
+        $model = ContentDetailList::findOrFail($id);
 
-        return view('admin.content-detail.show', compact('model'));
+        return view('admin.content-detail-list.show', compact('model'));
     }
     
 	/**
@@ -30,18 +30,14 @@ class ContentDetailController extends Controller
 	public function listIndex($id, Request $request)
     {
         DB::statement(DB::raw('set @rownum=0'));
-        $model = ContentDetail::select([
-					DB::raw('@rownum  := @rownum  + 1 AS rownum'), 'content_detail.*'
+        $model = ContentDetailList::select([
+					DB::raw('@rownum  := @rownum  + 1 AS rownum'), 'content_detail_list.*'
 				])
-                ->where('content_detail.content_id', $id);
+                ->where('content_detail_list.content_detail_id', $id);
 
          $datatables = app('datatables')->of($model)
             ->addColumn('action', function ($model) {
-                if ($model->getLinkIsTrue()) {
-                    return '<a href="'.route('content-detail.show', ['id'=>$model->id]).'" class="btn btn-xs btn-success rounded" data-toggle="tooltip" title="" data-original-title="'. trans('systems.edit') .'"><i class="fa fa-eye"></i></a> ';
-                        //. '<a href="user-relation/'.$model->id.'/edit" class="btn btn-xs btn-primary rounded" data-toggle="tooltip" title="" data-original-title="'. trans('systems.edit') .'"><i class="fa fa-pencil"></i></a> ';
-                        //. '<a href="#" onclick="modalDelete('.$model->id.')" class="btn btn-xs btn-danger rounded" data-toggle="tooltip" title="" data-original-title="'. trans('systems.delete') .'"><i class="fa fa-trash-o"></i></a>';
-                }
+                return '';
             });
 
         if ($keyword = $request->get('search')['value']) {

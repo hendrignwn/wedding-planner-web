@@ -38,16 +38,18 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="">Procedure</a>
+                        <li class="{!! (Request::is('admin/procedure*')) ? 'active' : '' !!}">
+                            <a href="{!! route('procedure.index') !!}">Procedure</a>
+                        </li>
                     </li>
                     <li class="{!! (Request::is('admin/concept*')) ? 'active' : '' !!}">
                         <a href="{!! route('concept.index') !!}">Concept</a>
                     </li>
-                    <li>
-                        <a href="">Term of Use</a>
+                    <li class="{!! (Request::is('admin/term-of-use*')) ? 'active' : '' !!}">
+                        <a href="{!! route('term-of-use.index') !!}">Term of Use</a>
                     </li>
-                    <li>
-                        <a href="">About Us</a>
+                    <li class="{!! (Request::is('admin/about-us*')) ? 'active' : '' !!}">
+                        <a href="{!! route('about-us.index') !!}">About Us</a>
                     </li>
                 </ul>
             </li>
