@@ -3,13 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Concept;
-use App\Helpers\FormatConverter;
-use App\Helpers\ImageHelper;
 use App\Http\Controllers\Controller;
-use App\User;
-use File;
+use App\Page;
 use Illuminate\Http\Request;
-use JWTAuth;
 
 class RequestController extends Controller
 {
@@ -25,6 +21,36 @@ class RequestController extends Controller
             'status' => 200,
             'message' => 'success',
             'data' => $models
+        ], 200);
+    }
+    
+    /**
+     * @param Request $request
+     * @return type
+     */
+    public function aboutUs(Request $request)
+    {
+        $model = Page::whereCategory(Page::CATEGORY_ABOUT_US)->first();
+        
+        return response()->json([
+            'status' => 200,
+            'message' => 'success',
+            'data' => $model
+        ], 200);
+    }
+    
+    /**
+     * @param Request $request
+     * @return type
+     */
+    public function termOfUse(Request $request)
+    {
+        $model = Page::whereCategory(Page::CATEGORY_TERM_OF_USE)->first();
+        
+        return response()->json([
+            'status' => 200,
+            'message' => 'success',
+            'data' => $model
         ], 200);
     }
 }

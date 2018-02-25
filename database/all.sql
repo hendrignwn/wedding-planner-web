@@ -58,7 +58,18 @@ INSERT INTO `content` (`id`, `concept_id`, `user_relation_id`, `user_id`, `name`
 (8,	1,	1,	2,	'Katering',	NULL,	1,	0,	'2018-02-21 04:31:20',	'2018-02-21 04:31:20'),
 (9,	1,	1,	2,	'Undangan',	NULL,	1,	0,	'2018-02-21 04:31:20',	'2018-02-21 04:31:20'),
 (10,	1,	1,	2,	'Seserahan',	NULL,	1,	0,	'2018-02-21 04:31:20',	'2018-02-21 04:31:20'),
-(11,	1,	1,	2,	'Kenang-kenangan',	NULL,	1,	0,	'2018-02-21 04:31:21',	'2018-02-21 04:31:21');
+(11,	1,	1,	2,	'Kenang-kenangan',	NULL,	1,	0,	'2018-02-21 04:31:21',	'2018-02-21 04:31:21'),
+(12,	1,	2,	5,	'Pengurus Pernikahan',	NULL,	1,	0,	'2018-02-24 03:10:07',	'2018-02-24 03:10:07'),
+(13,	1,	2,	5,	'Dekorasi',	NULL,	1,	0,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(14,	1,	2,	5,	'Lokasi Acara',	NULL,	1,	0,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(15,	1,	2,	5,	'Foto',	NULL,	1,	0,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(16,	1,	2,	5,	'Video',	NULL,	1,	0,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(17,	1,	2,	5,	'Aksesoris',	NULL,	1,	0,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(18,	1,	2,	5,	'Pengrias Wajah',	NULL,	1,	0,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(19,	1,	2,	5,	'Katering',	NULL,	1,	0,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(20,	1,	2,	5,	'Undangan',	NULL,	1,	0,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(21,	1,	2,	5,	'Seserahan',	NULL,	1,	0,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(22,	1,	2,	5,	'Kenang-kenangan',	NULL,	1,	0,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11');
 
 DROP TABLE IF EXISTS `content_detail`;
 CREATE TABLE `content_detail` (
@@ -81,7 +92,7 @@ CREATE TABLE `content_detail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `content_detail` (`id`, `content_id`, `name`, `value`, `is_noted`, `is_photo`, `is_video`, `is_link`, `is_cost`, `status`, `order`, `created_at`, `updated_at`) VALUES
-(1,	1,	'Nama Vendor',	NULL,	0,	0,	0,	0,	0,	1,	0,	'2018-02-21 04:31:18',	'2018-02-21 04:31:18'),
+(1,	1,	'Nama Vendor',	'ok',	0,	0,	0,	0,	0,	1,	0,	'2018-02-21 04:31:18',	'2018-02-24 19:18:20'),
 (2,	1,	'Kontak',	NULL,	0,	0,	0,	0,	0,	1,	1,	'2018-02-21 04:31:18',	'2018-02-21 04:31:18'),
 (3,	1,	'Alamat',	NULL,	0,	0,	0,	0,	0,	1,	2,	'2018-02-21 04:31:18',	'2018-02-21 04:31:18'),
 (4,	1,	'Biaya',	NULL,	0,	0,	0,	0,	1,	1,	3,	'2018-02-21 04:31:18',	'2018-02-21 04:31:18'),
@@ -153,7 +164,80 @@ INSERT INTO `content_detail` (`id`, `content_id`, `name`, `value`, `is_noted`, `
 (70,	11,	'Alamat',	NULL,	0,	0,	0,	0,	0,	1,	2,	'2018-02-21 04:31:21',	'2018-02-21 04:31:21'),
 (71,	11,	'Biaya',	NULL,	0,	0,	0,	0,	1,	1,	3,	'2018-02-21 04:31:21',	'2018-02-21 04:31:21'),
 (72,	11,	'Foto',	NULL,	0,	1,	0,	1,	0,	1,	4,	'2018-02-21 04:31:21',	'2018-02-21 04:31:21'),
-(73,	11,	'Catatan',	NULL,	1,	0,	0,	1,	0,	1,	5,	'2018-02-21 04:31:21',	'2018-02-21 04:31:21');
+(73,	11,	'Catatan',	NULL,	1,	0,	0,	1,	0,	1,	5,	'2018-02-21 04:31:21',	'2018-02-21 04:31:21'),
+(74,	12,	'Nama Vendor',	NULL,	0,	0,	0,	0,	0,	1,	0,	'2018-02-24 03:10:07',	'2018-02-24 03:10:07'),
+(75,	12,	'Kontak',	NULL,	0,	0,	0,	0,	0,	1,	1,	'2018-02-24 03:10:07',	'2018-02-24 03:10:07'),
+(76,	12,	'Alamat',	NULL,	0,	0,	0,	0,	0,	1,	2,	'2018-02-24 03:10:07',	'2018-02-24 03:10:07'),
+(77,	12,	'Biaya',	NULL,	0,	0,	0,	0,	1,	1,	3,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(78,	12,	'Catatan',	NULL,	1,	0,	0,	1,	0,	1,	4,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(79,	13,	'Nama Dekorator',	NULL,	0,	0,	0,	0,	0,	1,	0,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(80,	13,	'Kontak',	NULL,	0,	0,	0,	0,	0,	1,	1,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(81,	13,	'Alamat',	NULL,	0,	0,	0,	0,	0,	1,	2,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(82,	13,	'Biaya',	NULL,	0,	0,	0,	0,	1,	1,	3,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(83,	13,	'Foto Acuan Dekorasi',	NULL,	0,	1,	0,	1,	0,	1,	4,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(84,	13,	'Tema Dekorasi',	NULL,	0,	0,	0,	0,	0,	1,	5,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(85,	13,	'Nuansa Warna Bunga',	NULL,	0,	0,	0,	0,	0,	1,	6,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(86,	13,	'Nuansa Warna Dekorasi',	NULL,	0,	0,	0,	0,	0,	1,	7,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(87,	13,	'Kain Dekorasi',	NULL,	0,	0,	0,	0,	0,	1,	8,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(88,	13,	'Catatan',	NULL,	1,	0,	0,	1,	0,	1,	9,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(89,	14,	'Nama',	NULL,	0,	0,	0,	0,	0,	1,	0,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(90,	14,	'Kontak',	NULL,	0,	0,	0,	0,	0,	1,	1,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(91,	14,	'Alamat',	NULL,	0,	0,	0,	0,	0,	1,	2,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(92,	14,	'Biaya',	NULL,	0,	0,	0,	0,	1,	1,	3,	'2018-02-24 03:10:08',	'2018-02-24 03:10:08'),
+(93,	14,	'Foto Lokasi Acara',	NULL,	0,	1,	0,	1,	0,	1,	4,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(94,	14,	'Catatan',	NULL,	1,	0,	0,	1,	0,	1,	5,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(95,	15,	'Nama',	NULL,	0,	0,	0,	0,	0,	1,	0,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(96,	15,	'Kontak',	NULL,	0,	0,	0,	0,	0,	1,	1,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(97,	15,	'Alamat',	NULL,	0,	0,	0,	0,	0,	1,	2,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(98,	15,	'Biaya',	NULL,	0,	0,	0,	0,	1,	1,	3,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(99,	15,	'Foto Acuan Pernikahan',	NULL,	0,	1,	0,	1,	0,	1,	4,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(100,	15,	'Catatan',	NULL,	1,	0,	0,	1,	0,	1,	5,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(101,	16,	'Nama',	NULL,	0,	0,	0,	0,	0,	1,	0,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(102,	16,	'Kontak',	NULL,	0,	0,	0,	0,	0,	1,	1,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(103,	16,	'Alamat',	NULL,	0,	0,	0,	0,	0,	1,	2,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(104,	16,	'Biaya',	NULL,	0,	0,	0,	0,	1,	1,	3,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(105,	16,	'Video Acuan Pernikahan',	NULL,	0,	1,	0,	1,	0,	1,	4,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(106,	16,	'Tema Video',	NULL,	0,	0,	0,	0,	0,	1,	5,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(107,	16,	'Catatan',	NULL,	1,	0,	0,	1,	0,	1,	6,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(108,	17,	'Nama',	NULL,	0,	0,	0,	0,	0,	1,	0,	'2018-02-24 03:10:09',	'2018-02-24 03:10:09'),
+(109,	17,	'Kontak',	NULL,	0,	0,	0,	0,	0,	1,	1,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(110,	17,	'Alamat',	NULL,	0,	0,	0,	0,	0,	1,	2,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(111,	17,	'Biaya',	NULL,	0,	0,	0,	0,	1,	1,	3,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(112,	17,	'Contoh Aksesoris',	NULL,	0,	1,	0,	1,	0,	1,	4,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(113,	17,	'Tema',	NULL,	0,	0,	0,	0,	0,	1,	5,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(114,	17,	'Catatan',	NULL,	1,	0,	0,	1,	0,	1,	6,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(115,	18,	'Nama',	NULL,	0,	0,	0,	0,	0,	1,	0,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(116,	18,	'Kontak',	NULL,	0,	0,	0,	0,	0,	1,	1,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(117,	18,	'Alamat',	NULL,	0,	0,	0,	0,	0,	1,	2,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(118,	18,	'Biaya',	NULL,	0,	0,	0,	0,	1,	1,	3,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(119,	18,	'Contoh Pengrias Wajah',	NULL,	0,	1,	0,	1,	0,	1,	4,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(120,	18,	'Tema',	NULL,	0,	0,	0,	0,	0,	1,	5,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(121,	18,	'Catatan',	NULL,	1,	0,	0,	1,	0,	1,	6,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(122,	19,	'Nama',	NULL,	0,	0,	0,	0,	0,	1,	0,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(123,	19,	'Kontak',	NULL,	0,	0,	0,	0,	0,	1,	1,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(124,	19,	'Alamat',	NULL,	0,	0,	0,	0,	0,	1,	2,	'2018-02-24 03:10:10',	'2018-02-24 03:10:10'),
+(125,	19,	'Biaya',	NULL,	0,	0,	0,	0,	1,	1,	3,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(126,	19,	'Contoh Makanan',	NULL,	0,	1,	0,	1,	0,	1,	4,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(127,	19,	'Catatan',	NULL,	1,	0,	0,	1,	0,	1,	5,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(128,	20,	'Nama',	NULL,	0,	0,	0,	0,	0,	1,	0,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(129,	20,	'Kontak',	NULL,	0,	0,	0,	0,	0,	1,	1,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(130,	20,	'Alamat',	NULL,	0,	0,	0,	0,	0,	1,	2,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(131,	20,	'Biaya',	NULL,	0,	0,	0,	0,	1,	1,	3,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(132,	20,	'Contoh',	NULL,	0,	1,	0,	1,	0,	1,	4,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(133,	20,	'Isi Undangan',	NULL,	0,	0,	0,	0,	0,	1,	5,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(134,	20,	'Catatan',	NULL,	1,	0,	0,	1,	0,	1,	6,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(135,	21,	'Lokasi',	NULL,	0,	0,	0,	0,	0,	1,	0,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(136,	21,	'Tanggal',	NULL,	0,	0,	0,	0,	0,	1,	1,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(137,	21,	'Alamat',	NULL,	0,	0,	0,	0,	0,	1,	2,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(138,	21,	'Biaya',	NULL,	0,	0,	0,	0,	1,	1,	3,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(139,	21,	'Foto',	NULL,	0,	1,	0,	1,	0,	1,	4,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(140,	21,	'Catatan',	NULL,	1,	0,	0,	1,	0,	1,	5,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(141,	22,	'Nama',	NULL,	0,	0,	0,	0,	0,	1,	0,	'2018-02-24 03:10:11',	'2018-02-24 03:10:11'),
+(142,	22,	'Kontak',	NULL,	0,	0,	0,	0,	0,	1,	1,	'2018-02-24 03:10:12',	'2018-02-24 03:10:12'),
+(143,	22,	'Alamat',	NULL,	0,	0,	0,	0,	0,	1,	2,	'2018-02-24 03:10:12',	'2018-02-24 03:10:12'),
+(144,	22,	'Biaya',	NULL,	0,	0,	0,	0,	1,	1,	3,	'2018-02-24 03:10:12',	'2018-02-24 03:10:12'),
+(145,	22,	'Foto',	NULL,	0,	1,	0,	1,	0,	1,	4,	'2018-02-24 03:10:12',	'2018-02-24 03:10:12'),
+(146,	22,	'Catatan',	NULL,	1,	0,	0,	1,	0,	1,	5,	'2018-02-24 03:10:12',	'2018-02-24 03:10:12');
 
 DROP TABLE IF EXISTS `content_detail_list`;
 CREATE TABLE `content_detail_list` (
@@ -223,6 +307,10 @@ CREATE TABLE `user` (
   `remember_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `firebase_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `device_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `registered_device_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `registered_token` text COLLATE utf8mb4_unicode_ci,
+  `registered_at` timestamp NULL DEFAULT NULL,
+  `forgot_token` text COLLATE utf8mb4_unicode_ci,
   `token` text COLLATE utf8mb4_unicode_ci,
   `status` smallint(6) DEFAULT NULL,
   `role` smallint(6) DEFAULT NULL,
@@ -233,11 +321,13 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `user` (`id`, `name`, `gender`, `email`, `phone`, `password`, `remember_token`, `firebase_token`, `device_number`, `token`, `status`, `role`, `last_login_at`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1,	'Hendri Gunawan',	NULL,	'admin@wedding.com',	NULL,	'$2y$10$kIX7F7/JqN7itGh6oJnTGe.QAuYw.oL3nQJPXsQNF/BRyZs/RCPz.',	'lwlB6kSsmam10c3YHPGhUER0SjKpn4NQl9Dfu6sHs6sTBzoF5UybQ5Qk8esH',	NULL,	NULL,	NULL,	1,	1,	NULL,	'2018-02-19 02:54:13',	'2018-02-19 02:54:13',	NULL),
-(2,	'Hendri Gunawan',	1,	'hendri.gnw@gmail.com',	NULL,	'$2y$10$kIX7F7/JqN7itGh6oJnTGe.QAuYw.oL3nQJPXsQNF/BRyZs/RCPz.',	'tK58Ix70xSxfYbU1mPMvtOK3runaEQV2wJaZu0ejE7LXkeyNrCWJJ91jhm4T',	'xxx',	'xxx',	'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsImlzcyI6Imh0dHA6Ly8xMC4wLjAuMTkyL3dlZGRpbmctcGxhbm5lci13ZWIvcHVibGljL2FwaS92MS9hdXRoL2xvZ2luIiwiaWF0IjoxNTE5MTMyODI2LCJleHAiOjE1MjAzNDI0MjYsIm5iZiI6MTUxOTEzMjgyNiwianRpIjoibTRDYkVBc3hXSGxmcVRoOSJ9.1BjEFd84ABcVAFecRQm_WdAv17iZkUV_h9D2tXdgAXo',	1,	10,	'2018-02-20 06:20:26',	'2018-02-19 02:54:13',	'2018-02-20 06:20:26',	NULL),
-(3,	'Wina Marlina',	0,	'winamarlina97@gmail.com',	NULL,	'$2y$10$kIX7F7/JqN7itGh6oJnTGe.QAuYw.oL3nQJPXsQNF/BRyZs/RCPz.',	'tK58Ix70xSxfYbU1mPMvtOK3runaEQV2wJaZu0ejE7LXkeyNrCWJJ91jhm4T',	'xxx',	'xxx',	'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjMsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Qvd2VkZGluZy1wbGFubmVyLXdlYi9wdWJsaWMvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE1MTkxMzIyNzYsImV4cCI6MTUyMDM0MTg3NiwibmJmIjoxNTE5MTMyMjc2LCJqdGkiOiJhQm5aY09qNURNMFlWa0xXIn0.Fm7T5Ztv_zWHXDWoVcp-UKY5o4t7qwzMuEmEUWIE_xg',	1,	10,	'2018-02-20 06:11:16',	'2018-02-19 02:54:13',	'2018-02-20 06:11:16',	NULL),
-(4,	'Gunawan',	NULL,	'hendri.gnw1@gmail.com',	NULL,	'$2y$10$lxnkdhjmFhzn7Utve43SpO/RsE0cglPsYF54gC99zz24HUgYgdyHa',	'UaMLflGH5S4RdWb8dCvmV5BedJZKSHDxMEUoiCEkAo2KQuUquZsSV8r5lZWs',	NULL,	NULL,	NULL,	1,	1,	NULL,	'2018-02-21 03:07:30',	'2018-02-21 03:07:30',	NULL);
+INSERT INTO `user` (`id`, `name`, `gender`, `email`, `phone`, `password`, `remember_token`, `firebase_token`, `device_number`, `registered_device_number`, `registered_token`, `registered_at`, `forgot_token`, `token`, `status`, `role`, `last_login_at`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1,	'Hendri Gunawan',	NULL,	'admin@wedding.com',	NULL,	'$2y$10$kIX7F7/JqN7itGh6oJnTGe.QAuYw.oL3nQJPXsQNF/BRyZs/RCPz.',	'lwlB6kSsmam10c3YHPGhUER0SjKpn4NQl9Dfu6sHs6sTBzoF5UybQ5Qk8esH',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	1,	1,	NULL,	'2018-02-19 02:54:13',	'2018-02-19 02:54:13',	NULL),
+(2,	'Hendri Gunawan',	1,	'hendri.gnw@gmail.com',	NULL,	'$2y$10$kIX7F7/JqN7itGh6oJnTGe.QAuYw.oL3nQJPXsQNF/BRyZs/RCPz.',	'tK58Ix70xSxfYbU1mPMvtOK3runaEQV2wJaZu0ejE7LXkeyNrCWJJ91jhm4T',	'xxx',	'xxx',	NULL,	NULL,	NULL,	NULL,	'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC93ZWRkaW5nLXBsYW5uZXItd2ViL3B1YmxpYy9hcGkvdjEvYXV0aC9sb2dpbiIsImlhdCI6MTUxOTUyMzQyMywiZXhwIjoxNTIwNzMzMDIzLCJuYmYiOjE1MTk1MjM0MjMsImp0aSI6IlIzczNPY1hEZFJyRFlZdksifQ.YFF5aasTU0k7NrfX2Q0dgnKDaCOBCzQIjjWZVHz9eJE',	1,	10,	'2018-02-24 18:50:23',	'2018-02-19 02:54:13',	'2018-02-24 18:50:23',	NULL),
+(3,	'Wina Marlina',	0,	'winamarlina97@gmail.com',	NULL,	'$2y$10$kIX7F7/JqN7itGh6oJnTGe.QAuYw.oL3nQJPXsQNF/BRyZs/RCPz.',	'tK58Ix70xSxfYbU1mPMvtOK3runaEQV2wJaZu0ejE7LXkeyNrCWJJ91jhm4T',	'xxx',	'xxx',	NULL,	NULL,	NULL,	NULL,	'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjMsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Qvd2VkZGluZy1wbGFubmVyLXdlYi9wdWJsaWMvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE1MTkxMzIyNzYsImV4cCI6MTUyMDM0MTg3NiwibmJmIjoxNTE5MTMyMjc2LCJqdGkiOiJhQm5aY09qNURNMFlWa0xXIn0.Fm7T5Ztv_zWHXDWoVcp-UKY5o4t7qwzMuEmEUWIE_xg',	1,	10,	'2018-02-20 06:11:16',	'2018-02-19 02:54:13',	'2018-02-20 06:11:16',	NULL),
+(4,	'Gunawan',	NULL,	'hendri.gnw1@gmail.com',	NULL,	'$2y$10$lxnkdhjmFhzn7Utve43SpO/RsE0cglPsYF54gC99zz24HUgYgdyHa',	'UaMLflGH5S4RdWb8dCvmV5BedJZKSHDxMEUoiCEkAo2KQuUquZsSV8r5lZWs',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	1,	1,	NULL,	'2018-02-21 03:07:30',	'2018-02-21 03:07:30',	NULL),
+(5,	'Lorem Ipsum',	1,	'loremipsum@gmail.com',	'08561471500',	'$2y$10$oYp7nF9Zlh/WHyQ5gTTODOBBatGM1JHHHDkxKfYtr/FN91PULOosW',	NULL,	'xxx',	'xxx',	'xxx',	NULL,	'2018-02-24 03:10:07',	NULL,	'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjUsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC93ZWRkaW5nLXBsYW5uZXItd2ViL3B1YmxpYy9hcGkvdjEvYXV0aC9sb2dpbiIsImlhdCI6MTUxOTUyMzg5OSwiZXhwIjoxNTIwNzMzNDk5LCJuYmYiOjE1MTk1MjM4OTksImp0aSI6ImVEbWEybWpJbVJCM1ZNWDYifQ.AIrlMxXvjY3vmA24Nkqy6DNMkPQi_aXZ40QNe3cQkew',	1,	10,	'2018-02-24 18:58:19',	'2018-02-24 03:10:07',	'2018-02-24 23:57:50',	NULL),
+(6,	'Lorem Ipsum Female',	0,	'loremipsumfemale@gmail.com',	'085711202889',	'$2y$10$dP6XnfZSvaf82fsOEPTR6eb5a8X71VjMw0MLZCtbBezqlKA130LwC',	NULL,	'xxx',	NULL,	'xxx',	NULL,	'2018-02-24 23:37:55',	NULL,	NULL,	1,	10,	'2018-02-24 23:37:55',	'2018-02-24 03:10:07',	'2018-02-24 23:37:55',	NULL);
 
 DROP TABLE IF EXISTS `user_relation`;
 CREATE TABLE `user_relation` (
@@ -257,6 +347,7 @@ CREATE TABLE `user_relation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `user_relation` (`id`, `male_user_id`, `female_user_id`, `wedding_day`, `venue`, `photo`, `created_at`, `updated_at`) VALUES
-(1,	2,	3,	'2018-09-05',	'Braja Mustika, Bogor',	NULL,	'2018-02-20',	'2018-02-20');
+(1,	2,	3,	'2018-09-05',	'Braja Mustika, Bogor',	NULL,	'2018-02-20',	'2018-02-20'),
+(2,	5,	6,	NULL,	NULL,	NULL,	'2018-02-24',	'2018-02-24');
 
--- 2018-02-24 09:10:50
+-- 2018-02-25 07:03:20

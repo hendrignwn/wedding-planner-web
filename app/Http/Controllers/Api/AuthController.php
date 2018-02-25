@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\FormatConverter;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\UserRelation;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use JWTAuth;
-use function bcrypt;
 use function response;
 
 class AuthController extends Controller
@@ -53,15 +53,15 @@ class AuthController extends Controller
             }
             
             switch ($user->status) {
-                case User::STATUS_INACTIVE_OR_BLOCK :
+                case User::STATUS_INACTIVE :
                     return response()->json([
                         'status' => 401,
                         'message' => 'Your Account has been blocked',
                     ], 401);
-                case User::STATUS_NEED_CONFIRMATION :
+                case User::STATUS_NEED_REGISTER :
                     return response()->json([
                         'status' => 401,
-                        'message' => 'Your Account must be confirmation, please check your email',
+                        'message' => 'Your Account must be registered, please check your email',
                     ], 401);
             }
             
@@ -127,21 +127,16 @@ class AuthController extends Controller
 	public function register(Request $request)
 	{
         $validator = \Validator::make($request->all(), [
-            'first_name' => 'required|max:255',
+            'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:user,email',
-            'role' => 'required|in:'.User::ROLE_USER.','.User::ROLE_COUNSELOR,
-            //'gender' => 'required|in:'.User::GENDER_MALE.','.User::GENDER_FEMALE,
-            'language' => 'required|in:'. \App\UserSetting::LANGUAGE_ENGLISH.','.\App\UserSetting::LANGUAGE_INDONESIA,
-            //'dob' => 'required',
-            //'phone' => 'required',
+            'gender' => 'required|in:'.User::GENDER_MALE.','.User::GENDER_FEMALE,
+            'phone' => 'required',
             'password' => 'required|min:6',
             'confirm_password' => 'required|min:6|same:password',
-            //'pin_code' => 'integer',
             'registered_device_number' => 'required',
             'firebase_token' => 'required',
-            'temp_user_code' => 'required|exists:user_questionnaire,temp_user_code',
+            'relation_email' => 'required|email|max:255|unique:user,email',
         ]);
-
 
         if ($validator->fails()) {
 			return response()->json([
@@ -153,47 +148,241 @@ class AuthController extends Controller
         
         $user = new User();
         $user->fill($request->only([
-            'first_name',
-            'middle_name',
-            'last_name',
+            'name',
             'email',
             'gender',
             'phone',
-            'dob',
-            'role',
             'registered_device_number',
             'firebase_token',
-            'pin_code',
         ]));
-        $user->code = User::generateCode();
+        $user->password = bcrypt($request->password);
         $user->registered_at = Carbon::now()->toDateTimeString();
         $user->last_login_at = Carbon::now()->toDateTimeString();
-        $user->status = User::STATUS_NEED_CONFIRMATION;
-        if ($user->role == User::ROLE_USER) :
-            $user->activation_code = $user->generateActivationCode();
-        endif;
-        $user->device_number = $request->registered_device_number;
-        $user->firebase_token = $request->firebase_token;
-        $user->token = JWTAuth::fromUser($user);
-        $user->password = bcrypt($request->password);
-
+        $user->status = User::STATUS_ACTIVE;
+        $user->role = User::ROLE_USER;
         $user->save();
+        if ($user->gender == User::GENDER_MALE) :
+            $userFemale = new User();
+            $userFemale->email = $request->relation_email;
+            $userFemale->gender = User::GENDER_FEMALE;
+            $userFemale->status = User::STATUS_NEED_REGISTER;
+            $userFemale->role = User::ROLE_USER;
+            $userFemale->registered_token = str_random(25);
+            $userFemale->save();
+            $userFemale->sendNeedRegisterNotification();
+            
+            $userRelation = new UserRelation();
+            $userRelation->male_user_id = $user->id;
+            $userRelation->female_user_id = $userFemale->id;
+            $userRelation->save();
+        else:
+            $userMale = new User();
+            $userMale->email = $request->relation_email;
+            $userMale->gender = User::GENDER_MALE;
+            $userMale->status = User::STATUS_NEED_REGISTER;
+            $userMale->role = User::ROLE_USER;
+            $userMale->registered_token = str_random(25);
+            $userMale->save();
+            $userMale->sendNeedRegisterNotification();
+            
+            $userRelation = new UserRelation();
+            $userRelation->female_user_id = $user->id;
+            $userRelation->male_user_id = $userMale->id;
+            $userRelation->save();
+        endif;
         
-        $user->firstInsertUserSetting([
-            'language' => $request->language
-        ]);
+        $user->sendRegisterNotification();
         
-        $userQuestionnaire = \App\UserQuestionnaire::whereTempUserCode($request->temp_user_code)->update([
-            'temp_user_code' => null,
-            'user_id' => $user->id
-        ]);
+        // insert first data
+        $user->insertFirstContentData();
         
-        $user->sendEmailRegisterNotification();
+        if ($user->gender == User::GENDER_MALE) {
+            $relation = $user->maleUserRelation->toArray();
+            $relation['partner'] = $relation['female_user'];
+            unset($user->maleUserRelation);
+            unset($relation['male_user']);
+            unset($relation['female_user']);
+        } else {
+            $relation = $user->femaleUserRelation->toArray();
+            $relation['partner'] = $relation['male_user'];
+            unset($user->femaleUserRelation);
+            unset($relation['male_user']);
+            unset($relation['female_user']);
+        }
 
         return response()->json([
             'status' => 201,
             'message' => 'Register success, please check your email',
-            'data' => $user,
+            'data' => array_merge($user->toArray(), [
+                'relation' => $relation
+            ]),
         ], 201);
 	}
+    
+	/**
+	 * @param Request $request
+	 */
+	public function registerInvitation(Request $request)
+	{
+        $validator = \Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'phone' => 'required',
+            'password' => 'required|min:6',
+            'confirm_password' => 'required|min:6|same:password',
+            'registered_device_number' => 'required',
+            'firebase_token' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+			return response()->json([
+				'status' => 400,
+				'message' => 'Some Parameters is required',
+				'validators' => FormatConverter::parseValidatorErrors($validator),
+			], 400);
+		}
+        
+        $user = User::where('registered_token', $request->confirm)
+                ->where('status', User::STATUS_NEED_REGISTER)
+                ->first();
+        if (!$user) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'User is not found'
+            ], 404);
+        }
+        
+        $user->fill($request->only([
+            'name',
+            'email',
+            'phone',
+            'registered_device_number',
+            'firebase_token',
+        ]));
+        $user->password = bcrypt($request->password);
+        $user->registered_at = Carbon::now()->toDateTimeString();
+        $user->last_login_at = Carbon::now()->toDateTimeString();
+        $user->status = User::STATUS_ACTIVE;
+        $user->role = User::ROLE_USER;
+        $user->registered_token = null;
+        $user->save();
+        $user->sendRegisterNotification();
+        
+        if ($user->gender == User::GENDER_MALE) {
+            $relation = $user->maleUserRelation->toArray();
+            $relation['partner'] = $relation['female_user'];
+            unset($user->maleUserRelation);
+            unset($relation['male_user']);
+            unset($relation['female_user']);
+        } else {
+            $relation = $user->femaleUserRelation->toArray();
+            $relation['partner'] = $relation['male_user'];
+            unset($user->femaleUserRelation);
+            unset($relation['male_user']);
+            unset($relation['female_user']);
+        }
+
+        return response()->json([
+            'status' => 201,
+            'message' => 'Register success, please check your email',
+            'data' => array_merge($user->toArray(), [
+                'relation' => $relation
+            ]),
+        ], 201);
+	}
+    
+    /**
+     * 
+     * @param Request $request
+     * @return type
+     */
+    public function forgotPassword(Request $request)
+    {
+        $validator = \Validator::make($request->all(), [
+            'email' => 'required|exists:user,email',
+        ]);
+
+        if ($validator->fails()) {
+			return response()->json([
+				'status' => 400,
+				'message' => 'Some Parameters is required',
+				'validators' => FormatConverter::parseValidatorErrors($validator),
+			], 400);
+		}
+        
+        $user = User::where('email', $request->email)
+                ->where('status', User::STATUS_ACTIVE)
+                ->first();
+        if (!$user) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'User is not found'
+            ], 404);
+        }
+        
+        $user->forgot_token = str_random(25);
+        $user->save();
+        $user->sendForgotPasswordNotification();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Forgot password success, please check your email',
+        ], 200);
+    }
+    
+    /**
+     * 
+     * @param Request $request
+     * @return type
+     */
+    public function resetPassword(Request $request)
+    {
+        $user = User::where('forgot_token', $request->confirm)
+                ->where('status', User::STATUS_ACTIVE)
+                ->first();
+        if (!$user) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'User is not found'
+            ], 404);
+        }
+        
+        $validator = \Validator::make($request->all(), [
+            'password' => 'required|min:6',
+            'confirm_password' => 'required|min:6|same:password',
+        ]);
+
+        if ($validator->fails()) {
+			return response()->json([
+				'status' => 400,
+				'message' => 'Some Parameters is required',
+				'validators' => FormatConverter::parseValidatorErrors($validator),
+			], 400);
+		}
+        
+        $user->password = bcrypt($request->password);
+        $user->forgot_token = null;
+        $user->save();
+        
+        if ($user->gender == User::GENDER_MALE) {
+            $relation = $user->maleUserRelation->toArray();
+            $relation['partner'] = $relation['female_user'];
+            unset($user->maleUserRelation);
+            unset($relation['male_user']);
+            unset($relation['female_user']);
+        } else {
+            $relation = $user->femaleUserRelation->toArray();
+            $relation['partner'] = $relation['male_user'];
+            unset($user->femaleUserRelation);
+            unset($relation['male_user']);
+            unset($relation['female_user']);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Reset Password Success',
+            'data' => array_merge($user->toArray(), [
+                'relation' => $relation
+            ]),
+        ], 200);
+    }
 }

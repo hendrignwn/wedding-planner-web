@@ -16,7 +16,7 @@ class User extends Authenticatable
 
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
-    const STATUS_NEED_CONFIRMATION = 5;
+    const STATUS_NEED_REGISTER = 5;
     
     const ROLE_SUPERADMIN = 1;
     const ROLE_USER = 10;
@@ -38,6 +38,9 @@ class User extends Authenticatable
         'phone', 
         'password',
         'firebase_token',
+        'registered_token',
+        'registered_device_number',
+        'registered_at',
         'token',
         'status',
         'role',
@@ -147,6 +150,7 @@ class User extends Authenticatable
 	{
 		return [
 			self::STATUS_ACTIVE => 'Active',
+			self::STATUS_NEED_REGISTER => 'Need Registered',
 			self::STATUS_INACTIVE => 'Inactive',
 		];
 	}
@@ -251,6 +255,21 @@ class User extends Authenticatable
             }
         }
         
+        return true;
+    }
+    
+    public function sendNeedRegisterNotification()
+    {
+        return true;
+    }
+    
+    public function sendRegisterNotification()
+    {
+        return true;
+    }
+    
+    public function sendForgotPasswordNotification()
+    {
         return true;
     }
 }
