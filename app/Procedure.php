@@ -63,4 +63,9 @@ class Procedure extends BaseModel
     {
         return url(self::UPLOAD_DESTINATION_PATH . $this->file);
     }
+    
+    public static function destinationPathUrl()
+    {
+        return url(self::UPLOAD_DESTINATION_PATH);
+    }
 }
