@@ -1,4 +1,4 @@
--- Adminer 4.2.5 MySQL dump
+-- Adminer 4.5.0 MySQL dump
 
 SET NAMES utf8;
 SET time_zone = '+00:00';
@@ -294,7 +294,7 @@ CREATE TABLE `procedure` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `procedure` (`id`, `name`, `description`, `file`, `status`, `created_at`, `updated_at`) VALUES
-(1,	'Prosedur',	NULL,	'prosedur-085359.jpg',	1,	'2018-02-20 03:00:00',	'2018-02-24 01:54:01');
+(1,	'Prosedur',	NULL,	'prosedur-085359.png',	1,	'2018-02-20 03:00:00',	'2018-02-24 01:54:01');
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
@@ -322,8 +322,8 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `user` (`id`, `name`, `gender`, `email`, `phone`, `password`, `remember_token`, `firebase_token`, `device_number`, `registered_device_number`, `registered_token`, `registered_at`, `forgot_token`, `token`, `status`, `role`, `last_login_at`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1,	'Hendri Gunawan',	NULL,	'admin@wedding.com',	NULL,	'$2y$10$kIX7F7/JqN7itGh6oJnTGe.QAuYw.oL3nQJPXsQNF/BRyZs/RCPz.',	'lwlB6kSsmam10c3YHPGhUER0SjKpn4NQl9Dfu6sHs6sTBzoF5UybQ5Qk8esH',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	1,	1,	NULL,	'2018-02-19 02:54:13',	'2018-02-19 02:54:13',	NULL),
-(2,	'Hendri Gunawan',	1,	'hendri.gnw@gmail.com',	NULL,	'$2y$10$kIX7F7/JqN7itGh6oJnTGe.QAuYw.oL3nQJPXsQNF/BRyZs/RCPz.',	'tK58Ix70xSxfYbU1mPMvtOK3runaEQV2wJaZu0ejE7LXkeyNrCWJJ91jhm4T',	'xxx',	'xxx',	NULL,	NULL,	NULL,	NULL,	'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC93ZWRkaW5nLXBsYW5uZXItd2ViL3B1YmxpYy9hcGkvdjEvYXV0aC9sb2dpbiIsImlhdCI6MTUxOTUyMzQyMywiZXhwIjoxNTIwNzMzMDIzLCJuYmYiOjE1MTk1MjM0MjMsImp0aSI6IlIzczNPY1hEZFJyRFlZdksifQ.YFF5aasTU0k7NrfX2Q0dgnKDaCOBCzQIjjWZVHz9eJE',	1,	10,	'2018-02-24 18:50:23',	'2018-02-19 02:54:13',	'2018-02-24 18:50:23',	NULL),
+(1,	'Hendri Gunawan',	NULL,	'admin@wedding.com',	NULL,	'$2y$10$kIX7F7/JqN7itGh6oJnTGe.QAuYw.oL3nQJPXsQNF/BRyZs/RCPz.',	'A0FlhP38Ly9MULzgse5jxoqKmFzhqDJP7TPxSliWPQSRbDO7Fsu0FNCrNgY8',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	1,	1,	NULL,	'2018-02-19 02:54:13',	'2018-02-19 02:54:13',	NULL),
+(2,	'Hendri Gunawan',	1,	'hendri.gnw@gmail.com',	NULL,	'$2y$10$kIX7F7/JqN7itGh6oJnTGe.QAuYw.oL3nQJPXsQNF/BRyZs/RCPz.',	'tK58Ix70xSxfYbU1mPMvtOK3runaEQV2wJaZu0ejE7LXkeyNrCWJJ91jhm4T',	'xxx',	'fc53c83dca02e4dc',	NULL,	NULL,	NULL,	'v2pTBeNZk00A9Cus1eyKyNowB',	'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsImlzcyI6Imh0dHA6Ly8xMC4wLjAuMTkyL3dlZGRpbmctcGxhbm5lci13ZWIvcHVibGljL2FwaS92MS9hdXRoL2xvZ2luIiwiaWF0IjoxNTE5NzM1ODIwLCJleHAiOjE1MjA5NDU0MjAsIm5iZiI6MTUxOTczNTgyMCwianRpIjoiRE9GV21TVFdsYTZpMEJHRCJ9.4gK7E04Sw9lquunssBm_zzvheHnTHYEgsAiLqmJeA1o',	1,	10,	'2018-02-27 05:50:20',	'2018-02-19 02:54:13',	'2018-02-27 05:50:20',	NULL),
 (3,	'Wina Marlina',	0,	'winamarlina97@gmail.com',	NULL,	'$2y$10$kIX7F7/JqN7itGh6oJnTGe.QAuYw.oL3nQJPXsQNF/BRyZs/RCPz.',	'tK58Ix70xSxfYbU1mPMvtOK3runaEQV2wJaZu0ejE7LXkeyNrCWJJ91jhm4T',	'xxx',	'xxx',	NULL,	NULL,	NULL,	NULL,	'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjMsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Qvd2VkZGluZy1wbGFubmVyLXdlYi9wdWJsaWMvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE1MTkxMzIyNzYsImV4cCI6MTUyMDM0MTg3NiwibmJmIjoxNTE5MTMyMjc2LCJqdGkiOiJhQm5aY09qNURNMFlWa0xXIn0.Fm7T5Ztv_zWHXDWoVcp-UKY5o4t7qwzMuEmEUWIE_xg',	1,	10,	'2018-02-20 06:11:16',	'2018-02-19 02:54:13',	'2018-02-20 06:11:16',	NULL),
 (4,	'Gunawan',	NULL,	'hendri.gnw1@gmail.com',	NULL,	'$2y$10$lxnkdhjmFhzn7Utve43SpO/RsE0cglPsYF54gC99zz24HUgYgdyHa',	'UaMLflGH5S4RdWb8dCvmV5BedJZKSHDxMEUoiCEkAo2KQuUquZsSV8r5lZWs',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	1,	1,	NULL,	'2018-02-21 03:07:30',	'2018-02-21 03:07:30',	NULL),
 (5,	'Lorem Ipsum',	1,	'loremipsum@gmail.com',	'08561471500',	'$2y$10$oYp7nF9Zlh/WHyQ5gTTODOBBatGM1JHHHDkxKfYtr/FN91PULOosW',	NULL,	'xxx',	'xxx',	'xxx',	NULL,	'2018-02-24 03:10:07',	NULL,	'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjUsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC93ZWRkaW5nLXBsYW5uZXItd2ViL3B1YmxpYy9hcGkvdjEvYXV0aC9sb2dpbiIsImlhdCI6MTUxOTUyMzg5OSwiZXhwIjoxNTIwNzMzNDk5LCJuYmYiOjE1MTk1MjM4OTksImp0aSI6ImVEbWEybWpJbVJCM1ZNWDYifQ.AIrlMxXvjY3vmA24Nkqy6DNMkPQi_aXZ40QNe3cQkew',	1,	10,	'2018-02-24 18:58:19',	'2018-02-24 03:10:07',	'2018-02-24 23:57:50',	NULL),
@@ -350,4 +350,4 @@ INSERT INTO `user_relation` (`id`, `male_user_id`, `female_user_id`, `wedding_da
 (1,	2,	3,	'2018-09-05',	'Braja Mustika, Bogor',	NULL,	'2018-02-20',	'2018-02-20'),
 (2,	5,	6,	NULL,	NULL,	NULL,	'2018-02-24',	'2018-02-24');
 
--- 2018-02-25 07:03:20
+-- 2018-02-28 08:18:26

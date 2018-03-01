@@ -23,7 +23,10 @@
             </li>
             @php
             $requestMasterData = (
-                    Request::is('admin/concept*')
+                    Request::is('admin/procedure*') ||
+                    Request::is('admin/concept*') ||
+                    Request::is('admin/term-of-use*') ||
+                    Request::is('admin/about-us*')
                 ) ? true : false; 
             @endphp
             <li class="nav-item dropdown {!! $requestMasterData ? 'open' : '' !!}">

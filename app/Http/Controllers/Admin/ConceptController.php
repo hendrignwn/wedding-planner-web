@@ -179,6 +179,9 @@ class ConceptController extends Controller
 				]);
 
          $datatables = app('datatables')->of($model)
+            ->editColumn('status', function ($model) {
+                return $model->getStatusLabel();
+            })
             ->addColumn('action', function ($model) {
                 return //'<a href="concept/'.$model->id.'" class="btn btn-xs btn-success rounded" data-toggle="tooltip" title="" data-original-title="'. trans('systems.edit') .'"><i class="fa fa-eye"></i></a> '
 						 '<a href="concept/'.$model->id.'/edit" class="btn btn-xs btn-primary rounded" data-toggle="tooltip" title="" data-original-title="'. trans('systems.edit') .'"><i class="fa fa-pencil"></i></a> ';
