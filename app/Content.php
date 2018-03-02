@@ -18,6 +18,7 @@ class Content extends BaseModel
      */
     protected $fillable = [
         'concept_id',
+        'grouping',
         'user_relation_id',
         'user_id',
         'name',

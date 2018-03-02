@@ -155,21 +155,32 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
-                                            <th>Cost</th>
+                                            <th style="text-align:right">Cost</th>
                                         </tr>
                                     </thead>
                                     @php
                                     $no = 1;
+                                    $grandCost = 0;
                                     @endphp
                                     @foreach ($model->getListCosts() as $cost)
                                     <tbody>
                                         <tr>
                                             <th>{!! $no++ !!}</th>
                                             <th>{!! $cost->content->name !!}</th>
-                                            <th>{!! $cost->value !!}</th>
+                                            <th style="text-align:right">{!! \App\Helpers\FormatConverter::rupiahFormat($cost->value) !!}</th>
                                         </tr>
                                     </tbody>
+                                        @php
+                                            $grandCost += $cost->value;
+                                        @endphp
                                     @endforeach
+                                    <tfoot class="label-info">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Total</th>
+                                            <th style="text-align:right">{!! \App\Helpers\FormatConverter::rupiahFormat($grandCost) !!}</th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
 

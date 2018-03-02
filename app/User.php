@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -239,7 +240,7 @@ class User extends Authenticatable
         if ($available > 0) {
             return true;
         }
-
+        DB::beginTransaction();
         foreach ($concepts as $key => $item) {
 
             $content = new Content();
@@ -254,6 +255,7 @@ class User extends Authenticatable
                 $contentDetail->save();
             }
         }
+        DB::commit();
         
         return true;
     }

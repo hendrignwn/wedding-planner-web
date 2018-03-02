@@ -39,6 +39,8 @@ Route::group(['prefix' => 'v1'], function () {
         
         Route::get('/contents/{conceptId}', 'Api\ContentController@index');
         
+        Route::get('/costs', 'Api\UserController@costs');
+        
         Route::get('/content-details/{contentId}', 'Api\ContentDetailController@index');
         Route::patch('/content-details/update/{id}', 'Api\ContentDetailController@update');
         

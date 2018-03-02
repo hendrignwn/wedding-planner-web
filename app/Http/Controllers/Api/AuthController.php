@@ -161,6 +161,14 @@ class AuthController extends Controller
         $user->status = User::STATUS_ACTIVE;
         $user->role = User::ROLE_USER;
         $user->save();
+        
+        $token = JWTAuth::fromUser($user);
+        $user->last_login_at = Carbon::now()->toDateTimeString();
+        $user->firebase_token = $request['firebase_token'];
+        $user->device_number = $request['device_number'];
+        $user->token = $token;
+        $user->save();
+        
         if ($user->gender == User::GENDER_MALE) :
             $userFemale = new User();
             $userFemale->email = $request->relation_email;

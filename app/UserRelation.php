@@ -2,6 +2,9 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
 class UserRelation extends BaseModel
 {
     const UPLOAD_DESTINATION_PATH = 'files/user-relations/';
@@ -59,7 +62,7 @@ class UserRelation extends BaseModel
      */
     public function generateFilename($ext)
     {
-        return str_slug($this->name . ' ' . \Carbon\Carbon::now()->toTimeString()) . '.' . $ext;
+        return str_slug($this->name . ' ' . Carbon::now()->toTimeString()) . '.' . $ext;
     }
     
     public function maleUser()
@@ -87,8 +90,11 @@ class UserRelation extends BaseModel
         $models = ContentDetail::whereHas('content', function($query) {
                 $query->where('content.user_relation_id', '=', $this->id);
             })
+            ->with(['content'])
+            ->join('content', 'content.id', '=', 'content_detail.content_id')
+            ->select([DB::raw('content_detail.*, SUM(content_detail.value) as value')])
             ->where('content_detail.is_cost', '=', 1)
-            ->orderBy('content_detail.order', 'asc')
+            ->groupBy('content.grouping')
             ->get();
             
         return $models;

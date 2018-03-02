@@ -197,4 +197,28 @@ class UserController extends Controller
             'data' => $user,
         ]);
     }
+    
+    public function costs(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+		if ($user->token != JWTAuth::getToken()) {
+			return response()->json([
+				'status' => 401,
+				'message' => 'Invalid credentials'
+			], 401);
+		}
+        
+        $costs = $user->userRelation->getListCosts();
+        $grandCost = null;
+        foreach ($costs as $cost) :
+            $grandCost += $cost->value;
+        endforeach;
+        
+        return response()->json([
+            'status' => 200,
+            'message' => 'success',
+            'grand_cost' => $grandCost,
+            'data' => $costs,
+        ], 200);
+    }
 }
