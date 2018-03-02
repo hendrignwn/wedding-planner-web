@@ -39,6 +39,10 @@ class UserRelation extends BaseModel
         'female_user_id',
     ];
     
+    protected $appends = [
+        'relation_name'
+    ];
+    
     protected $with = [
         'maleUser',
         'femaleUser'
@@ -54,6 +58,11 @@ class UserRelation extends BaseModel
             \File::makeDirectory($path, 0755);
         }
         $this->setPath($path);
+    }
+    
+    public function getRelationNameAttribute()
+    {
+        return $this->getRelationName();
     }
     
     /**
