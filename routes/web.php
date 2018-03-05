@@ -15,6 +15,13 @@ Route::get('/', function () {
     return redirect('login');
 });
 
+Route::get('/register-relation', 'Web\\SiteController@registerRequest');
+Route::post('/register-relation', 'Web\\SiteController@proccessRegisterRequest');
+Route::get('/reset-your-password', 'Web\\SiteController@resetPassword');
+Route::post('/reset-your-password', 'Web\\SiteController@proccessResetPassword');
+
+Route::get('/success', 'Web\\SiteController@success');
+
 /**
  * Admin Routes
  */

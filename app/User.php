@@ -2,10 +2,14 @@
 
 namespace App;
 
+use App\Mail\ForgotPasswordNotification;
+use App\Mail\RegisterNotification;
+use App\Mail\RegisterRequestNotification;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
+use Mail;
 
 class User extends Authenticatable
 {
@@ -260,18 +264,52 @@ class User extends Authenticatable
         return true;
     }
     
+    /**
+     * @return boolean
+     */
     public function sendNeedRegisterNotification()
     {
+        if ($this->gender == self::GENDER_MALE) {
+            $relation = $this->userRelation->femaleUser;
+        } else {
+            $relation = $this->userRelation->maleUser;
+        }
+        
+        Mail::to([$this->email])
+                    ->queue(new RegisterRequestNotification($this, $relation));
+        
         return true;
     }
     
+    /**
+     * @return boolean
+     */
     public function sendRegisterNotification()
     {
+        Mail::to([$this->email], $this->name)
+                    ->queue(new RegisterNotification($this));
+        
         return true;
     }
     
+    /**
+     * @return boolean
+     */
     public function sendForgotPasswordNotification()
     {
+        Mail::to([$this->email], $this->name)
+                    ->queue(new ForgotPasswordNotification($this));
+        
         return true;
+    }
+    
+    public function getUrlRegisteredRequest()
+    {
+        return url('register-relation', ['token' => $this->registered_token]);
+    }
+    
+    public function getUrlForgotPassword()
+    {
+        return url('reset-your-password', ['token' => $this->forgot_token]);
     }
 }

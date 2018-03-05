@@ -136,6 +136,8 @@ class AuthController extends Controller
             'registered_device_number' => 'required',
             'firebase_token' => 'required',
             'relation_email' => 'required|email|max:255|unique:user,email',
+            'wedding_day' => 'required',
+            'venue' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -182,6 +184,8 @@ class AuthController extends Controller
             $userRelation = new UserRelation();
             $userRelation->male_user_id = $user->id;
             $userRelation->female_user_id = $userFemale->id;
+            $userRelation->wedding_day = $request->wedding_day;
+            $userRelation->venue = $request->venue;
             $userRelation->save();
         else:
             $userMale = new User();
@@ -196,6 +200,8 @@ class AuthController extends Controller
             $userRelation = new UserRelation();
             $userRelation->female_user_id = $user->id;
             $userRelation->male_user_id = $userMale->id;
+            $userRelation->wedding_day = $request->wedding_day;
+            $userRelation->venue = $request->venue;
             $userRelation->save();
         endif;
         
