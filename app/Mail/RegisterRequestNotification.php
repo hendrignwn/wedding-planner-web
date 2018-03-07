@@ -2,10 +2,10 @@
 
 namespace App\Mail;
 
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class RegisterRequestNotification extends Mailable
 {
@@ -19,7 +19,7 @@ class RegisterRequestNotification extends Mailable
      *
      * @return void
      */
-    public function __construct(\App\User $user, App\User $userRelation)
+    public function __construct(User $user, User $userRelation)
     {
         $this->user = $user;
         $this->userRelation = $userRelation;

@@ -7,13 +7,9 @@ use Illuminate\Http\Request;
 
 class SiteController extends Controller
 {
-    public function registerRequest(Request $request)
+    public function registerRequest($token, Request $request)
     {
-        $token = $request->get('token', null);
-        if ($token == null) {
-            abort(404, 'Page is not found.');
-        }
-        
+        return "<script>window.onload = function () {window.location = 'agendanikah://register-relation';}</script>";
         $user = \App\User::where('registered_token', $token)
                 ->roleMobileApp()
                 ->first();

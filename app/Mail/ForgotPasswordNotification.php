@@ -2,10 +2,10 @@
 
 namespace App\Mail;
 
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ForgotPasswordNotification extends Mailable
 {
@@ -18,7 +18,7 @@ class ForgotPasswordNotification extends Mailable
      *
      * @return void
      */
-    public function __construct(\App\User $user)
+    public function __construct(User $user)
     {
         $this->user = $user;
     }

@@ -19,7 +19,7 @@ Route::get('test', function () {
     return "<a href='agendanikah://register-relation?token=111'>Register</a><a href='http://agendanikah.com/register-relation?token=111'>Register</a><a href='agendanikah.com/register-relation?token=111'>Register</a>";
 });
 
-Route::get('/register-relation', 'Web\\SiteController@registerRequest');
+Route::get('/register-relation/{token}', 'Web\\SiteController@registerRequest');
 Route::post('/register-relation', 'Web\\SiteController@proccessRegisterRequest');
 Route::get('/reset-your-password', 'Web\\SiteController@resetPassword');
 Route::post('/reset-your-password', 'Web\\SiteController@proccessResetPassword');

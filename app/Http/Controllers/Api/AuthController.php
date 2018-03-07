@@ -179,7 +179,6 @@ class AuthController extends Controller
             $userFemale->role = User::ROLE_USER;
             $userFemale->registered_token = str_random(25);
             $userFemale->save();
-            $userFemale->sendNeedRegisterNotification();
             
             $userRelation = new UserRelation();
             $userRelation->male_user_id = $user->id;
@@ -187,6 +186,8 @@ class AuthController extends Controller
             $userRelation->wedding_day = $request->wedding_day;
             $userRelation->venue = $request->venue;
             $userRelation->save();
+            
+            $userFemale->sendNeedRegisterNotification();
         else:
             $userMale = new User();
             $userMale->email = $request->relation_email;
@@ -195,7 +196,6 @@ class AuthController extends Controller
             $userMale->role = User::ROLE_USER;
             $userMale->registered_token = str_random(25);
             $userMale->save();
-            $userMale->sendNeedRegisterNotification();
             
             $userRelation = new UserRelation();
             $userRelation->female_user_id = $user->id;
@@ -203,6 +203,8 @@ class AuthController extends Controller
             $userRelation->wedding_day = $request->wedding_day;
             $userRelation->venue = $request->venue;
             $userRelation->save();
+            
+            $userMale->sendNeedRegisterNotification();
         endif;
         
         $user->sendRegisterNotification();
