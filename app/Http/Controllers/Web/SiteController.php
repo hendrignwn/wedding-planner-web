@@ -49,6 +49,7 @@ class SiteController extends Controller
         
         $user->fill($request->all());
         $user->password = bcrypt($request->password);
+        $user->status = \App\User::STATUS_ACTIVE;
         $user->registered_token = null;
         $user->save();
         
