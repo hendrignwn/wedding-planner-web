@@ -45,24 +45,12 @@ class RequestController extends Controller
      * @param Request $request
      * @return type
      */
-    public function aboutUs(Request $request)
+    public function getPage($category)
     {
-        $model = Page::whereCategory(Page::CATEGORY_ABOUT_US)->first();
-        
-        return response()->json([
-            'status' => 200,
-            'message' => 'success',
-            'data' => $model
-        ], 200);
-    }
-    
-    /**
-     * @param Request $request
-     * @return type
-     */
-    public function termOfUse(Request $request)
-    {
-        $model = Page::whereCategory(Page::CATEGORY_TERM_OF_USE)->first();
+        $model = Page::whereCategory($category)->first();
+        if (!$model) {
+            $model = [];
+        }
         
         return response()->json([
             'status' => 200,

@@ -4,8 +4,9 @@ namespace App;
 
 class Page extends BaseModel
 {
-    const CATEGORY_TERM_OF_USE = 1;
+    const CATEGORY_PRIVACY_POLICY = 1;
     const CATEGORY_ABOUT_US = 2;
+    const CATEGORY_TERM_OF_USE = 3;
     
     /**
      * The table associated with the model.

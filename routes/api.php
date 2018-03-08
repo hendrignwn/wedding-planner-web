@@ -32,8 +32,7 @@ Route::group(['prefix' => 'v1'], function () {
     
     Route::get('/concepts', 'Api\RequestController@listConcepts');
     Route::get('/procedure', 'Api\RequestController@procedure');
-    Route::get('/about-us', 'Api\RequestController@aboutUs');
-    Route::get('/term-of-use', 'Api\RequestController@termOfUse');
+    Route::get('/page/{category}', 'Api\RequestController@getPage');
     
     Route::group(['middleware' => ['jwt.auth']], function () {
         
