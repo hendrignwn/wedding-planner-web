@@ -9,7 +9,7 @@ class SiteController extends Controller
 {
     public function registerRequest($token, Request $request)
     {
-        return "<script>window.onload = function () {window.location = 'agendanikah://register-relation';}</script>";
+        //return "<script>window.onload = function () {window.location = 'agendanikah://register-relation';}</script>";
         $user = \App\User::where('registered_token', $token)
                 ->roleMobileApp()
                 ->first();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Content;
 use App\ContentDetail;
+use App\Helpers\FormatConverter;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
@@ -111,6 +112,115 @@ class ContentDetailController extends Controller
                 'content_details' => $contentDetails,
             ]
         ], 200);
+    }
+    
+    public function store($contentId, Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+		if ($user->token != JWTAuth::getToken()) {
+			return response()->json([
+				'status' => 401,
+				'message' => 'Invalid credentials'
+			], 401);
+		}
         
+        $user = User::whereId($user->id)->roleMobileApp()->first();
+        if (!$user) {
+            return response()->json([
+				'status' => 401,
+				'message' => 'Invalid credentials'
+			], 401);
+        }
+        
+        $content = Content::whereId($contentId)->first();
+        if (!$content) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Gagal, silahkan input kembali',
+            ], 404);
+        }
+        
+        $validator = \Validator::make($request->all(), [
+            'name' => 'required',
+            'value' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+			return response()->json([
+				'status' => 400,
+				'message' => 'Some Parameters is required',
+				'validators' => FormatConverter::parseValidatorErrors($validator),
+			], 400);
+		}
+        
+        $contentDetail = new ContentDetail();
+        $contentDetail->content_id = $contentId;
+        $contentDetail->name = $request->name;
+        $contentDetail->value = $request->value;
+        $contentDetail->status = ContentDetail::STATUS_ACTIVE;
+        $contentDetail->is_not_deleted = ContentDetail::IS_NOT_DELETED_FALSE;
+        $contentDetail->order = 0;
+        $contentDetail->save();
+        
+        $content = Content::whereId($contentDetail->content_id)->actived()->first();
+        $contentDetails = ContentDetail::where('content_id', $content->id)
+                ->actived()
+                ->ordered()
+                ->get();
+        
+        return response()->json([
+            'status' => 200,
+            'message' => 'Data is successfully saved',
+            'data' => [
+                'content' => $content,
+                'content_details' => $contentDetails,
+            ]
+        ], 200);
+    }
+    
+    public function delete($id, Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+		if ($user->token != JWTAuth::getToken()) {
+			return response()->json([
+				'status' => 401,
+				'message' => 'Invalid credentials'
+			], 401);
+		}
+        
+        $user = User::whereId($user->id)->roleMobileApp()->first();
+        if (!$user) {
+            return response()->json([
+				'status' => 401,
+				'message' => 'Invalid credentials'
+			], 401);
+        }
+        
+        $content = ContentDetail::whereId($id)
+                ->where('is_not_deleted', ContentDetail::IS_NOT_DELETED_FALSE)
+                ->first();
+        if (!$content) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Data ini tidak dapat di hapus',
+            ], 404);
+        }
+        
+        $content->delete();
+        
+        $content = Content::whereId($content->id)->actived()->first();
+        $contentDetails = ContentDetail::where('content_id', $content->id)
+                ->actived()
+                ->ordered()
+                ->get();
+        
+        return response()->json([
+            'status' => 200,
+            'message' => 'success',
+            'data' => [
+                'content' => $content,
+                'content_details' => $contentDetails,
+            ]
+        ], 200);
     }
 }

@@ -82,13 +82,13 @@ class UserController extends Controller
 			], 401);
 		}
         
-        $user = User::whereId($code)->roleMobileApp()->first();
-        
         $validator = \Validator::make($request->all(), [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:user,email,'.$user->id,
             'gender' => 'required|in:'.User::GENDER_MALE.','.User::GENDER_FEMALE,
             'phone' => 'required',
+            'wedding_day' => 'required',
+            'venue' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -106,6 +106,11 @@ class UserController extends Controller
             'phone',
         ]));
         $user->save();
+        $user->userRelation->fill($request->only([
+            'wedding_day',
+            'venue'
+        ]));
+        $user->userRelation->save();
         
         if ($user->gender == User::GENDER_MALE) {
             $relation = $user->maleUserRelation->toArray();
@@ -220,5 +225,55 @@ class UserController extends Controller
             'grand_cost' => $grandCost,
             'data' => $costs,
         ], 200);
+    }
+    
+    
+    public function resendRegisterRelation($userId, Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        if ($user->id != $code) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Invalid credentials'
+            ], 401);
+        }
+		
+		if ($user->token != JWTAuth::getToken()) {
+			return response()->json([
+				'status' => 401,
+				'message' => 'Invalid credentials'
+			], 401);
+		}
+        
+        if ($user->gender == User::GENDER_MALE) {
+            $relation = $user->maleUserRelation;
+            $relationPartner = $relation->female_user;
+        } else {
+            $relation = $user->femaleUserRelation;
+            $relationPartner = $relation->male_user;
+        }
+        
+        $validator = \Validator::make($request->all(), [
+            'email' => 'required|unique:user,email,'.$relationPartner->id,
+        ]);
+
+        if ($validator->fails()) {
+			return response()->json([
+				'status' => 400,
+				'message' => 'Some Parameters is required',
+				'validators' => FormatConverter::parseValidatorErrors($validator),
+			], 400);
+		}
+        
+        $relationPartner->email = $request->email;
+        $relationPartner->save();
+        $relationPartner->sendNeedRegisterNotification();
+        
+        return response()->json([
+            'status' => 200,
+            'message' => 'success',
+            'data' => [],
+        ], 200);
+       
     }
 }

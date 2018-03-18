@@ -36,20 +36,35 @@ Route::group(['prefix' => 'v1'], function () {
     
     Route::group(['middleware' => ['jwt.auth']], function () {
         
-        Route::get('/contents/{conceptId}', 'Api\ContentController@index');
+        Route::group(['prefix' => 'contents'], function () {
+            Route::get('/{conceptId}', 'Api\ContentController@index');
+            Route::post('/store/{conceptId}', 'Api\ContentController@store');
+            Route::patch('/update/{id}', 'Api\ContentController@update');
+            Route::delete('/delete/{id}', 'Api\ContentController@delete');
+        });
         
         Route::get('/costs', 'Api\UserController@costs');
         
-        Route::get('/content-details/{contentId}', 'Api\ContentDetailController@index');
-        Route::patch('/content-details/update/{id}', 'Api\ContentDetailController@update');
+        Route::group(['prefix' => 'content-details'], function () {
+            Route::get('/{contentId}', 'Api\ContentDetailController@index');
+            Route::post('/store/{contentId}', 'Api\ContentDetailController@store');
+            Route::patch('/update/{id}', 'Api\ContentDetailController@update');
+            Route::delete('/delete/{id}', 'Api\ContentDetailController@delete');
+        });
         
-        Route::get('/content-detail-lists/{contentDetailId}', 'Api\ContentDetailListController@index');
-        Route::post('/content-detail-lists/{contentDetailId}', 'Api\ContentDetailListController@store');
-        Route::patch('/content-detail-lists/{id}', 'Api\ContentDetailListController@update');
-        Route::delete('/content-detail-lists/{id}', 'Api\ContentDetailListController@delete');
+        Route::group(['prefix' => 'content-detail-lists'], function () {
+            Route::get('/{contentDetailId}', 'Api\ContentDetailListController@index');
+            Route::post('/store/{contentDetailId}', 'Api\ContentDetailListController@store');
+            Route::patch('/update/{id}', 'Api\ContentDetailListController@update');
+            Route::delete('/delete/{id}', 'Api\ContentDetailListController@delete');
+        });
+        
+        Route::post('report-problem', 'Api\RequestController@storeReportProblem');
         
         Route::group(['prefix' => 'user'], function () {
             Route::get('/show/{code}', 'Api\UserController@show');
+            Route::patch('/update/{code}', 'Api\UserController@update');
+            Route::patch('/re-send-relation/{id}', 'Api\UserController@resendRegisterRelation');
         });
     });
     

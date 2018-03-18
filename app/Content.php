@@ -4,6 +4,9 @@ namespace App;
 
 class Content extends BaseModel
 {
+    const IS_NOT_DELETED_TRUE = 1;
+    const IS_NOT_DELETED_FALSE = 0;
+    
     /**
      * The table associated with the model.
      * 
