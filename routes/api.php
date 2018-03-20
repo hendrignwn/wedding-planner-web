@@ -61,7 +61,6 @@ Route::group(['prefix' => 'v1'], function () {
         Route::group(['prefix' => 'content-detail-lists'], function () {
             Route::get('/{contentDetailId}', 'Api\ContentDetailListController@index');
             Route::post('/store/{contentDetailId}', 'Api\ContentDetailListController@store');
-            Route::patch('/update/{id}', 'Api\ContentDetailListController@update');
             Route::delete('/delete/{id}', 'Api\ContentDetailListController@delete');
         });
         

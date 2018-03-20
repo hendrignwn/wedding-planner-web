@@ -4,6 +4,8 @@ namespace App;
 
 class ContentDetailList extends BaseModel
 {
+    const UPLOAD_DESTINATION_PATH = 'files/content-detail-lists/';
+    
     /**
      * The table associated with the model.
      * 
@@ -37,8 +39,46 @@ class ContentDetailList extends BaseModel
     protected $with = [
     ];
     
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+
+        $path = public_path(self::UPLOAD_DESTINATION_PATH);
+
+        if(!is_dir($path)) {
+            \File::makeDirectory($path, 0755);
+        }
+        $this->setPath($path);
+    }
+    
     public function contentDetail()
     {
         return $this->hasOne('\App\ContentDetail', 'id', 'content_detail_id');
+    }
+    
+    public function deletePhoto()
+    {
+        @unlink($this->getPath() . $this->value);
+    }
+    /**
+     * 
+     * @param type $ext
+     */
+    public function generateFilename($ext)
+    {
+        return str_slug($this->name . ' ' . Carbon::now()->toTimeString()) . '.' . $ext;
+    }
+    
+    public static function getLastOrderByContentDetailId($id)
+    {
+        $model = self::where('content_detail_id', $id)
+                ->orderBy('id', 'desc')
+                ->limit(1)
+                ->first();
+        if (!$model) {
+            return 0;
+        }
+        
+        return $model->order;
     }
 }
