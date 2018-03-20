@@ -140,10 +140,65 @@ class UserController extends Controller
      * @param Request $request
      * @return type
      */
+    public function deletePhoto($code, Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        if ($user->id != $code) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Invalid credentials'
+            ], 401);
+        }
+		
+		if ($user->token != JWTAuth::getToken()) {
+			return response()->json([
+				'status' => 401,
+				'message' => 'Invalid credentials'
+			], 401);
+		}
+
+        if ($user->gender == User::GENDER_MALE) {
+            $relation = $user->maleUserRelation;
+            $relation->deletePhoto();
+            $relation->photo = null;
+            $relation->save();
+            
+            $relation = $user->maleUserRelation->toArray();
+            $relation['partner'] = $relation['female_user'];
+            unset($user->maleUserRelation);
+            unset($relation['male_user']);
+            unset($relation['female_user']);
+        } else {
+            $relation = $user->femaleUserRelation;
+            $relation->deletePhoto();
+            $relation->photo = null;
+            $relation->save();
+            
+            $relation = $user->femaleUserRelation->toArray();
+            $relation['partner'] = $relation['male_user'];
+            unset($user->femaleUserRelation);
+            unset($relation['male_user']);
+            unset($relation['female_user']);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Delete Success',
+            'data' => array_merge($user->toArray(), [
+                'relation' => $relation
+            ]),
+        ], 200);
+    }
+    
+    /**
+     * @param type $code
+     * @param Request $request
+     * @return type
+     */
     public function updatePhoto($code, Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        if ($user->code != $code) {
+        if ($user->id != $code) {
             return response()->json([
                 'status' => 401,
                 'message' => 'Invalid credentials'
@@ -181,26 +236,47 @@ class UserController extends Controller
         }
 
         $data = ImageHelper::getImageBase64Information($imageBase64);
-        $img = base64_decode($data['data']);
-
-        // jika image sebelumnya ada, maka delete
-        if ($user->photo != null || $user->photo != '') {
-            File::delete($user->getPath() . $user->photo);
+        $img = \Eventviva\ImageResize::createFromString(base64_decode($data['data']));
+        $img->resizeToWidth(780);
+        $img->crop(780, 560);
+        
+        if ($user->gender == User::GENDER_MALE) {
+            $relation = $user->maleUserRelation;
+            $relation->deletePhoto();
+            $imageFilename = $relation->generateFilename($data['extension']);
+            $img->save($relation->getPath() . $imageFilename);
+            $relation->photo = $imageFilename;
+            $relation->save();
+        } else {
+            $relation = $user->femaleUserRelation;
+            $relation->deletePhoto();
+            $imageFilename = $relation->generateFilename($data['extension']);
+            $img->save($relation->getPath() . $imageFilename);
+            $relation->photo = $imageFilename;
+            $relation->save();
         }
 
-        $imageFilename = $user->generateFilename('avatar', $data['extension']);
-        ImageHelper::base64_to_jpeg($request->photo_base64, $user->getPath() . $imageFilename);
-
-        $request['photo'] = $imageFilename;
-
-        $only = $request->only(['image']);
-        $user->update($only);
+        if ($user->gender == User::GENDER_MALE) {
+            $relation = $user->maleUserRelation->toArray();
+            $relation['partner'] = $relation['female_user'];
+            unset($user->maleUserRelation);
+            unset($relation['male_user']);
+            unset($relation['female_user']);
+        } else {
+            $relation = $user->femaleUserRelation->toArray();
+            $relation['partner'] = $relation['male_user'];
+            unset($user->femaleUserRelation);
+            unset($relation['male_user']);
+            unset($relation['female_user']);
+        }
 
         return response()->json([
             'status' => 200,
-            'message' => 'Update Photo success',
-            'data' => $user,
-        ]);
+            'message' => 'Update Success',
+            'data' => array_merge($user->toArray(), [
+                'relation' => $relation
+            ]),
+        ], 200);
     }
     
     public function costs(Request $request)

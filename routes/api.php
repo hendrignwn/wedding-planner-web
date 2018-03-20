@@ -44,6 +44,12 @@ Route::group(['prefix' => 'v1'], function () {
         });
         
         Route::get('/costs', 'Api\UserController@costs');
+        Route::get('/messages', 'Api\RequestController@listMessages');
+        
+        Route::group(['prefix' => 'vendor'], function () {
+            Route::get('/', 'Api\VendorController@index');
+            Route::get('/{id}', 'Api\VendorController@show');
+        });
         
         Route::group(['prefix' => 'content-details'], function () {
             Route::get('/{contentId}', 'Api\ContentDetailController@index');
@@ -64,6 +70,8 @@ Route::group(['prefix' => 'v1'], function () {
         Route::group(['prefix' => 'user'], function () {
             Route::get('/show/{code}', 'Api\UserController@show');
             Route::patch('/update/{code}', 'Api\UserController@update');
+            Route::post('/upload-photo/{code}', 'Api\UserController@updatePhoto');
+            Route::delete('/delete-photo/{code}', 'Api\UserController@deletePhoto');
             Route::patch('/re-send-relation/{id}', 'Api\UserController@resendRegisterRelation');
         });
     });

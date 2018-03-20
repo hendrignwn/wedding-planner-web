@@ -71,7 +71,7 @@ class UserRelation extends BaseModel
      */
     public function generateFilename($ext)
     {
-        return str_slug($this->name . ' ' . Carbon::now()->toTimeString()) . '.' . $ext;
+        return str_slug($this->getRelationName() . ' ' . Carbon::now()->toTimeString()) . '.' . $ext;
     }
     
     public function maleUser()
@@ -107,5 +107,10 @@ class UserRelation extends BaseModel
             ->get();
             
         return $models;
+    }
+    
+    public function deletePhoto()
+    {
+        @unlink($this->getPath() . $this->photo);
     }
 }

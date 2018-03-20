@@ -1,4 +1,4 @@
--- Adminer 4.2.5 MySQL dump
+-- Adminer 4.6.2 MySQL dump
 
 SET NAMES utf8;
 SET time_zone = '+00:00';
@@ -604,6 +604,23 @@ CREATE TABLE `content_detail_list` (
 
 SET NAMES utf8mb4;
 
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE `message` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `is_all_date` smallint(6) NOT NULL DEFAULT '0',
+  `message_at` timestamp NULL DEFAULT NULL,
+  `status` smallint(6) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -683,8 +700,8 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `user` (`id`, `name`, `gender`, `email`, `phone`, `password`, `remember_token`, `firebase_token`, `device_number`, `registered_device_number`, `registered_token`, `registered_at`, `forgot_token`, `token`, `status`, `role`, `last_login_at`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1,	'Hendri Gunawan',	NULL,	'admin@wedding.com',	NULL,	'$2y$10$kIX7F7/JqN7itGh6oJnTGe.QAuYw.oL3nQJPXsQNF/BRyZs/RCPz.',	'A0FlhP38Ly9MULzgse5jxoqKmFzhqDJP7TPxSliWPQSRbDO7Fsu0FNCrNgY8',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	1,	1,	NULL,	'2018-02-19 02:54:13',	'2018-02-19 02:54:13',	NULL),
-(17,	'Hendri Gunawan',	1,	'hendri.gnw@gmail.com',	'08561471500',	'$2y$10$.hMCSM1UbmkgLZn1m1Kx3.V4kQKlM7VerQziG6vrQvsJr9sQF9DeC',	NULL,	'xxx',	'xxx',	'xxx',	NULL,	'2018-03-02 00:59:54',	NULL,	'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjE3LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0L3dlZGRpbmctcGxhbm5lci13ZWIvcHVibGljL2FwaS92MS9hdXRoL3JlZ2lzdGVyIiwiaWF0IjoxNTE5OTc3NTk0LCJleHAiOjE1MjExODcxOTQsIm5iZiI6MTUxOTk3NzU5NCwianRpIjoicHFNWUVRZTZwU1lUeHRaVyJ9.AHSdgw3nggemqNzJjOgTVTUQZuA2p5BtaX-8RdSmGrU',	1,	10,	'2018-03-02 00:59:54',	'2018-03-02 00:59:54',	'2018-03-02 00:59:54',	NULL),
+(1,	'Hendri Gunawan',	NULL,	'admin@wedding.com',	NULL,	'$2y$10$kIX7F7/JqN7itGh6oJnTGe.QAuYw.oL3nQJPXsQNF/BRyZs/RCPz.',	'gzTyIhamYEPgaf2PAD2Iod8NGUdKd5kPB8l1yfj1uJTf8IfovXdsvAi5MJDs',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	1,	1,	NULL,	'2018-02-19 02:54:13',	'2018-02-19 02:54:13',	NULL),
+(17,	'Hendri Gunawan',	1,	'hendri.gnw@gmail.com',	'08561471500',	'$2y$10$.hMCSM1UbmkgLZn1m1Kx3.V4kQKlM7VerQziG6vrQvsJr9sQF9DeC',	NULL,	'xxx',	'xxx',	'xxx',	NULL,	'2018-03-02 00:59:54',	NULL,	'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjE3LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0L3dlZGRpbmctcGxhbm5lci13ZWIvcHVibGljL2FwaS92MS9hdXRoL2xvZ2luIiwiaWF0IjoxNTIxNDYxODUxLCJleHAiOjE1MjI2NzE0NTEsIm5iZiI6MTUyMTQ2MTg1MSwianRpIjoiNmNXeWR3TjBHOHNEMmlzdiJ9.3BJzM0PqK6LfQ5pT2ZqwJ57Boj88V2Kg77N0kz4le0Q',	1,	10,	'2018-03-19 05:17:31',	'2018-03-02 00:59:54',	'2018-03-19 05:17:31',	NULL),
 (18,	'Wina Marlina',	0,	'winamarlina97@gmail.com',	'085711202889',	'$2y$10$cljIE/mSJZokGpzaFVkyDeZTd2ecDgazT8EVxLbaj/IVd9STvXqQ6',	NULL,	NULL,	NULL,	NULL,	'PE7iMoFMPTqjQUvqCq1f0DXry',	NULL,	NULL,	NULL,	5,	10,	NULL,	'2018-03-02 00:59:54',	'2018-03-05 01:42:14',	NULL);
 
 DROP TABLE IF EXISTS `user_relation`;
@@ -705,6 +722,43 @@ CREATE TABLE `user_relation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `user_relation` (`id`, `male_user_id`, `female_user_id`, `wedding_day`, `venue`, `photo`, `created_at`, `updated_at`) VALUES
-(8,	17,	18,	NULL,	NULL,	NULL,	'2018-03-02',	'2018-03-02');
+(8,	17,	18,	NULL,	NULL,	'wina-marlina-hendri-gunawan-121857.jpg',	'2018-03-02',	'2018-03-19');
 
--- 2018-03-18 03:40:18
+DROP TABLE IF EXISTS `vendor`;
+CREATE TABLE `vendor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `file` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `instagram` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `website` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` smallint(6) NOT NULL DEFAULT '1',
+  `order` smallint(6) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `vendor` (`id`, `category`, `name`, `description`, `file`, `address`, `phone`, `instagram`, `website`, `status`, `order`, `created_at`, `updated_at`) VALUES
+(2,	'',	'Hendri Photography',	'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',	'hendri-photography-042524.jpg',	'Jl Arcana 2 No 219 Jakarta Pusat',	'021 999 2225',	'Hendri Gunawan',	'website.com',	1,	0,	'2018-03-18 21:25:24',	'2018-03-18 21:39:51');
+
+DROP TABLE IF EXISTS `vendor_detail`;
+CREATE TABLE `vendor_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `vendor_id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `file` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` smallint(6) NOT NULL DEFAULT '1',
+  `order` smallint(6) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `vendor_id` (`vendor_id`),
+  CONSTRAINT `vendor_detail_ibfk_2` FOREIGN KEY (`vendor_id`) REFERENCES `vendor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- 2018-03-20 11:12:44

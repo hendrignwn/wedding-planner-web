@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Concept;
 use App\Helpers\FormatConverter;
 use App\Http\Controllers\Controller;
+use App\Message;
 use App\Page;
 use App\Procedure;
 use App\ReportProblem;
@@ -20,6 +21,21 @@ class RequestController extends Controller
     public function listConcepts(Request $request)
     {
         $models = Concept::actived()->ordered()->get();
+        
+        return response()->json([
+            'status' => 200,
+            'message' => 'success',
+            'data' => $models
+        ], 200);
+    }
+    
+    /**
+     * @param Request $request
+     * @return type
+     */
+    public function listMessages(Request $request)
+    {
+        $models = Message::actived()->orderBy('message_at', 'desc')->get();
         
         return response()->json([
             'status' => 200,

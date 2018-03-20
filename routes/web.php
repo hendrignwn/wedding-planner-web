@@ -65,4 +65,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     
     Route::get('/content-detail-list/data/{id}', ['as' => 'content-detail-list.data', 'uses' => 'Admin\\ContentDetailListController@listIndex']);
     Route::get('/content-detail-list/{id}', ['as' => 'content-detail-list.show', 'uses' => 'Admin\\ContentDetailListController@show']);
+    
+    Route::get('/vendor/data', ['as' => 'vendor.data', 'uses' => 'Admin\\VendorController@listIndex']);
+	Route::resource('/vendor', 'Admin\\VendorController');
+    
+    Route::get('/vendor-detail/data/{id}', ['as' => 'vendor-detail.data', 'uses' => 'Admin\\VendorDetailController@listIndex']);
+	Route::resource('/vendor-detail', 'Admin\\VendorDetailController');
+    
+    Route::get('/message/data', ['as' => 'message.data', 'uses' => 'Admin\\MessageController@listIndex']);
+	Route::resource('/message', 'Admin\\MessageController');
 });

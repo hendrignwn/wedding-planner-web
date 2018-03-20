@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ asset('vendor/perfect-scrollbar/css/perfect-scrollbar.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendor/selectize/dist/css/selectize.default.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendor/summernote/dist/summernote.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-daterangepicker/daterangepicker.css') }}" />
 
     <!-- page plugins css -->
     <link rel="stylesheet" href="{{ asset('vendor/bower-jvectormap/jquery-jvectormap-1.2.2.css') }}" />
@@ -79,6 +80,8 @@
     <script src="{{ asset('vendor/chart.js/dist/Chart.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}"></script>
     <script src="{{ asset('vendor/summernote/dist/summernote.min.js') }}"></script>
+    <script src="{{ asset('vendor/moment/min/moment.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('admin-assets/js/app.min.js') }}"></script>
 
     <!-- page js -->

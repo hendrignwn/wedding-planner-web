@@ -64,6 +64,22 @@
                     <span class="title">Partners</span>
                 </a>
             </li>
+            <li class="nav-item  {{ (Request::is('admin/vendor*')) ? 'active' : '' }}">
+                <a href="{{ route('vendor.index') }}">
+                    <span class="icon-holder">
+                        <i class="ti-list-ol"></i>
+                    </span>
+                    <span class="title">Vendors</span>
+                </a>
+            </li>
+            <li class="nav-item  {{ (Request::is('admin/message*')) ? 'active' : '' }}">
+                <a href="{{ route('message.index') }}">
+                    <span class="icon-holder">
+                        <i class="fa fa-envelope"></i>
+                    </span>
+                    <span class="title">Messages [Notification]</span>
+                </a>
+            </li>
             <li class="nav-item {{ (Request::is('admin/user-app*')) ? 'active' : '' }}">
                 <a href="{{ route('user-app.index') }}">
                     <span class="icon-holder">
