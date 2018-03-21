@@ -16,7 +16,7 @@
 
 <div aria-required="true" class="form-group required form-group-default {{ $errors->has('description') ? 'has-error' : ''}}">
     {!! Form::label('description', 'Description') !!}
-    {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
+    {!! Form::textarea('description', null, ['class' => 'form-control summernote']) !!}
     {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
 </div>
 
@@ -72,6 +72,9 @@
 
 @push('script')
 <script>
+$(".summernote").summernote({
+    height: 200,
+});
 $('.select2').selectize({
     sortField: 'text'
 });

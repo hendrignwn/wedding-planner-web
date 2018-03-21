@@ -26,7 +26,7 @@
                                 </tr>
                                 <tr>
                                     <th> Description </th>
-                                    <td> {{ $model->description }} </td>
+                                    <td> {!! $model->description !!} </td>
                                 </tr>
                                 <tr>
                                     <th> Image </th>

@@ -196,27 +196,28 @@ class ContentDetailController extends Controller
 			], 401);
         }
         
-        $content = ContentDetail::whereId($id)
+        $contentDetail = ContentDetail::whereId($id)
                 ->where('is_not_deleted', ContentDetail::IS_NOT_DELETED_FALSE)
                 ->first();
-        if (!$content) {
+        if (!$contentDetail) {
             return response()->json([
                 'status' => 404,
                 'message' => 'Data ini tidak dapat di hapus',
             ], 404);
         }
+        $contentId = $contentDetail->content_id;
+        $contentDetail->delete();
         
-        $content->delete();
-        
-        $content = Content::whereId($content->id)->actived()->first();
-        $contentDetails = ContentDetail::where('content_id', $content->id)
+        $content = Content::whereId($contentId)->actived()->first();
+        $contentDetails = ContentDetail::where('content_id', $contentId)
                 ->actived()
                 ->ordered()
                 ->get();
         
+        
         return response()->json([
             'status' => 200,
-            'message' => 'success',
+            'message' => 'Data berhasil dihapus',
             'data' => [
                 'content' => $content,
                 'content_details' => $contentDetails,
