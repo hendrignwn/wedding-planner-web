@@ -60,6 +60,12 @@ class ContentDetailList extends BaseModel
     {
         @unlink($this->getPath() . $this->value);
     }
+    
+    public function getValueUrl()
+    {
+        return "<a href='".url(self::UPLOAD_DESTINATION_PATH . $this->value)."' target='_blank'>".url(self::UPLOAD_DESTINATION_PATH . $this->value)."</a>";
+    }
+    
     /**
      * 
      * @param type $ext

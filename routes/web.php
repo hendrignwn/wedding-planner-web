@@ -46,6 +46,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 	Route::resource('/user-app', 'Admin\\UserAppController');
     
     Route::get('/user-relation/data', ['as' => 'user-relation.data', 'uses' => 'Admin\\UserRelationController@listIndex']);
+    Route::get('/concept/user-data/{userRelationId}', ['as' => 'concept.user-data', 'uses' => 'Admin\\UserRelationController@listConceptsIndex']);
 	Route::resource('/user-relation', 'Admin\\UserRelationController');
     
     Route::get('/procedure/data', ['as' => 'procedure.data', 'uses' => 'Admin\\ProcedureController@listIndex']);
@@ -57,7 +58,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::get('/about-us/data', ['as' => 'about-us.data', 'uses' => 'Admin\\AboutUsController@listIndex']);
 	Route::resource('/about-us', 'Admin\\AboutUsController');
     
-    Route::get('/content/data/{id}', ['as' => 'content.data', 'uses' => 'Admin\\ContentController@listIndex']);
+    Route::get('/content/data/{id}/{userRelationId}', ['as' => 'content.data', 'uses' => 'Admin\\ContentController@listIndex']);
+    Route::get('/content/{id}/{userRelationId}', ['as' => 'content.index', 'uses' => 'Admin\\ContentController@index']);
     Route::get('/content/{id}', ['as' => 'content.show', 'uses' => 'Admin\\ContentController@show']);
     
     Route::get('/content-detail/data/{id}', ['as' => 'content-detail.data', 'uses' => 'Admin\\ContentDetailController@listIndex']);

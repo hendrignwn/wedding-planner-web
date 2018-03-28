@@ -191,18 +191,15 @@
                         <div class="card-block">
 
                             <div class="pull-left mrg-btm-20">
-                                <h4>Content Lists</h4>
+                                <h4>Concepts</h4>
                             </div>
 
                             <div class="table-responsive">
-                                <table id="content-table" class="table table-lg table-hover" width="100%">
+                                <table id="concept-table" class="table table-lg table-hover" width="100%">
                                     <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
-                                            <th>User</th>
-                                            <th>Created at</th>
-                                            <th>Updated At</th>
                                             <td></td>
                                         </tr>
                                     </thead>
@@ -221,11 +218,10 @@
 @push('script')
 <script>
 var oTable;
-oTable = $('#content-table').DataTable({
+oTable = $('#concept-table').DataTable({
     processing: true,
     serverSide: true,
     dom: 'lBfrtip',
-    order:  [[ 3, "asc" ]],
     pagingType: 'full_numbers',
     buttons: [
         {
@@ -271,7 +267,7 @@ oTable = $('#content-table').DataTable({
     },
     lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
     ajax: {
-    url: '{!! route('content.data', ['id' => $model->id]) !!}',
+    url: '{!! route('concept.user-data', ['userRelationId' => $model->id]) !!}',
         data: function (d) {
             d.range = $('input[name=drange]').val();
         }
@@ -279,9 +275,6 @@ oTable = $('#content-table').DataTable({
     columns: [
 		{ data: "rownum", name: "rownum" },
 		{ data: "name", name: "name" },
-		{ data: "user.name", name: "user.name" },
-		{ data: "created_at", name: "created_at", visible:false },
-		{ data: "updated_at", name: "updated_at" },
         { data: "action", name: "action", searchable: false, orderable: false },
     ],
 }).on( 'processing.dt', function ( e, settings, processing ) {if(processing){Pace.start();} else {Pace.stop();}});

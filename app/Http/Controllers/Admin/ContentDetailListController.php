@@ -36,6 +36,9 @@ class ContentDetailListController extends Controller
                 ->where('content_detail_list.content_detail_id', $id);
 
          $datatables = app('datatables')->of($model)
+            ->editColumn('value', function ($model) {
+                return $model->getValueUrl();
+            })
             ->addColumn('action', function ($model) {
                 return '';
             });

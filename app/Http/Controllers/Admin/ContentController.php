@@ -16,6 +16,20 @@ class ContentController extends Controller
      * Bank
      * @return View
      */
+    public function index($id, $userRelationId)
+    {
+        $model = \App\Concept::findOrFail($id);
+        
+        return view('admin.content.index', compact('id', 'userRelationId', 'model'));
+    }
+    
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * Bank
+     * @return View
+     */
     public function show($id)
     {
         $model = \App\Content::findOrFail($id);
@@ -26,14 +40,15 @@ class ContentController extends Controller
 	/**
 	 * any data
 	 */
-	public function listIndex($id, Request $request)
+	public function listIndex($id, $userRelationId, Request $request)
     {
         DB::statement(DB::raw('set @rownum=0'));
         $model = Content::with(['user', 'userRelation'])
                 ->select([
 					DB::raw('@rownum  := @rownum  + 1 AS rownum'), 'content.*', 'content.order AS order'
 				])
-                ->where('content.user_relation_id', $id);
+                ->where('content.concept_id', $id)
+                ->where('content.user_relation_id', $userRelationId);
 
          $datatables = app('datatables')->of($model)
             ->addColumn('action', function ($model) {
