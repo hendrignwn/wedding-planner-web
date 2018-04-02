@@ -2,9 +2,12 @@
 
 namespace App;
 
+use Carbon\Carbon;
+
 class ContentDetailList extends BaseModel
 {
     const UPLOAD_DESTINATION_PATH = 'files/content-detail-lists/';
+    const UPLOAD_DESTINATION_PATH_THUMB = 'files/content-detail-lists/thumbs/';
     
     /**
      * The table associated with the model.
@@ -44,11 +47,16 @@ class ContentDetailList extends BaseModel
         parent::__construct($attributes);
 
         $path = public_path(self::UPLOAD_DESTINATION_PATH);
+        $thumbPath = public_path(self::UPLOAD_DESTINATION_PATH_THUMB);
 
         if(!is_dir($path)) {
             \File::makeDirectory($path, 0755);
         }
+        if(!is_dir($thumbPath)) {
+            \File::makeDirectory($thumbPath, 0755);
+        }
         $this->setPath($path);
+        $this->setThumbPath($thumbPath);
     }
     
     public function contentDetail()
@@ -59,6 +67,7 @@ class ContentDetailList extends BaseModel
     public function deletePhoto()
     {
         @unlink($this->getPath() . $this->value);
+        @unlink($this->getThumbPath() . $this->value);
     }
     
     public function getValueUrl()

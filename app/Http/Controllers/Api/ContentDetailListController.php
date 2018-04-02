@@ -41,7 +41,7 @@ class ContentDetailListController extends Controller
         $contentDetail = ContentDetail::whereId($contentDetailId)->actived()->first();
         $contentDetailList = ContentDetailList::where('content_detail_id', $contentDetailId)
                 ->actived()
-                ->ordered()
+                ->orderBy('order', 'desc')
                 ->get();
         
         return response()->json([
@@ -92,14 +92,18 @@ class ContentDetailListController extends Controller
         $img->resizeToWidth(780);
         $img->crop(780, 560);
         
-        
-        
         $contentDetailList = new ContentDetailList();
         $contentDetailList->content_detail_id = $contentDetailId;
         $contentDetailList->name = $user->name + ' ' + (ContentDetailList::getLastOrderByContentDetailId($contentDetailId) + 1);
         
         $imageFilename = $contentDetailList->generateFilename($data['extension']);
         $img->save($contentDetailList->getPath() . $imageFilename);
+        
+        $thumbImg = ImageResize::createFromString(base64_decode($data['data']));
+        $thumbImg->resizeToWidth(480);
+        $thumbImg->crop(480, 260);
+        $thumbImg->save($contentDetailList->getThumbPath() . $imageFilename);
+        
         $contentDetailList->value = $imageFilename;
         $contentDetailList->status = ContentDetailList::STATUS_ACTIVE;
         $contentDetailList->order = ContentDetailList::getLastOrderByContentDetailId($contentDetailId) + 1;
@@ -108,7 +112,7 @@ class ContentDetailListController extends Controller
         $contentDetail = ContentDetail::whereId($contentDetailId)->actived()->first();
         $contentDetailList = ContentDetailList::where('content_detail_id', $contentDetailId)
                 ->actived()
-                ->ordered()
+                ->orderBy('order', 'desc')
                 ->get();
         
         return response()->json([
@@ -116,7 +120,7 @@ class ContentDetailListController extends Controller
             'message' => 'Success',
             'data' => [
                 'content_detail' => $contentDetail,
-                'content_detail_list' => $contentDetailList,
+                'content_detail_list' => $contentDetailList
             ]
         ], 201);
     }
@@ -146,7 +150,7 @@ class ContentDetailListController extends Controller
         $contentDetail = ContentDetail::whereId($contentDetailList->content_detail_id)->actived()->first();
         $contentDetailList = ContentDetailList::where('content_detail_id', $contentDetailList->content_detail_id)
                 ->actived()
-                ->ordered()
+                ->orderBy('order', 'desc')
                 ->get();
         
         return response()->json([
