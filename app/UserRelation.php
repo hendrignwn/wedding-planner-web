@@ -91,7 +91,16 @@ class UserRelation extends BaseModel
     
     public function getRelationName()
     {
-        return $this->femaleUser->name . ' & ' . $this->maleUser->name;
+        $female = $this->femaleUser->name;
+        if ($female == null) {
+            $female = 'Pasangan Anda';
+        }
+        
+        $male = $this->maleUser->name;
+        if ($male == null) {
+            $male = 'Pasangan Anda';
+        }
+        return $female . ' & ' . $male;
     }
     
     public function getListCosts()

@@ -88,7 +88,7 @@ class UserController extends Controller
                 'required',
                 \Illuminate\Validation\Rule::unique('user')->ignore($user->id)
             ],
-            'gender' => 'required|in:'.User::GENDER_MALE.','.User::GENDER_FEMALE,
+            //'gender' => 'required|in:'.User::GENDER_MALE.','.User::GENDER_FEMALE,
             'phone' => 'required',
             'wedding_day' => 'required',
             'venue' => 'required',
@@ -105,7 +105,7 @@ class UserController extends Controller
         $user->fill($request->only([
             'name',
             'email',
-            'gender',
+            //'gender',
             'phone',
         ]));
         $user->save();
@@ -310,7 +310,7 @@ class UserController extends Controller
     public function resendRegisterRelation($userId, Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        if ($user->id != $code) {
+        if ($user->id != $userId) {
             return response()->json([
                 'status' => 401,
                 'message' => 'Invalid credentials'
@@ -326,10 +326,10 @@ class UserController extends Controller
         
         if ($user->gender == User::GENDER_MALE) {
             $relation = $user->maleUserRelation;
-            $relationPartner = $relation->female_user;
+            $relationPartner = $relation->femaleUser;
         } else {
             $relation = $user->femaleUserRelation;
-            $relationPartner = $relation->male_user;
+            $relationPartner = $relation->maleUser;
         }
         
         $validator = \Validator::make($request->all(), [

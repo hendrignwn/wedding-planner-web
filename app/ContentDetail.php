@@ -59,4 +59,9 @@ class ContentDetail extends BaseModel
     {
         return $this->is_link == true;
     }
+    
+    public function getCostIsTrue()
+    {
+        return $this->is_cost == true;
+    }
 }

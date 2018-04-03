@@ -247,6 +247,7 @@ class AuthController extends Controller
             'confirm_password' => 'required|min:6|same:password',
             'registered_device_number' => 'required',
             'firebase_token' => 'required',
+            'registered_token' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -257,7 +258,7 @@ class AuthController extends Controller
 			], 400);
 		}
         
-        $user = User::where('registered_token', $request->confirm)
+        $user = User::where('registered_token', $request->registered_token)
                 ->where('status', User::STATUS_NEED_REGISTER)
                 ->first();
         if (!$user) {
@@ -281,6 +282,14 @@ class AuthController extends Controller
         $user->role = User::ROLE_USER;
         $user->registered_token = null;
         $user->save();
+        
+        $token = JWTAuth::fromUser($user);
+        $user->last_login_at = Carbon::now()->toDateTimeString();
+        $user->firebase_token = $request['firebase_token'];
+        $user->device_number = $request['device_number'];
+        $user->token = $token;
+        $user->save();
+        
         $user->sendRegisterNotification();
         
         if ($user->gender == User::GENDER_MALE) {

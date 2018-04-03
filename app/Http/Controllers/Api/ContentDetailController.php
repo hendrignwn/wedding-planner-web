@@ -95,7 +95,11 @@ class ContentDetailController extends Controller
 			], 404);
         }
         
-        $contentDetail->value = $request->value;
+        if ($contentDetail->getCostIsTrue()) {
+            $contentDetail->value = str_replace('.', '', $request->value);
+        } else {
+            $contentDetail->value = $request->value;
+        }
         $contentDetail->save();
         
         $content = Content::whereId($contentDetail->content_id)->actived()->first();
