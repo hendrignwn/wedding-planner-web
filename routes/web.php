@@ -16,13 +16,13 @@ Route::get('/', function () {
 });
 
 Route::get('test', function () {
-    return "<a href='agendanikah://register-relation?token=111'>Register</a><a href='http://agendanikah.com/register-relation?token=111'>Register</a><a href='agendanikah.com/register-relation?token=111'>Register</a>";
+    return "<a href='agendanikah://reset-password?token=111'>Register</a><a href='http://agendanikah.com/register-relation?token=111'>Register</a><a href='agendanikah.com/register-relation?token=111'>Register</a>";
 });
 
 Route::get('/register-relation/{token}', 'Web\\SiteController@registerRequest');
 Route::post('/register-relation', 'Web\\SiteController@proccessRegisterRequest');
-Route::get('/reset-your-password', 'Web\\SiteController@resetPassword');
-Route::post('/reset-your-password', 'Web\\SiteController@proccessResetPassword');
+Route::get('/reset-your-password/{token}', 'Web\\SiteController@resetPassword');
+Route::post('/reset-your-password/{token}', 'Web\\SiteController@proccessResetPassword');
 
 Route::get('/success', 'Web\\SiteController@success');
 

@@ -9,7 +9,6 @@ class SiteController extends Controller
 {
     public function registerRequest($token, Request $request)
     {
-        //return "<script>window.onload = function () {window.location = 'agendanikah://register-relation';}</script>";
         $user = \App\User::where('registered_token', $token)
                 ->roleMobileApp()
                 ->first();
@@ -23,7 +22,10 @@ class SiteController extends Controller
             $relation = $user->userRelation->maleUser;
         }
         
-        return view('web.site.register-request', compact('user', 'relation'));
+        $webRealUrl = url('register-relation/' . $token);
+        $iosUrlScheme = $androidUrlScheme = 'agendanikah://register-relation?token=' . $token;
+        
+        return view('web.site.register-request', compact('user', 'relation', 'webRealUrl', 'iosUrlScheme', 'androidUrlScheme'));
     }
     
     public function proccessRegisterRequest(Request $request) 
@@ -56,9 +58,8 @@ class SiteController extends Controller
         return redirect('success');
     }
     
-    public function resetPassword(Request $request)
+    public function resetPassword($token, Request $request)
     {
-        $token = $request->get('token', null);
         if ($token == null) {
             abort(404, 'Page is not found.');
         }
@@ -70,7 +71,11 @@ class SiteController extends Controller
             abort(404, 'Page is not found.');
         }
 
-        return view('web.site.reset-password', compact('user'));
+        
+        $webRealUrl = url('reset-your-password/' . $token);
+        $iosUrlScheme = $androidUrlScheme = 'agendanikah://reset-password?token=' . $token;
+        
+        return view('web.site.reset-password', compact('user', 'relation', 'webRealUrl', 'iosUrlScheme', 'androidUrlScheme'));
     }
     
     public function proccessResetPassword(Request $request)

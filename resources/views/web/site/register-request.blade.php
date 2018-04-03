@@ -152,3 +152,37 @@
     </div>
 </div>
 @endsection
+
+@push('script')
+<script>
+    var IS_IPAD = navigator.userAgent.match(/iPad/i) != null,
+        IS_IPHONE = !IS_IPAD && ((navigator.userAgent.match(/iPhone/i) != null) || (navigator.userAgent.match(/iPod/i) != null)),
+        IS_IOS = IS_IPAD || IS_IPHONE,
+        IS_ANDROID = !IS_IOS && navigator.userAgent.match(/android/i) != null,
+        IS_MOBILE = IS_IOS || IS_ANDROID;
+
+    function open() {
+        // If it's not an universal app, use IS_IPAD or IS_IPHONE
+        if (IS_IOS) {
+            window.location = "{{ $iosUrlScheme }}";
+
+            setTimeout(function() {
+
+                // If the user is still here, open the App Store
+                if (!document.webkitHidden) {
+
+                    // Replace the Apple ID following '/id'
+                    window.location = '{{ $webRealUrl }}';
+                }
+            }, 25);
+
+        } else if (IS_ANDROID) {
+
+            // Instead of using the actual URL scheme, use 'intent://' for better UX
+            window.location = '{{ $androidUrlScheme }}';
+        }
+    }
+    
+    window.onload = open();
+</script>
+@endpush

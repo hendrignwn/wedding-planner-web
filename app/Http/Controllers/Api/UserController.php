@@ -84,7 +84,10 @@ class UserController extends Controller
         
         $validator = \Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:user,email,'.$user->id,
+            'email' => [
+                'required',
+                \Illuminate\Validation\Rule::unique('user')->ignore($user->id)
+            ],
             'gender' => 'required|in:'.User::GENDER_MALE.','.User::GENDER_FEMALE,
             'phone' => 'required',
             'wedding_day' => 'required',
