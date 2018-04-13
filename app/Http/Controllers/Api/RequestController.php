@@ -50,12 +50,11 @@ class RequestController extends Controller
      */
     public function procedure(Request $request)
     {
-        $model = Procedure::actived()->first();
+        $model = Procedure::actived()->ordered()->get();
         
         return response()->json([
             'status' => 200,
             'message' => 'success',
-            'link' => Procedure::destinationPathUrl(),
             'data' => $model,
         ], 200);
     }

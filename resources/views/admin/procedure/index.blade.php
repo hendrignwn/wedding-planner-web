@@ -8,15 +8,16 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-block">
-                    
-                    <input type="hidden" id="drs" name="drange"/>
                     <input type="hidden" id="delete_value" name="delete_value"/>
                     <div class="table-overflow">
                         <table id="procedure-table" class="table table-lg table-hover" width="100%">
                             <thead>
                                 <tr>
                                     <th>*</th>
-                                    <th>File</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Order</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th></th>
@@ -24,6 +25,9 @@
                             </thead>
                         </table>
                     </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{route('procedure.create')}}" class="btn btn-primary btn-rounded">Create new Procedure</a>
                 </div>
             </div>
         </div>
@@ -37,7 +41,7 @@ oTable = $('#procedure-table').DataTable({
     processing: true,
     serverSide: true,
     dom: 'lBfrtip',
-    order:  [[ 3, "asc" ]],
+    order:  [[ 4, "asc" ]],
     pagingType: 'full_numbers',
     buttons: [
         {
@@ -90,7 +94,10 @@ oTable = $('#procedure-table').DataTable({
     },
     columns: [
 		{ data: "rownum", name: "rownum" },
-		{ data: "file", name: "file" },
+		{ data: "name", name: "name" },
+		{ data: "description", name: "description" },
+		{ data: "status", name: "status" },
+		{ data: "order", name: "order" },
 		{ data: "created_at", name: "created_at", visible:false },
 		{ data: "updated_at", name: "updated_at" },
         { data: "action", name: "action", searchable: false, orderable: false },
@@ -105,6 +112,23 @@ $('#formsearch').submit(function () {
 } );
 
 oTable.page.len(25).draw();
+
+function modalDelete(id) {
+    $('#modal-delete').modal('show');
+    $('#delete_value').val(id);
+}
+
+function deleteRecord(){
+    $('#modal-delete').modal('hide');
+    var id = $('#delete_value').val();
+    $.ajax({
+        url: '{{url("admin/procedure")}}' + "/" + id + '?' + $.param({"_token" : '{{ csrf_token() }}' }),
+        type: 'DELETE',
+        complete: function(data) {
+            oTable.draw();
+        }
+    });
+}
 
 </script>
 @endpush

@@ -8,16 +8,36 @@
     </div>
 @endif
 
-<div aria-required="true" class="form-group required form-group-default {{ $errors->has('file') ? 'has-error' : ''}}">
-    {!! Form::label('file', 'File') !!}
-    {!! Form::file('file', ['class' => 'form-control']) !!}
-    {!! $errors->first('file', '<p class="help-block">:message</p>') !!}    
+<div aria-required="true" class="form-group required form-group-default {{ $errors->has('name') ? 'has-error' : ''}}">
+    {!! Form::label('name', 'Name') !!}
+    {!! Form::text('name', null, ['class' => 'form-control']) !!}
+    {!! $errors->first('name', '<p class="help-block">:message</p>') !!}    
 </div>
-@if ($model->file != null)
-<div class="form-group">
-    <img src='{{$model->getFileUrl()}}' width='400px' />
-</div>
-@endif
 
+<div aria-required="true" class="form-group required form-group-default {{ $errors->has('description') ? 'has-error' : ''}}">
+    {!! Form::label('description', 'Description') !!}
+    {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
+    {!! $errors->first('description', '<p class="help-block">:message</p>') !!}    
+</div>
+
+<div aria-required="true" class="form-group required form-group-default form-group-default-select2 {{ $errors->has('status') ? 'has-error' : ''}}">
+    {!! Form::label('status', 'Status') !!}
+    {!! Form::select('status', \App\Procedure::statusLabels(), null, ['class' => 'select2 full-width', 'data-init-plugin' => 'select2']) !!}
+    {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
+</div>
+
+<div aria-required="true" class="form-group required form-group-default {{ $errors->has('order') ? 'has-error' : ''}}">
+    {!! Form::label('order', 'Order') !!}
+    {!! Form::text('order', null, ['class' => 'form-control']) !!}
+    {!! $errors->first('order', '<p class="help-block">:message</p>') !!}
+</div>
 {!! Form::submit(isset($submitButtonText) ? $submitButtonText : 'Create', ['type' => 'submit', 'class' => 'btn btn-success']) !!}
 <button class="btn btn-default" type="reset"><i class="pg-close"></i> Clear</button>
+
+@push('script')
+<script>
+$('.select2').selectize({
+    sortField: 'text'
+});    
+</script>
+@endpush

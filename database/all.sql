@@ -651,15 +651,22 @@ CREATE TABLE `procedure` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` varchar(600) DEFAULT NULL,
-  `file` varchar(100) NOT NULL,
   `status` smallint(6) NOT NULL DEFAULT '1',
+  `order` smallint(6) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `procedure` (`id`, `name`, `description`, `file`, `status`, `created_at`, `updated_at`) VALUES
-(1,	'Prosedur',	NULL,	'prosedur-085359.png',	1,	'2018-02-20 03:00:00',	'2018-02-24 01:54:01');
+INSERT INTO `procedure` (`id`, `name`, `description`, `status`, `order`, `created_at`, `updated_at`) VALUES
+(1,	'RT/RW',	'Mengurus surat pengantar nikah untuk dibawa ke kelurahan',	1,	0,	'2018-02-20 03:00:00',	'2018-02-24 01:54:01'),
+(2,	'KELURAHAN',	'Mengurus surat pengantar untuk dibawa ke KUA kecamatan',	1,	1,	'2018-02-20 03:00:00',	'2018-02-24 01:54:01'),
+(3,	'KUA KECAMATAN',	'Mengurus surat pengantar rekomendasi nikah untuk dibawa ke KUA kecamatan akad nikah',	1,	2,	'2018-02-20 03:00:00',	'2018-02-24 01:54:01'),
+(4,	'KUA KECAMATAN',	'Pendaftaran nikah di KUA tempat dilaksanakannya akad nikah',	1,	3,	'2018-02-20 03:00:00',	'2018-02-24 01:54:01'),
+(5,	'Akad di KUA KECAMATAN (Biaya nikah gratis)',	'Akad di luar KUA KECAMATAN (Membayar Rp 600.000 di bank persepsi yang ada diwilayah KUA akad nikah',	1,	4,	'2018-02-20 03:00:00',	'2018-02-24 01:54:01'),
+(6,	'',	'Menyerahkan slip setoran biaya nikah ke KUA tempat akad nikah',	1,	5,	'2018-02-20 03:00:00',	'2018-02-24 01:54:01'),
+(7,	'KUA KECAMATAN',	'Pemerikasaan data nikah calon pengantin & wali nikah di tempat akad nikah',	1,	6,	'2018-02-20 03:00:00',	'2018-02-24 01:54:01'),
+(8,	'LOKASI NIKAH',	'Pelaksanaan akad nikah & penyerahan buku nikah',	1,	7,	'2018-02-20 03:00:00',	'2018-02-24 01:54:01');
 
 DROP TABLE IF EXISTS `report_problem`;
 CREATE TABLE `report_problem` (
@@ -700,7 +707,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `user` (`id`, `name`, `gender`, `email`, `phone`, `password`, `remember_token`, `firebase_token`, `device_number`, `registered_device_number`, `registered_token`, `registered_at`, `forgot_token`, `token`, `status`, `role`, `last_login_at`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1,	'Hendri Gunawan',	NULL,	'admin@wedding.com',	NULL,	'$2y$10$kIX7F7/JqN7itGh6oJnTGe.QAuYw.oL3nQJPXsQNF/BRyZs/RCPz.',	'gzTyIhamYEPgaf2PAD2Iod8NGUdKd5kPB8l1yfj1uJTf8IfovXdsvAi5MJDs',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	1,	1,	NULL,	'2018-02-19 02:54:13',	'2018-02-19 02:54:13',	NULL),
+(1,	'Hendri Gunawan',	NULL,	'admin@wedding.com',	NULL,	'$2y$10$kIX7F7/JqN7itGh6oJnTGe.QAuYw.oL3nQJPXsQNF/BRyZs/RCPz.',	'XAXYKA2pgHm5aKSkZ5pnvGwwXiatg9szU0ShEInbKm3r88Cxj1XubI8IoQU0',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	1,	1,	NULL,	'2018-02-19 02:54:13',	'2018-02-19 02:54:13',	NULL),
 (17,	'Hendri Gunawan',	1,	'hendri.gnw@gmail.com',	'08561471500',	'$2y$10$.hMCSM1UbmkgLZn1m1Kx3.V4kQKlM7VerQziG6vrQvsJr9sQF9DeC',	NULL,	'xxx',	'xxx',	'xxx',	NULL,	'2018-03-02 00:59:54',	NULL,	'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjE3LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0L3dlZGRpbmctcGxhbm5lci13ZWIvcHVibGljL2FwaS92MS9hdXRoL2xvZ2luIiwiaWF0IjoxNTIxNDYxODUxLCJleHAiOjE1MjI2NzE0NTEsIm5iZiI6MTUyMTQ2MTg1MSwianRpIjoiNmNXeWR3TjBHOHNEMmlzdiJ9.3BJzM0PqK6LfQ5pT2ZqwJ57Boj88V2Kg77N0kz4le0Q',	1,	10,	'2018-03-19 05:17:31',	'2018-03-02 00:59:54',	'2018-03-19 05:17:31',	NULL),
 (18,	'Wina Marlina',	0,	'winamarlina97@gmail.com',	'085711202889',	'$2y$10$cljIE/mSJZokGpzaFVkyDeZTd2ecDgazT8EVxLbaj/IVd9STvXqQ6',	NULL,	NULL,	NULL,	NULL,	'PE7iMoFMPTqjQUvqCq1f0DXry',	NULL,	NULL,	NULL,	5,	10,	NULL,	'2018-03-02 00:59:54',	'2018-03-05 01:42:14',	NULL);
 
@@ -761,4 +768,4 @@ CREATE TABLE `vendor_detail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
--- 2018-03-20 11:12:44
+-- 2018-04-13 04:24:53

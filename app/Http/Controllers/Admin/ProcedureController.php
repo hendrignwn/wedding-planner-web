@@ -15,7 +15,9 @@ use Session;
 class ProcedureController extends Controller
 {
 	protected $rules = [
-		'file' => 'required|image',
+		'name' => 'nullable',
+		'description' => 'nullable',
+		'order' => 'required',
 	];
 
 
@@ -54,15 +56,6 @@ class ProcedureController extends Controller
 		$requestData = $request->all();
 		
         $model->fill($requestData);
-		if (isset($request->file)) {
-			$files = $request->file('file');
-			$filename = $model->generateFilename($files->getClientOriginalExtension());
-			$files->move($model->getPath(), $filename);
-            $img = new ImageResize($model->getPath() . $filename);
-            $img->resizeToWidth(1280);
-            $img->save($model->getPath() . $filename);
-			$model->file = $filename;
-		}
 		$model->save();
 		
         Session::flash('success', 'Procedure added!');
@@ -112,23 +105,9 @@ class ProcedureController extends Controller
         $this->validate($request, $rules);
 		
 		$model = Procedure::findOrFail($id);
-		$oldFile = $model->file;
-		
-        $requestData = $request->all();
-		
+		$requestData = $request->all();
 		$model->fill($requestData);
-        if (isset($request->file)) {
-            @unlink($model->getPath() . $oldFile);
-            $files = $request->file('file');
-			$filename = $model->generateFilename($files->getClientOriginalExtension());
-			$files->move($model->getPath(), $filename);
-            $img = new ImageResize($model->getPath() . $filename);
-            $img->save($model->getPath() . $filename);
-			$model->file = $filename;
-		} else {
-            $model->file = $oldFile;
-        }
-		$model->save();
+        $model->save();
 		
         Session::flash('success', 'Procedure updated!');
 
@@ -144,7 +123,7 @@ class ProcedureController extends Controller
      */
     public function destroy($id)
     {
-        return redirect('admin/procedure');
+        Procedure::destroy($id);
 		
         Session::flash('success', 'Procedure deleted!');
 
@@ -162,11 +141,12 @@ class ProcedureController extends Controller
 				]);
 
          $datatables = app('datatables')->of($model)
-            ->editColumn('file', function ($model) {
-                return "<img src='{$model->getFileUrl()}' width='300px' />";
+            ->editColumn('status', function ($model) {
+                return $model->getStatusLabel();
             })
             ->addColumn('action', function ($model) {
-                return '<a href="procedure/'.$model->id.'/edit" class="btn btn-xs btn-primary rounded" data-toggle="tooltip" title="" data-original-title="'. trans('systems.edit') .'"><i class="fa fa-pencil"></i></a> ';
+                return '<a href="procedure/'.$model->id.'/edit" class="btn btn-xs btn-primary rounded" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a> '
+                    . '<a href="#" onclick="modalDelete('.$model->id.')" class="btn btn-xs btn-danger rounded" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a> ';
             });
 
         if ($keyword = $request->get('search')['value']) {

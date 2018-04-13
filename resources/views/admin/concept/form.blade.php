@@ -15,7 +15,6 @@
     {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
 </div>
 
-
 <div aria-required="true" class="form-group required form-group-default form-group-default-select2 {{ $errors->has('status') ? 'has-error' : ''}}">
     {!! Form::label('status', 'Status') !!}
     {!! Form::select('status', \App\Concept::statusLabels(), null, ['class' => 'select2 full-width', 'data-init-plugin' => 'select2']) !!}
