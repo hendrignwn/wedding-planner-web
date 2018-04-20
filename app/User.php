@@ -43,6 +43,7 @@ class User extends Authenticatable
         'phone', 
         'password',
         'firebase_token',
+        'user_id_token',
         'registered_token',
         'registered_device_number',
         'registered_at',

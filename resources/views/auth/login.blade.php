@@ -14,8 +14,11 @@
                                 <div class="card-body">
                                     <div class="pdd-horizon-30 pdd-vertical-30">
                                         <div class="mrg-btm-30">
-                                            <img class="img-responsive inline-block" src="admin-assets/images/logo/logo.png" alt="">
+                                            <h2 class="inline-block pull-left no-mrg-vertical pdd-top-15">{{ config('app.name') }}</h2>
                                             <h2 class="inline-block pull-right no-mrg-vertical pdd-top-15">Login</h2>
+                                            <br/>
+                                            <br/>
+                                            <br/>
                                         </div>
                                         <p class="mrg-btm-15 font-size-13">Please enter your user name and password to login</p>
                                         <form class="ng-pristine ng-valid form-horizontal" method="POST" action="{{ route('login') }}">

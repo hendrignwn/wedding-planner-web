@@ -25,6 +25,7 @@ class AuthController extends Controller
 			'email' => 'required',
 			'password' => 'required',
 			'firebase_token' => 'required',
+			'user_id_token' => 'required',
 			'device_number' => 'required'
 		]);
 
@@ -68,6 +69,7 @@ class AuthController extends Controller
             $token = JWTAuth::fromUser($user);
             $user->last_login_at = Carbon::now()->toDateTimeString();
             $user->firebase_token = $request['firebase_token'];
+            $user->user_id_token = $request['user_id_token'];
             $user->device_number = $request['device_number'];
             $user->token = $token;
             $user->save();

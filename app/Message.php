@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\FirebaseNotification;
 use Carbon\Carbon;
 
 class Message extends BaseModel
@@ -31,6 +32,7 @@ class Message extends BaseModel
         'end_date',
         'is_all_date',
         'message_at',
+        'sent_notification',
         'status',
         'created_at',
         'updated_at',
@@ -137,5 +139,35 @@ class Message extends BaseModel
         $this->deleteFile();
         $this->deleteThumbFile();
         return true;
+    }
+    
+    public static function sendPushNotification()
+    {
+        $messages = Message::where('message_at', \Carbon\Carbon::now()->toDateString() . ' 00:00:00')
+                ->whereIsNull('sent_notification')
+                ->get();
+        if (!$messages) {
+            return null;
+        }
+        
+        $users = User::whereNotNull('firebase_token')->where('status', User::STATUS_ACTIVE)
+                ->get();
+        if (!$users) {
+            return null;
+        }
+        
+        foreach ($messages as $message) :
+            $notifications = [
+                'title' => $message->name,
+                'body' => strip_tags(substr($message->description, 0, 80)),
+                'sound' => 'default',
+                'badge' => 0,
+                'click_action' => 'com.hendri.agendanikah.firebase.message.notification',
+            ];
+            foreach ($users as $user) {
+                $notification = new FirebaseNotification();
+                $notification->sendNewMessage($user->firebase_token, $message->toArray(), $notifications);
+            }
+        endforeach;
     }
 }
