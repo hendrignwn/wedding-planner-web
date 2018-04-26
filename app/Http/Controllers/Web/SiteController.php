@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class SiteController extends Controller
 {
+    public function index(Request $request)
+    {
+        return view('web.site.index');
+    }
+    
     public function registerRequest($token, Request $request)
     {
         $user = \App\User::where('registered_token', $token)
@@ -105,5 +110,10 @@ class SiteController extends Controller
     public function success(Request $request)
     {
         return view('web.site.success');
+    }
+    
+    public function support(Request $reqeust)
+    {
+        return view('web.site.support');
     }
 }

@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect('login');
-});
+Route::get('/', 'Web\\SiteController@index');
 
 Route::get('test', function () {
     return "<a href='agendanikah://reset-password?token=111'>Register</a><a href='http://agendanikah.com/register-relation?token=111'>Register</a><a href='agendanikah.com/register-relation?token=111'>Register</a>";
@@ -25,6 +23,8 @@ Route::get('/reset-your-password/{token}', 'Web\\SiteController@resetPassword');
 Route::post('/reset-your-password/{token}', 'Web\\SiteController@proccessResetPassword');
 
 Route::get('/success', 'Web\\SiteController@success');
+
+Route::get('/support', 'Web\\SiteController@support');
 
 /**
  * Admin Routes

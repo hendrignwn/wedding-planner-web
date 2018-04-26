@@ -28,10 +28,21 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        Log::useDailyFiles(storage_path() . '/logs/scheduler.log');
         $schedule->call(function() {
             Message::sendPushNotification();
             Log::info('Scheduler is running: daily at 10:00');
         })->dailyAt('10:00');
+        
+        $schedule->call(function() {
+            Message::sendPushNotification();
+            Log::info('Scheduler is running: daily at 18:30');
+        })->dailyAt('18:30');
+        
+        $schedule->call(function() {
+            Message::sendPushNotification();
+            Log::info('Scheduler is running: daily at 23:50');
+        })->dailyAt('23:50');
     }
 
     /**

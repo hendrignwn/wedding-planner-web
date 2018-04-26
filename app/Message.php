@@ -141,33 +141,62 @@ class Message extends BaseModel
         return true;
     }
     
+    /**
+     * @return type
+     */
     public static function sendPushNotification()
     {
         $messages = Message::where('message_at', \Carbon\Carbon::now()->toDateString() . ' 00:00:00')
-                ->whereIsNull('sent_notification')
+                ->whereNull('sent_notification')
                 ->get();
         if (!$messages) {
             return null;
         }
         
-        $users = User::whereNotNull('firebase_token')->where('status', User::STATUS_ACTIVE)
-                ->get();
+        $users = User::whereNotNull('user_id_token')->where('status', User::STATUS_ACTIVE)
+                ->pluck('user_id_token');
         if (!$users) {
             return null;
         }
         
         foreach ($messages as $message) :
-            $notifications = [
-                'title' => $message->name,
-                'body' => strip_tags(substr($message->description, 0, 80)),
-                'sound' => 'default',
-                'badge' => 0,
-                'click_action' => 'com.hendri.agendanikah.firebase.message.notification',
+            $fields = [
+                'app_id' => 'c054887d-802a-4395-9603-51e82b790459',
+                'data' => [
+                    'id' => $message->id,
+                    'name' => $message->name,
+                    'file' => $message->file,
+                ],
+                'contents' => [
+                    'en' => strip_tags(substr($message->description, 0, 80)),
+                ],
+                'headings' => [
+                    'en' => $message->name,
+                ],
+                'include_player_ids' => $users,
             ];
-            foreach ($users as $user) {
-                $notification = new FirebaseNotification();
-                $notification->sendNewMessage($user->firebase_token, $message->toArray(), $notifications);
-            }
+            
+            $notification = json_encode($fields);
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json; charset=utf-8',
+                'Authorization: Basic MTFmN2ZlZDItZjMxOS00YWRlLTg2YzEtYzkyNmY0NWM4OTQy'
+            ));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_HEADER, FALSE);
+            curl_setopt($ch, CURLOPT_POST, TRUE);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $notification);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+            $response = curl_exec($ch);
+            curl_close($ch);
+            
+            \Illuminate\Support\Facades\Log::info('Send Notification Success with params ' . $notification);
+            \Illuminate\Support\Facades\Log::info('Send Notification Success with response ' . $response);
+
+            $message->sent_notification += 1;
+            $message->save();
         endforeach;
     }
 }
