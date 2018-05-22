@@ -13,10 +13,6 @@
 
 Route::get('/', 'Web\\SiteController@index');
 
-Route::get('test', function () {
-    return "<a href='agendanikah://reset-password?token=111'>Register</a><a href='http://agendanikah.com/register-relation?token=111'>Register</a><a href='agendanikah.com/register-relation?token=111'>Register</a>";
-});
-
 Route::get('/register-relation/{token}', 'Web\\SiteController@registerRequest');
 Route::post('/register-relation', 'Web\\SiteController@proccessRegisterRequest');
 Route::get('/reset-your-password/{token}', 'Web\\SiteController@resetPassword');
@@ -72,7 +68,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 	Route::resource('/vendor', 'Admin\\VendorController');
     
     Route::get('/vendor-detail/data/{id}', ['as' => 'vendor-detail.data', 'uses' => 'Admin\\VendorDetailController@listIndex']);
-	Route::resource('/vendor-detail', 'Admin\\VendorDetailController');
+    Route::get('/vendor-detail/create/{vendorId}', ['as' => 'vendor-detail.create', 'uses' => 'Admin\\VendorDetailController@create']);
+    Route::post('/vendor-detail/create/{vendorId}', ['as' => 'vendor-detail.store', 'uses' => 'Admin\\VendorDetailController@store']);
+    Route::get('/vendor-detail/{id}/edit', ['as' => 'vendor-detail.edit', 'uses' => 'Admin\\VendorDetailController@edit']);
+    Route::patch('/vendor-detail/{id}', ['as' => 'vendor-detail.update', 'uses' => 'Admin\\VendorDetailController@update']);
+    Route::delete('/vendor-detail/{id}', ['as' => 'vendor-detail.delete', 'uses' => 'Admin\\VendorDetailController@delete']);
     
     Route::get('/message/data', ['as' => 'message.data', 'uses' => 'Admin\\MessageController@listIndex']);
 	Route::resource('/message', 'Admin\\MessageController');

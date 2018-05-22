@@ -15,12 +15,10 @@ use Session;
 class VendorDetailController extends Controller
 {
 	protected $rules = [
+        'file' => 'required|file|min:1|max:40000|image',
+        'thumbnail_file' => 'required|file|min:1|max:40000|image',
 		'name' => 'required',
-        'file' => 'required|file|min:1|max:20000|image',
-        'thumbnail_file' => 'required|file|min:1|max:20000|image',
 		'status' => 'required',
-		'website' => 'required',
-		'instagram' => 'required',
 		'order' => 'required',
 	];
 
@@ -42,7 +40,9 @@ class VendorDetailController extends Controller
      */
     public function create($vendorId)
     {
-        return view('admin.vendor-detail.create', compact('vendorId'));
+        $vendor = \App\Vendor::find($vendorId);
+        
+        return view('admin.vendor-detail.create', compact('vendor'));
     }
 
     /**
@@ -58,8 +58,8 @@ class VendorDetailController extends Controller
 		
 		$model = new VendorDetail();
 		$requestData = $request->all();
-		
 		$model->fill($requestData);
+        $model->vendor_id = $vendorId;
         $filename = null;
 		if (isset($request->file)) {
 			$files = $request->file('file');
@@ -82,7 +82,7 @@ class VendorDetailController extends Controller
         
         Session::flash('success', 'VendorDetail added!');
         
-        return redirect('admin/vendor-detail');
+        return redirect(route('vendor.show', ['id' => $model->vendor_id]));
     }
 
     /**
@@ -158,7 +158,7 @@ class VendorDetailController extends Controller
 		
         Session::flash('success', 'VendorDetail updated!');
 
-        return redirect('admin/vendor-detail');
+        return redirect(route('vendor.show', ['id' => $model->vendor_id]));
     }
 
     /**
@@ -186,7 +186,7 @@ class VendorDetailController extends Controller
     {
         DB::statement(DB::raw('set @rownum=0'));
         $model = VendorDetail::select([
-					DB::raw('@rownum  := @rownum  + 1 AS rownum'), 'vendor-detail.*'
+					DB::raw('@rownum  := @rownum  + 1 AS rownum'), 'vendor_detail.*'
 				])
                 ->where('vendor_id', $id);
 
@@ -198,8 +198,7 @@ class VendorDetailController extends Controller
                 return $model->getFileThumbImg();
             })
             ->addColumn('action', function ($model) {
-                return '<a href="'.route('vendor-detail.show', ['id'=>$model->id]).'" class="btn btn-xs btn-success rounded" data-toggle="tooltip" title="" data-original-title="'. trans('systems.edit') .'"><i class="fa fa-eye"></i></a> '
-						. '<a href="'.route('vendor-detail.edit', ['id'=>$model->id]).'" class="btn btn-xs btn-primary rounded" data-toggle="tooltip" title="" data-original-title="'. trans('systems.edit') .'"><i class="fa fa-pencil"></i></a> '
+                return '<a href="'.route('vendor-detail.edit', ['id'=>$model->id]).'" class="btn btn-xs btn-primary rounded" data-toggle="tooltip" title="" data-original-title="'. trans('systems.edit') .'"><i class="fa fa-pencil"></i></a> '
 						. '<a onclick="modalDelete('.$model->id.')" href="javascript:;" class="btn btn-xs btn-danger rounded" data-toggle="tooltip" title="" data-original-title="'. trans('systems.delete') .'"><i class="fa fa-trash"></i></a>';
             });
 

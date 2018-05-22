@@ -17,8 +17,8 @@ class VendorController extends Controller
 	protected $rules = [
         'category' => 'required',
 		'name' => 'required',
-        'file' => 'required|file|min:1|max:20000|image',
-        'thumbnail_file' => 'required|file|min:1|max:20000|image',
+        'file' => 'required|file|min:1|max:50000|image',
+        'thumbnail_file' => 'required|file|min:1|max:50000|image',
 		'status' => 'required',
 		'address' => 'required',
 		'phone' => 'required',

@@ -81,9 +81,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
-                                            <th>File</th>
-                                            <th>Status</th>
-                                            <th>Order</th>
+                                            <th>Value</th>
                                             <th>Created at</th>
                                             <th>Updated At</th>
                                             <td></td>
@@ -94,7 +92,7 @@
 
                         </div>
                         <div class="card-footer">
-                            <a href="{{ route('vendor-detail.create', ['vendorId'=>$model->id]) }}" class="btn btn-primary btn-rounded">Add New Detail</a>
+                            <a href="{{ url('admin/vendor-detail/create', ['vendorId'=>$model->id]) }}" class="btn btn-primary btn-rounded">Add New Detail</a>
                         </div>
                     </div>
                     
@@ -157,7 +155,7 @@ oTable = $('#detail-table').DataTable({
     },
     lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
     ajax: {
-    url: '{!! route('vendor-detail.data', ['id' => $model->id]) !!}',
+    url: '{!! route('content-detail.data', ['id' => $model->id]) !!}',
         data: function (d) {
             d.range = $('input[name=drange]').val();
         }
@@ -165,9 +163,7 @@ oTable = $('#detail-table').DataTable({
     columns: [
 		{ data: "rownum", name: "rownum" },
 		{ data: "name", name: "name" },
-		{ data: "file", name: "file" },
-		{ data: "status", name: "status" },
-		{ data: "order", name: "order" },
+		{ data: "value", name: "value" },
 		{ data: "created_at", name: "created_at", visible:false },
 		{ data: "updated_at", name: "updated_at" },
         { data: "action", name: "action", searchable: false, orderable: false },

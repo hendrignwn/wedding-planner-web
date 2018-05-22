@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Carbon\Carbon;
+
 class VendorDetail extends BaseModel
 {
     const UPLOAD_DESTINATION_PATH = 'files/vendor-details/';
@@ -85,5 +87,23 @@ class VendorDetail extends BaseModel
     {
         @unlink($this->getPath() . $this->file);
         @unlink($this->getThumbPath() . $this->file);
+    }
+    
+    public function getFileThumbImg()
+    {
+        if ($this->file != null) {
+            return "<img src='{$this->getFileThumbUrl()}' width='150' />";
+        }
+        
+        return null;
+    }
+    
+    public function getFileImg()
+    {
+        if ($this->file != null) {
+            return "<img src='{$this->getFileUrl()}' width='100%' />";
+        }
+        
+        return null;
     }
 }
