@@ -4,14 +4,14 @@ namespace App;
 
 use Carbon\Carbon;
 
-class Procedure extends BaseModel
+class ProcedurePreparation extends BaseModel
 {
     /**
      * The table associated with the model.
      * 
      * @var string
      */
-    protected $table = 'procedure';
+    protected $table = 'procedure_preparation';
 
     /**
      * The attributes that are mass assignable.
@@ -19,10 +19,11 @@ class Procedure extends BaseModel
      * @var array
      */
     protected $fillable = [
+        'user_relation_id',
+        'user_id',
         'name',
-        'description',
-        'status',
-        'order',
+        'venue',
+        'preparation_at',
     ];
 
     /**
@@ -36,8 +37,14 @@ class Procedure extends BaseModel
     protected $with = [
     ];
     
-    public function procedureAdministration()
+    public function userRelation() 
     {
-        return $this->hasOne('\App\ProcedureAdministration', 'procedure_id', 'id');
+        return $this->hasOne('\App\UserRelation', 'id', 'user_relation_id');
     }
+    
+    public function user() 
+    {
+        return $this->hasOne('\App\User', 'id', 'user_id');
+    }
+    
 }

@@ -203,7 +203,7 @@ class Concept extends BaseModel
                 'content' => [
                     'concept_id' => self::ACARA_LAMARAN,
                     'grouping' => self::GROUPING_PENGRIAS_WAJAH,
-                    'name' => 'Pengrias Wajah',
+                    'name' => 'Perias Wajah',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
                     'order' => 0,
@@ -213,7 +213,7 @@ class Concept extends BaseModel
                     ['name' => 'Kontak', 'status' => self::STATUS_ACTIVE, 'order' => 1],
                     ['name' => 'Alamat', 'status' => self::STATUS_ACTIVE, 'order' => 2],
                     ['name' => 'Biaya', 'status' => self::STATUS_ACTIVE, 'order' => 3, 'is_cost' => 1],
-                    ['name' => 'Contoh Pengrias Wajah', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
+                    ['name' => 'Contoh Perias Wajah', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
                     ['name' => 'Tema', 'status' => self::STATUS_ACTIVE, 'order' => 5],
                     ['name' => 'Catatan', 'status' => self::STATUS_ACTIVE, 'order' => 6, 'is_link' => 1, 'is_noted' => 1],
                 ]
@@ -429,7 +429,7 @@ class Concept extends BaseModel
                 'content' => [
                     'concept_id' => self::ACARA_PENGAJIAN,
                     'grouping' => self::GROUPING_PENGRIAS_WAJAH,
-                    'name' => 'Pengrias Wajah',
+                    'name' => 'Perias Wajah',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
                     'order' => 0,
@@ -439,7 +439,7 @@ class Concept extends BaseModel
                     ['name' => 'Kontak', 'status' => self::STATUS_ACTIVE, 'order' => 1],
                     ['name' => 'Alamat', 'status' => self::STATUS_ACTIVE, 'order' => 2],
                     ['name' => 'Biaya', 'status' => self::STATUS_ACTIVE, 'order' => 3, 'is_cost' => 1],
-                    ['name' => 'Contoh Pengrias Wajah', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
+                    ['name' => 'Contoh Perias Wajah', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
                     ['name' => 'Tema', 'status' => self::STATUS_ACTIVE, 'order' => 5],
                     ['name' => 'Catatan', 'status' => self::STATUS_ACTIVE, 'order' => 6, 'is_link' => 1, 'is_noted' => 1],
                 ]
@@ -637,7 +637,7 @@ class Concept extends BaseModel
                 'content' => [
                     'concept_id' => self::ACARA_SIRAMAN,
                     'grouping' => self::GROUPING_PENGRIAS_WAJAH,
-                    'name' => 'Pengrias Wajah',
+                    'name' => 'Perias Wajah',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
                     'order' => 0,
@@ -647,7 +647,7 @@ class Concept extends BaseModel
                     ['name' => 'Kontak', 'status' => self::STATUS_ACTIVE, 'order' => 1],
                     ['name' => 'Alamat', 'status' => self::STATUS_ACTIVE, 'order' => 2],
                     ['name' => 'Biaya', 'status' => self::STATUS_ACTIVE, 'order' => 3, 'is_cost' => 1],
-                    ['name' => 'Contoh Pengrias Wajah', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
+                    ['name' => 'Contoh Perias Wajah', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
                     ['name' => 'Tema', 'status' => self::STATUS_ACTIVE, 'order' => 5],
                     ['name' => 'Catatan', 'status' => self::STATUS_ACTIVE, 'order' => 6, 'is_link' => 1, 'is_noted' => 1],
                 ]
@@ -845,7 +845,7 @@ class Concept extends BaseModel
                 'content' => [
                     'concept_id' => self::PRE_WEDDING,
                     'grouping' => self::GROUPING_PENGRIAS_WAJAH,
-                    'name' => 'Pengrias Wajah',
+                    'name' => 'Perias Wajah',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
                     'order' => 0,
@@ -855,7 +855,7 @@ class Concept extends BaseModel
                     ['name' => 'Kontak', 'status' => self::STATUS_ACTIVE, 'order' => 1],
                     ['name' => 'Alamat', 'status' => self::STATUS_ACTIVE, 'order' => 2],
                     ['name' => 'Biaya', 'status' => self::STATUS_ACTIVE, 'order' => 3, 'is_cost' => 1],
-                    ['name' => 'Contoh Pengrias Wajah', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
+                    ['name' => 'Contoh Perias Wajah', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
                     ['name' => 'Tema', 'status' => self::STATUS_ACTIVE, 'order' => 5],
                     ['name' => 'Catatan', 'status' => self::STATUS_ACTIVE, 'order' => 6, 'is_link' => 1, 'is_noted' => 1],
                 ]
@@ -1017,7 +1017,7 @@ class Concept extends BaseModel
                 'content' => [
                     'concept_id' => self::ACARA_AKAD_NIKAH,
                     'grouping' => self::GROUPING_PENGRIAS_WAJAH,
-                    'name' => 'Pengrias Wajah',
+                    'name' => 'Perias Wajah',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
                     'order' => 0,
@@ -1027,7 +1027,7 @@ class Concept extends BaseModel
                     ['name' => 'Kontak', 'status' => self::STATUS_ACTIVE, 'order' => 1],
                     ['name' => 'Alamat', 'status' => self::STATUS_ACTIVE, 'order' => 2],
                     ['name' => 'Biaya', 'status' => self::STATUS_ACTIVE, 'order' => 3, 'is_cost' => 1],
-                    ['name' => 'Contoh Pengrias Wajah', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
+                    ['name' => 'Contoh Perias Wajah', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
                     ['name' => 'Tema', 'status' => self::STATUS_ACTIVE, 'order' => 5],
                     ['name' => 'Catatan', 'status' => self::STATUS_ACTIVE, 'order' => 6, 'is_link' => 1, 'is_noted' => 1],
                 ]
@@ -1226,7 +1226,7 @@ class Concept extends BaseModel
                 'content' => [
                     'concept_id' => self::ACARA_RESEPSI,
                     'grouping' => self::GROUPING_PENGRIAS_WAJAH,
-                    'name' => 'Pengrias Wajah',
+                    'name' => 'Perias Wajah',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
                     'order' => 0,
@@ -1236,7 +1236,7 @@ class Concept extends BaseModel
                     ['name' => 'Kontak', 'status' => self::STATUS_ACTIVE, 'order' => 1],
                     ['name' => 'Alamat', 'status' => self::STATUS_ACTIVE, 'order' => 2],
                     ['name' => 'Biaya', 'status' => self::STATUS_ACTIVE, 'order' => 3, 'is_cost' => 1],
-                    ['name' => 'Contoh Pengrias Wajah', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
+                    ['name' => 'Contoh Perias Wajah', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
                     ['name' => 'Tema', 'status' => self::STATUS_ACTIVE, 'order' => 5],
                     ['name' => 'Catatan', 'status' => self::STATUS_ACTIVE, 'order' => 6, 'is_link' => 1, 'is_noted' => 1],
                 ]

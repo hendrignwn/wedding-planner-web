@@ -46,6 +46,22 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/costs', 'Api\UserController@costs');
         Route::get('/messages', 'Api\RequestController@listMessages');
         
+        Route::group(['prefix' => 'procedure-administrations'], function () {
+            Route::get('/', 'Api\ProcedureAdministrationController@index');
+            Route::post('/', 'Api\ProcedureAdministrationController@store');
+        });
+        
+        Route::group(['prefix' => 'procedure-payment'], function () {
+            Route::get('/', 'Api\ProcedurePaymentController@index');
+            Route::post('/', 'Api\ProcedurePaymentController@store');
+        });
+        
+        Route::group(['prefix' => 'procedure-preparation'], function () {
+            Route::get('/', 'Api\ProcedurePreparationController@index');
+            Route::post('/', 'Api\ProcedurePreparationControllerController@store');
+        });
+        
+        
         Route::group(['prefix' => 'vendor'], function () {
             Route::get('/', 'Api\VendorController@index');
             Route::get('/{id}', 'Api\VendorController@show');

@@ -24,8 +24,8 @@ class AuthController extends Controller
 		$validator = \Validator::make($request->all(), [
 			'email' => 'required',
 			'password' => 'required',
-			'firebase_token' => 'required',
-			'user_id_token' => 'required',
+			'firebase_token' => 'nullable',
+			'user_id_token' => 'nullable',
 			'device_number' => 'required'
 		]);
 
@@ -137,6 +137,7 @@ class AuthController extends Controller
             'confirm_password' => 'required|min:6|same:password',
             'registered_device_number' => 'required',
             'firebase_token' => 'required',
+            'relation_name' => 'required',
             'relation_email' => 'required|email|max:255|unique:user,email',
             'wedding_day' => 'required',
             'venue' => 'required',
@@ -175,6 +176,7 @@ class AuthController extends Controller
         
         if ($user->gender == User::GENDER_MALE) :
             $userFemale = new User();
+            $userFemale->name = $request->relation_name;
             $userFemale->email = $request->relation_email;
             $userFemale->gender = User::GENDER_FEMALE;
             $userFemale->status = User::STATUS_NEED_REGISTER;
@@ -192,6 +194,7 @@ class AuthController extends Controller
             $userFemale->sendNeedRegisterNotification();
         else:
             $userMale = new User();
+            $userMale->name = $request->relation_name;
             $userMale->email = $request->relation_email;
             $userMale->gender = User::GENDER_MALE;
             $userMale->status = User::STATUS_NEED_REGISTER;
