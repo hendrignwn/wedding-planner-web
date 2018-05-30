@@ -84,6 +84,28 @@ class UserRelation extends BaseModel
         return $this->hasOne('\App\User', 'id', 'female_user_id');
     }
     
+    public function getMaleUserIdToken()
+    {
+        if ($this->maleUser->status != User::STATUS_ACTIVE) {
+            return null;
+        }
+        if ($this->maleUser->user_id_token == null) {
+            return null;
+        }
+        return $this->maleUser->user_id_token;
+    }
+    
+    public function getFemaleUserIdToken()
+    {
+        if ($this->femaleUser->status != User::STATUS_ACTIVE) {
+            return null;
+        }
+        if ($this->femaleUser->user_id_token == null) {
+            return null;
+        }
+        return $this->femaleUser->user_id_token;
+    }
+    
     public function getPhotoUrl()
     {
         return url(self::UPLOAD_DESTINATION_PATH . $this->photo);

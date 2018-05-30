@@ -38,7 +38,7 @@ class ProcedureAdministration extends BaseModel
     
     protected $with = [
     ];
-    
+        
     public function userRelation() 
     {
         return $this->hasOne('\App\UserRelation', 'id', 'user_relation_id');

@@ -24,6 +24,10 @@ class Procedure extends BaseModel
         'status',
         'order',
     ];
+    
+    protected $appends = [
+        'checklist',
+    ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -39,5 +43,18 @@ class Procedure extends BaseModel
     public function procedureAdministration()
     {
         return $this->hasOne('\App\ProcedureAdministration', 'procedure_id', 'id');
+    }
+    
+    public function getChecklistAttribute()
+    {
+        if (!$this->procedureAdministration) {
+            return 0;
+        }
+        
+        if ($this->procedureAdministration->checklist == ProcedureAdministration::CHECKLIST_FALSE) {
+            return 0;
+        }
+        
+        return 1;
     }
 }

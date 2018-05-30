@@ -32,6 +32,7 @@ class ProcedurePayment extends BaseModel
         'installment_date_1',
         'installment_date_2',
         'installment_date_3',
+        'description',
     ];
 
     /**
@@ -53,6 +54,80 @@ class ProcedurePayment extends BaseModel
     public function user() 
     {
         return $this->hasOne('\App\User', 'id', 'user_id');
+    }
+    
+    public static function sendPushNotification()
+    {
+        $models = self::where("installment_date_1", Carbon::now()->toDateString())
+                    ->orWhere("installment_date_2", Carbon::now()->toDateString())
+                    ->orWhere("installment_date_3", Carbon::now()->toDateString())
+                    ->get();
+        if (!$models) {
+            return null;
+        }
+        
+        foreach ($models as $model) {
+            $users = [];
+            if ($model->userRelation->getMaleUserIdToken() != null) {
+                $users[] = $model->userRelation->getMaleUserIdToken();
+            }
+            if ($model->userRelation->getFemaleUserIdToken() != null) {
+                $users[] = $model->userRelation->getFemaleUserIdToken();
+            }
+            if (count($users) > 0) {
+                $content = 'Segera lakukan pembayaran';
+                switch (Carbon::now()->toDateString()) {
+                    case $model->installment_date_1:
+                        $content = 'Pembayaran sebesar Rp. ' . number_format($model->installment_total_1) . 
+                            ' jatuh tempo pada tanggal ' . Carbon::parse($model->installment_total_1)->format('d M Y') . 
+                            '. Total Keseluruhan Pembayaran sebesar Rp. ' . number_format($model->payment_total);
+                        break;
+                    case $model->installment_date_2:
+                        $content = 'Pembayaran sebesar Rp. ' . number_format($model->installment_total_2) . 
+                            ' jatuh tempo pada tanggal ' . Carbon::parse($model->installment_total_2)->format('d M Y') . 
+                            '. Total Keseluruhan Pembayaran sebesar Rp. ' . number_format($model->payment_total);
+                        break;
+                    case $model->installment_date_3:
+                        $content = 'Pembayaran sebesar Rp. ' . number_format($model->installment_total_3) . 
+                            ' jatuh tempo pada tanggal ' . Carbon::parse($model->installment_total_3)->format('d M Y') . 
+                            '. Total Keseluruhan Pembayaran sebesar Rp. ' . number_format($model->payment_total);
+                        break;
+                }
+                $fields = [
+                    'app_id' => 'c054887d-802a-4395-9603-51e82b790459',
+                    'data' => [
+                        'id' => $model->id,
+                        'name' => $model->name,
+                    ],
+                    'contents' => [
+                        'en' => $content,
+                    ],
+                    'headings' => [
+                        'en' => "Pembayaran: " . $model->name,
+                    ],
+                    'include_player_ids' => $users,
+                ];
+
+                $notification = json_encode($fields);
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/json; charset=utf-8',
+                    'Authorization: Basic MTFmN2ZlZDItZjMxOS00YWRlLTg2YzEtYzkyNmY0NWM4OTQy'
+                ));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_setopt($ch, CURLOPT_HEADER, FALSE);
+                curl_setopt($ch, CURLOPT_POST, TRUE);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $notification);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+                $response = curl_exec($ch);
+                curl_close($ch);
+
+                \Illuminate\Support\Facades\Log::info('Procedure Preparation Send Notification Success with params ' . $notification);
+                \Illuminate\Support\Facades\Log::info('Procedure Preparation Send Notification Success with response ' . $response);
+            }
+        }
     }
     
 }

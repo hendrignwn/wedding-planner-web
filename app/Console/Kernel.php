@@ -43,6 +43,16 @@ class Kernel extends ConsoleKernel
             Message::sendPushNotification();
             Log::info('Scheduler is running: daily at 23:50');
         })->dailyAt('23:50');
+        
+        $schedule->call(function() {
+            \App\ProcedurePreparation::sendPushNotification();
+            Log::info('Scheduler is running: every hour');
+        })->hourly();
+        
+        $schedule->call(function() {
+            \App\ProcedurePayment::sendPushNotification();
+            Log::info('Scheduler is running: every hour');
+        })->hourly();
     }
 
     /**

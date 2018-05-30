@@ -54,11 +54,15 @@ Route::group(['prefix' => 'v1'], function () {
         Route::group(['prefix' => 'procedure-payment'], function () {
             Route::get('/', 'Api\ProcedurePaymentController@index');
             Route::post('/', 'Api\ProcedurePaymentController@store');
+            Route::patch('/{id}', 'Api\ProcedurePaymentController@update');
+            Route::delete('/{id}', 'Api\ProcedurePaymentController@delete');
         });
         
         Route::group(['prefix' => 'procedure-preparation'], function () {
             Route::get('/', 'Api\ProcedurePreparationController@index');
-            Route::post('/', 'Api\ProcedurePreparationControllerController@store');
+            Route::post('/', 'Api\ProcedurePreparationController@store');
+            Route::patch('/{id}', 'Api\ProcedurePreparationController@update');
+            Route::delete('/{id}', 'Api\ProcedurePreparationController@delete');
         });
         
         

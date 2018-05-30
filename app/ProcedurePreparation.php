@@ -47,4 +47,59 @@ class ProcedurePreparation extends BaseModel
         return $this->hasOne('\App\User', 'id', 'user_id');
     }
     
+    public static function sendPushNotification()
+    {
+        $models = self::whereRaw("DATE_FORMAT(DATE_SUB(preparation_at, INTERVAL 1 HOUR), '%Y-%m-%d %H') = '" . Carbon::now()->format('Y-m-d H') . "'")
+                ->get();
+        if (!$models) {
+            return null;
+        }
+        
+        foreach ($models as $model) {
+            $users = [];
+            if ($model->userRelation->getMaleUserIdToken() != null) {
+                $users[] = $model->userRelation->getMaleUserIdToken();
+            }
+            if ($model->userRelation->getFemaleUserIdToken() != null) {
+                $users[] = $model->userRelation->getFemaleUserIdToken();
+            }
+            if (count($users) > 0) {
+                $fields = [
+                    'app_id' => 'c054887d-802a-4395-9603-51e82b790459',
+                    'data' => [
+                        'id' => $model->id,
+                        'name' => $model->name,
+                        'venue' => $model->venue,
+                        'preparation_at' => $model->preparation_at,
+                    ],
+                    'contents' => [
+                        'en' => strip_tags(substr("Bertempat di " . $model->venue . " " . Carbon::parse($model->preparation_at)->format('d M Y H:i'), 0, 80)),
+                    ],
+                    'headings' => [
+                        'en' => "Persiapan: " . $model->name,
+                    ],
+                    'include_player_ids' => $users,
+                ];
+
+                $notification = json_encode($fields);
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/json; charset=utf-8',
+                    'Authorization: Basic MTFmN2ZlZDItZjMxOS00YWRlLTg2YzEtYzkyNmY0NWM4OTQy'
+                ));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_setopt($ch, CURLOPT_HEADER, FALSE);
+                curl_setopt($ch, CURLOPT_POST, TRUE);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $notification);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+                $response = curl_exec($ch);
+                curl_close($ch);
+
+                \Illuminate\Support\Facades\Log::info('Procedure Preparation Send Notification Success with params ' . $notification);
+                \Illuminate\Support\Facades\Log::info('Procedure Preparation Send Notification Success with response ' . $response);
+            }
+        }
+    }
 }
