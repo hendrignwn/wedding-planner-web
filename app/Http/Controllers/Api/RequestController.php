@@ -18,29 +18,25 @@ class RequestController extends Controller
      * @param Request $request
      * @return type
      */
-    public function listConcepts(Request $request)
-    {
-        $models = Concept::actived()->ordered()->get();
-        
-        return response()->json([
-            'status' => 200,
-            'message' => 'success',
-            'data' => $models
-        ], 200);
-    }
-    
-    /**
-     * @param Request $request
-     * @return type
-     */
     public function listMessages(Request $request)
     {
-        $models = Message::actived()->orderBy('message_at', 'desc')->get();
+        $user = JWTAuth::parseToken()->authenticate();
+		if ($user->token != JWTAuth::getToken()) {
+			return response()->json([
+				'status' => 401,
+				'message' => 'Invalid credentials'
+			], 401);
+		}
+        
+        $models = Message::actived()->whereNull('user_relation_id')->orderBy('message_at', 'desc')->get();
+        $modelHasUsers = Message::actived()->where('user_relation_id', $user->userRelation->id)->orderBy('message_at', 'desc')->get();
+        
+        $results = array_merge($modelHasUsers->toArray(), $models->toArray());
         
         return response()->json([
             'status' => 200,
             'message' => 'success',
-            'data' => $models
+            'data' => $results
         ], 200);
     }
     

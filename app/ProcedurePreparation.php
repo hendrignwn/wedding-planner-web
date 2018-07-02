@@ -63,6 +63,19 @@ class ProcedurePreparation extends BaseModel
             if ($model->userRelation->getFemaleUserIdToken() != null) {
                 $users[] = $model->userRelation->getFemaleUserIdToken();
             }
+            $message = new Message();
+            $message->user_relation_id = $model->user_relation_id;
+            $message->name = 'Persiapan: ' . $model->name;
+            $message->description = 'Tanggal ' . Carbon::parse($model->preparation_at)->format('d M Y H:i') . ' dan bertempat di ' . $model->venue;
+            $message->start_date = Carbon::parse($model->preparation_at)->toDateString();
+            $message->file = 'default.jpg';
+            $message->end_date = Carbon::parse($model->preparation_at)->addDay()->toDateString();
+            $message->is_all_date = 0;
+            $message->status = self::STATUS_ACTIVE;
+            $message->message_at = Carbon::now()->toDateTimeString();
+            $message->created_at = Carbon::now()->toDateTimeString();
+            $message->save();
+            
             if (count($users) > 0) {
                 $fields = [
                     'app_id' => 'c054887d-802a-4395-9603-51e82b790459',
@@ -80,7 +93,7 @@ class ProcedurePreparation extends BaseModel
                     ],
                     'include_player_ids' => $users,
                 ];
-
+                
                 $notification = json_encode($fields);
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");

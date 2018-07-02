@@ -29,6 +29,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         Log::useDailyFiles(storage_path() . '/logs/scheduler.log');
+        Log::info('Running cron job');
         $schedule->call(function() {
             Message::sendPushNotification();
             Log::info('Scheduler is running: daily at 10:00');
@@ -36,13 +37,13 @@ class Kernel extends ConsoleKernel
         
         $schedule->call(function() {
             Message::sendPushNotification();
-            Log::info('Scheduler is running: daily at 18:30');
-        })->dailyAt('18:30');
+            Log::info('Scheduler is running: daily at 18:00');
+        })->dailyAt('18:00');
         
         $schedule->call(function() {
             Message::sendPushNotification();
-            Log::info('Scheduler is running: daily at 23:50');
-        })->dailyAt('23:50');
+            Log::info('Scheduler is running: daily at 23:00');
+        })->dailyAt('23:00');
         
         $schedule->call(function() {
             \App\ProcedurePreparation::sendPushNotification();
@@ -51,8 +52,8 @@ class Kernel extends ConsoleKernel
         
         $schedule->call(function() {
             \App\ProcedurePayment::sendPushNotification();
-            Log::info('Scheduler is running: every hour');
-        })->hourly();
+            Log::info('Scheduler is running: daily at 08:00');
+        })->dailyAt('08:00');
     }
 
     /**

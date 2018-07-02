@@ -15,6 +15,10 @@ use Illuminate\Http\Request;
 /**
  * with validation Content Type: application/json
  */
+Route::get('test', function() {
+    echo "test";
+    var_dump(App\ProcedurePreparation::sendPushNotification());
+});
 Route::group(['prefix' => 'v1'], function () {
     
     Route::group(['prefix' => 'auth'], function () {
@@ -30,17 +34,23 @@ Route::group(['prefix' => 'v1'], function () {
         });
     });
     
-    Route::get('/concepts', 'Api\RequestController@listConcepts');
     Route::get('/procedure', 'Api\RequestController@procedure');
     Route::get('/page/{category}', 'Api\RequestController@getPage');
     
     Route::group(['middleware' => ['jwt.auth']], function () {
-        
+                       
         Route::group(['prefix' => 'contents'], function () {
-            Route::get('/{conceptId}', 'Api\ContentController@index');
-            Route::post('/store/{conceptId}', 'Api\ContentController@store');
+            Route::get('/{conceptId}/{isCustomConcept}', 'Api\ContentController@index');
+            Route::post('/store/{conceptId}/{isCustomConcept}', 'Api\ContentController@store');
             Route::patch('/update/{id}', 'Api\ContentController@update');
             Route::delete('/delete/{id}', 'Api\ContentController@delete');
+        });
+                       
+        Route::group(['prefix' => 'concepts'], function () {
+            Route::get('/', 'Api\ConceptController@index');
+            Route::post('/store', 'Api\ConceptController@store');
+            Route::patch('/update/{id}', 'Api\ConceptController@update');
+            Route::delete('/delete/{id}', 'Api\ConceptController@delete');
         });
         
         Route::get('/costs', 'Api\UserController@costs');

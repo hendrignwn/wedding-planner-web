@@ -25,6 +25,7 @@ class Message extends BaseModel
      * @var array
      */
     protected $fillable = [
+        'user_relation_id',
         'name',
         'description',
         'file',
@@ -61,6 +62,11 @@ class Message extends BaseModel
         }
         $this->setPath($path);
         $this->setThumbPath($pathThumb);
+    }
+    
+    public function userRelation()
+    {
+        return $this->hasOne('\App\UserRelation', 'id', 'user_relation_id');
     }
     
     public function getFileUrl()

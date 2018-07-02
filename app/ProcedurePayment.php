@@ -93,6 +93,20 @@ class ProcedurePayment extends BaseModel
                             '. Total Keseluruhan Pembayaran sebesar Rp. ' . number_format($model->payment_total);
                         break;
                 }
+                
+                $message = new Message();
+                $message->user_relation_id = $model->user_relation_id;
+                $message->name = 'Pembayaran: ' . $model->name;
+                $message->description = $content;
+                $message->file = 'default.jpg';
+                $message->start_date = Carbon::now()->toDateString();
+                $message->end_date = Carbon::now()->addDay()->toDateString();
+                $message->is_all_date = 0;
+                $message->status = self::STATUS_ACTIVE;
+                $message->message_at = Carbon::now()->toDateTimeString();
+                $message->created_at = Carbon::now()->toDateTimeString();
+                $message->save();
+                
                 $fields = [
                     'app_id' => 'c054887d-802a-4395-9603-51e82b790459',
                     'data' => [

@@ -17,7 +17,7 @@ class ContentController extends Controller
      * @param Request $request
      * @return type
      */
-    public function index($conteptId, Request $request)
+    public function index($conteptId, $isCustomConcept, Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 		if ($user->token != JWTAuth::getToken()) {
@@ -42,12 +42,20 @@ class ContentController extends Controller
 				'message' => 'Something error. Please try again'
 			], 500);
         }
-        
-        $contents = Content::where('user_relation_id', $userRelationId)
+        if ($isCustomConcept) {
+            $contents = Content::where('user_relation_id', $userRelationId)
+                ->where('user_relation_concept_id', $conteptId)
+                ->actived()
+                ->ordered()
+                ->get();
+        } else {
+            $contents = Content::where('user_relation_id', $userRelationId)
                 ->where('concept_id', $conteptId)
                 ->actived()
                 ->ordered()
                 ->get();
+        }
+        
         
         return response()->json([
             'status' => 200,
@@ -57,7 +65,7 @@ class ContentController extends Controller
         ], 200);
     }
     
-    public function store($conceptId, Request $request)
+    public function store($conceptId, $isCustomConcept, Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 		if ($user->token != JWTAuth::getToken()) {
@@ -75,7 +83,16 @@ class ContentController extends Controller
 			], 401);
         }
         
-        $concept = Concept::whereId($conceptId)->first();
+        $content = new Content();
+        if ($isCustomConcept) {
+            $concept = \App\UserRelationConcept::whereId($conceptId)->first();
+            $content->user_relation_concept_id = $conceptId;
+            $content->concept_id = null;
+        } else {
+            $concept = Concept::whereId($conceptId)->first();
+            $content->concept_id = $conceptId;
+            $content->user_relation_concept_id = null;
+        }
         if (!$concept) {
             return response()->json([
                 'status' => 404,
@@ -103,8 +120,6 @@ class ContentController extends Controller
             $relationPartner = $relation->male_user;
         }
         
-        $content = new Content();
-        $content->concept_id = $conceptId;
         $content->user_id = $user->id;
         $content->user_relation_id = $relation->id;
         $content->name = $request->name;
@@ -113,11 +128,19 @@ class ContentController extends Controller
         $content->order = 0;
         $content->save();
         
-        $contents = Content::where('user_relation_id', $relation->id)
+        if ($isCustomConcept) {
+            $contents = Content::where('user_relation_id', $relation->id)
+                ->where('user_relation_concept_id', $conceptId)
+                ->actived()
+                ->ordered()
+                ->get();
+        } else {
+            $contents = Content::where('user_relation_id', $relation->id)
                 ->where('concept_id', $conceptId)
                 ->actived()
                 ->ordered()
                 ->get();
+        }
         
         return response()->json([
             'status' => 200,
@@ -171,16 +194,24 @@ class ContentController extends Controller
         $content->order = 0;
         $content->save();
         
-        $contents = Content::where('user_relation_id', $content->user_relation_id)
+        if ($content->user_relation_concept_id) {
+            $contents = Content::where('user_relation_id', $content->user_relation_id)
+                ->where('user_relation_concept_id', $content->user_relation_concept_id)
+                ->actived()
+                ->ordered()
+                ->get();
+        } else {
+            $contents = Content::where('user_relation_id', $content->user_relation_id)
                 ->where('concept_id', $content->concept_id)
                 ->actived()
                 ->ordered()
                 ->get();
+        }
         
         return response()->json([
             'status' => 200,
             'message' => 'success',
-            'concept_id' => $content->concept_id,
+            'concept_id' => $content->user_relation_concept_id ? $content->user_relation_concept_id : $content->concept_id,
             'data' => $contents,
         ], 200);
     }
@@ -215,16 +246,24 @@ class ContentController extends Controller
         
         $content->delete();
         
-        $contents = Content::where('user_relation_id', $content->user_relation_id)
+        if ($content->user_relation_concept_id) {
+            $contents = Content::where('user_relation_id', $content->user_relation_id)
+                ->where('user_relation_concept_id', $content->user_relation_concept_id)
+                ->actived()
+                ->ordered()
+                ->get();
+        } else {
+            $contents = Content::where('user_relation_id', $content->user_relation_id)
                 ->where('concept_id', $content->concept_id)
                 ->actived()
                 ->ordered()
                 ->get();
+        }
         
         return response()->json([
             'status' => 200,
             'message' => 'success',
-            'concept_id' => $content->concept_id,
+            'concept_id' => $content->user_relation_concept_id ? $content->user_relation_concept_id : $content->concept_id,
             'data' => $contents,
         ], 200);
     }

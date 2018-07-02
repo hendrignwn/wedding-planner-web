@@ -11,6 +11,7 @@ class Concept extends BaseModel
     const ACARA_AKAD_NIKAH = 5;
     const ACARA_RESEPSI = 6;
     const BULAN_MADU = 7;
+    const PENGISI_ACARA_MC = 7;
     
     const GROUPING_PENGURUS_PERNIKAHAN = 1;
     const GROUPING_DEKORASI = 2;
@@ -25,6 +26,7 @@ class Concept extends BaseModel
     const GROUPING_CINDERA_MATA = 11;
     const GROUPING_SESERAHAN = 12;
     const GROUPING_BULAN_MADU = 13;
+    const GROUPING_PENGISI_ACARA_MC= 14;
     
     /**
      * The table associated with the model.
@@ -1330,6 +1332,24 @@ class Concept extends BaseModel
                     ['name' => 'Hotel', 'status' => self::STATUS_ACTIVE, 'order' => 2],
                     ['name' => 'Biaya', 'status' => self::STATUS_ACTIVE, 'order' => 3, 'is_cost' => 1],
                     ['name' => 'Foto Lokasi', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
+                    ['name' => 'Catatan', 'status' => self::STATUS_ACTIVE, 'order' => 5, 'is_link' => 1, 'is_noted' => 1],
+                ]
+            ],
+            [
+                'content' => [
+                    'concept_id' => self::PENGISI_ACARA_MC,
+                    'grouping' => self::GROUPING_PENGISI_ACARA_MC,
+                    'name' => 'Pengisi Acara & MC',
+                    'description' => null,
+                    'status' => self::STATUS_ACTIVE,
+                    'order' => 0,
+                ],
+                'content_details' => [
+                    ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
+                    ['name' => 'Kontak', 'status' => self::STATUS_ACTIVE, 'order' => 1],
+                    ['name' => 'Alamat', 'status' => self::STATUS_ACTIVE, 'order' => 2],
+                    ['name' => 'Biaya', 'status' => self::STATUS_ACTIVE, 'order' => 3, 'is_cost' => 1],
+                    ['name' => 'Foto', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
                     ['name' => 'Catatan', 'status' => self::STATUS_ACTIVE, 'order' => 5, 'is_link' => 1, 'is_noted' => 1],
                 ]
             ],
