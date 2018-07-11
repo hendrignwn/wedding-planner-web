@@ -94,7 +94,7 @@ class ContentDetailListController extends Controller
         
         $contentDetailList = new ContentDetailList();
         $contentDetailList->content_detail_id = $contentDetailId;
-        $contentDetailList->name = $user->name + ' ' + (ContentDetailList::getLastOrderByContentDetailId($contentDetailId) + 1);
+        $contentDetailList->name = $user->name . ' ' . (ContentDetailList::getLastOrderByContentDetailId($contentDetailId) + 1);
         
         $imageFilename = $contentDetailList->generateFilename($data['extension']);
         $img->save($contentDetailList->getPath() . $imageFilename);

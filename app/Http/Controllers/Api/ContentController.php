@@ -127,6 +127,7 @@ class ContentController extends Controller
         $content->is_not_deleted = Content::IS_NOT_DELETED_FALSE;
         $content->order = 0;
         $content->save();
+        $content->triggerInsertContentDetails();
         
         if ($isCustomConcept) {
             $contents = Content::where('user_relation_id', $relation->id)

@@ -79,22 +79,27 @@ class ProcedurePayment extends BaseModel
                 switch (Carbon::now()->toDateString()) {
                     case $model->installment_date_1:
                         $content = 'Pembayaran sebesar Rp. ' . number_format($model->installment_total_1) . 
-                            ' jatuh tempo pada tanggal ' . Carbon::parse($model->installment_total_1)->format('d M Y') . 
+                            ' jatuh tempo pada tanggal ' . Carbon::parse($model->installment_date_1)->format('d M Y') . 
                             '. Total Keseluruhan Pembayaran sebesar Rp. ' . number_format($model->payment_total);
                         break;
                     case $model->installment_date_2:
                         $content = 'Pembayaran sebesar Rp. ' . number_format($model->installment_total_2) . 
-                            ' jatuh tempo pada tanggal ' . Carbon::parse($model->installment_total_2)->format('d M Y') . 
+                            ' jatuh tempo pada tanggal ' . Carbon::parse($model->installment_date_2)->format('d M Y') . 
                             '. Total Keseluruhan Pembayaran sebesar Rp. ' . number_format($model->payment_total);
                         break;
                     case $model->installment_date_3:
                         $content = 'Pembayaran sebesar Rp. ' . number_format($model->installment_total_3) . 
-                            ' jatuh tempo pada tanggal ' . Carbon::parse($model->installment_total_3)->format('d M Y') . 
+                            ' jatuh tempo pada tanggal ' . Carbon::parse($model->installment_date_3)->format('d M Y') . 
                             '. Total Keseluruhan Pembayaran sebesar Rp. ' . number_format($model->payment_total);
                         break;
                 }
                 
-                $message = new Message();
+                $message = Message::where('procedure_payment_id', $model->id)->first();
+                if (!$message) {
+                    $message = new Message();   
+                    $message->created_at = Carbon::now()->toDateTimeString();
+                }
+                $message->procedure_payment_id = $model->id;
                 $message->user_relation_id = $model->user_relation_id;
                 $message->name = 'Pembayaran: ' . $model->name;
                 $message->description = $content;
@@ -104,7 +109,7 @@ class ProcedurePayment extends BaseModel
                 $message->is_all_date = 0;
                 $message->status = self::STATUS_ACTIVE;
                 $message->message_at = Carbon::now()->toDateTimeString();
-                $message->created_at = Carbon::now()->toDateTimeString();
+                $message->updated_at = Carbon::now()->toDateTimeString();
                 $message->save();
                 
                 $fields = [
@@ -120,6 +125,7 @@ class ProcedurePayment extends BaseModel
                         'en' => "Pembayaran: " . $model->name,
                     ],
                     'include_player_ids' => $users,
+                    'badge_count' => 1
                 ];
 
                 $notification = json_encode($fields);

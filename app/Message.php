@@ -26,6 +26,8 @@ class Message extends BaseModel
      */
     protected $fillable = [
         'user_relation_id',
+        'procedure_payment_id',
+        'procedure_preparation_id',
         'name',
         'description',
         'file',

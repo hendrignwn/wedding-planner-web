@@ -85,7 +85,7 @@ class ContentDetailList extends BaseModel
     }
     
     public static function getLastOrderByContentDetailId($id)
-    {
+    { 
         $model = self::where('content_detail_id', $id)
                 ->orderBy('id', 'desc')
                 ->limit(1)
@@ -94,6 +94,6 @@ class ContentDetailList extends BaseModel
             return 0;
         }
         
-        return $model->order;
+        return (int)$model->order;
     }
 }

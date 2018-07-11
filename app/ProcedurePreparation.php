@@ -63,7 +63,12 @@ class ProcedurePreparation extends BaseModel
             if ($model->userRelation->getFemaleUserIdToken() != null) {
                 $users[] = $model->userRelation->getFemaleUserIdToken();
             }
-            $message = new Message();
+            $message = Message::where('procedure_preparation_id', $model->id)->first();
+            if (!$message) {
+                $message = new Message();   
+                $message->created_at = Carbon::now()->toDateTimeString();
+            }
+            $message->procedure_preparation_id = $model->id;
             $message->user_relation_id = $model->user_relation_id;
             $message->name = 'Persiapan: ' . $model->name;
             $message->description = 'Tanggal ' . Carbon::parse($model->preparation_at)->format('d M Y H:i') . ' dan bertempat di ' . $model->venue;
@@ -73,7 +78,7 @@ class ProcedurePreparation extends BaseModel
             $message->is_all_date = 0;
             $message->status = self::STATUS_ACTIVE;
             $message->message_at = Carbon::now()->toDateTimeString();
-            $message->created_at = Carbon::now()->toDateTimeString();
+            $message->updated_at = Carbon::now()->toDateTimeString();
             $message->save();
             
             if (count($users) > 0) {
@@ -92,6 +97,7 @@ class ProcedurePreparation extends BaseModel
                         'en' => "Persiapan: " . $model->name,
                     ],
                     'include_player_ids' => $users,
+                    'badge_count' => 1
                 ];
                 
                 $notification = json_encode($fields);
