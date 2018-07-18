@@ -78,6 +78,8 @@
 
             <div class="content">
                 <div class="title m-b-md">
+                    <img src="{{ asset('img/logo.png') }}" width="200" />
+                    <br/>
                     {{ config('app.name') }}
                 </div>
 
