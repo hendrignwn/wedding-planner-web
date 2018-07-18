@@ -51,6 +51,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::get('/term-of-use/data', ['as' => 'term-of-use.data', 'uses' => 'Admin\\TermOfUseController@listIndex']);
 	Route::resource('/term-of-use', 'Admin\\TermOfUseController');
     
+    Route::get('/privacy-policy/data', ['as' => 'privacy-policy.data', 'uses' => 'Admin\\PrivacyPolicyController@listIndex']);
+	Route::resource('/privacy-policy', 'Admin\\PrivacyPolicyController');
+    
     Route::get('/about-us/data', ['as' => 'about-us.data', 'uses' => 'Admin\\AboutUsController@listIndex']);
 	Route::resource('/about-us', 'Admin\\AboutUsController');
     

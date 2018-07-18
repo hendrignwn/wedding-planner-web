@@ -13,7 +13,7 @@ use Illuminate\Routing\Redirector;
 use Illuminate\View\View;
 use Session;
 
-class TermOfUseController extends Controller
+class PrivacyPolicyController extends Controller
 {
 	protected $rules = [
 		'name' => 'required',
@@ -28,8 +28,8 @@ class TermOfUseController extends Controller
      */
     public function index()
     {
-        return redirect(route('term-of-use.edit', ['id' => Page::CATEGORY_TERM_OF_USE]));
-        return view('admin.term-of-use.index');
+        return redirect(route('privacy-policy.edit', ['id' => Page::CATEGORY_PRIVACY_POLICY]));
+        return view('admin.privacy-policy.index');
     }
 
     /**
@@ -39,7 +39,7 @@ class TermOfUseController extends Controller
      */
     public function create()
     {
-        return view('admin.term-of-use.create');
+        return view('admin.privacy-policy.create');
     }
 
     /**
@@ -70,7 +70,7 @@ class TermOfUseController extends Controller
 		
         Session::flash('success', 'Procedure added!');
         
-        return redirect('admin/term-of-use');
+        return redirect('admin/privacy-policy');
     }
 
     /**
@@ -84,7 +84,7 @@ class TermOfUseController extends Controller
     {
         $model = Page::findOrFail($id);
 
-        return view('admin.term-of-use.show', compact('model'));
+        return view('admin.privacy-policy.show', compact('model'));
     }
 
     /**
@@ -98,7 +98,7 @@ class TermOfUseController extends Controller
     {
         $model = Page::findOrFail($id);
 
-        return view('admin.term-of-use.edit', compact('model'));
+        return view('admin.privacy-policy.edit', compact('model'));
     }
 
     /**
@@ -123,7 +123,7 @@ class TermOfUseController extends Controller
 		
         Session::flash('success', 'Term of Use updated!');
 
-        return redirect(route('term-of-use.edit', ['id' => $model->id]));
+        return redirect(route('privacy-policy.edit', ['id' => $model->id]));
     }
 
     /**
@@ -135,11 +135,11 @@ class TermOfUseController extends Controller
      */
     public function destroy($id)
     {
-        return redirect('admin/term-of-use');
+        return redirect('admin/privacy-policy');
 		
         Session::flash('success', 'Procedure deleted!');
 
-        return redirect('admin/term-of-use');
+        return redirect('admin/privacy-policy');
     }
 	
 	/**
@@ -151,11 +151,11 @@ class TermOfUseController extends Controller
         $model = Page::select([
 					DB::raw('@rownum  := @rownum  + 1 AS rownum'), 'page.*'
 				])
-                ->whereCategory(Page::CATEGORY_TERM_OF_USE);
+                ->whereCategory(Page::CATEGORY_PRIVACY_POLICY);
 
          $datatables = app('datatables')->of($model)
             ->addColumn('action', function ($model) {
-                return '<a href="term-of-use/'.$model->id.'/edit" class="btn btn-xs btn-primary rounded" data-toggle="tooltip" title="" data-original-title="'. trans('systems.edit') .'"><i class="fa fa-pencil"></i></a> ';
+                return '<a href="privacy-policy/'.$model->id.'/edit" class="btn btn-xs btn-primary rounded" data-toggle="tooltip" title="" data-original-title="'. trans('systems.edit') .'"><i class="fa fa-pencil"></i></a> ';
             });
 
         if ($keyword = $request->get('search')['value']) {
@@ -165,9 +165,9 @@ class TermOfUseController extends Controller
 //        if ($range = $datatables->request->get('range')) {
 //            $rang = explode(":", $range);
 //            if($rang[0] != "Invalid date" && $rang[1] != "Invalid date" && $rang[0] != $rang[1]){
-//                $datatables->whereBetween('term-of-use.created_at', ["$rang[0] 00:00:00", "$rang[1] 23:59:59"]);
+//                $datatables->whereBetween('privacy-policy.created_at', ["$rang[0] 00:00:00", "$rang[1] 23:59:59"]);
 //            }else if($rang[0] != "Invalid date" && $rang[1] != "Invalid date" && $rang[0] == $rang[1]) {
-//                $datatables->whereBetween('term-of-use.created_at', ["$rang[0] 00:00:00", "$rang[1] 23:59:59"]);
+//                $datatables->whereBetween('privacy-policy.created_at', ["$rang[0] 00:00:00", "$rang[1] 23:59:59"]);
 //            }
 //        }
 		

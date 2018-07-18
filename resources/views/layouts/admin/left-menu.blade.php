@@ -26,6 +26,7 @@
                     Request::is('admin/procedure*') ||
                     Request::is('admin/concept*') ||
                     Request::is('admin/term-of-use*') ||
+                    Request::is('admin/privacy-policy*') ||
                     Request::is('admin/about-us*')
                 ) ? true : false; 
             @endphp
@@ -50,6 +51,9 @@
                     </li>
                     <li class="{!! (Request::is('admin/term-of-use*')) ? 'active' : '' !!}">
                         <a href="{!! route('term-of-use.index') !!}">Term of Use</a>
+                    </li>
+                    <li class="{!! (Request::is('admin/privacy-policy*')) ? 'active' : '' !!}">
+                        <a href="{!! route('privacy-policy.index') !!}">Kebijakan Privasi</a>
                     </li>
                     <li class="{!! (Request::is('admin/about-us*')) ? 'active' : '' !!}">
                         <a href="{!! route('about-us.index') !!}">About Us</a>
