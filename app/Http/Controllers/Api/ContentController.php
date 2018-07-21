@@ -114,18 +114,30 @@ class ContentController extends Controller
         
         if ($user->gender == User::GENDER_MALE) {
             $relation = $user->maleUserRelation;
-            $relationPartner = $relation->female_user;
+            $relationPartner = $relation->femaleUser;
         } else {
             $relation = $user->femaleUserRelation;
-            $relationPartner = $relation->male_user;
+            $relationPartner = $relation->maleUser;
         }
         
+        $lastContentOrder = Content::where('user_relation_concept_id', $conceptId)
+                ->orWhere('concept_id', $conceptId)
+                ->where('user_relation_id', $relation->id)
+                ->orderBy('id', 'desc')
+                ->first();
+        if ($lastContentOrder) {
+            $order = $lastContentOrder->order + 1;
+        } else {
+            $order = 0;
+        }
+        
+        $content->grouping = null;
         $content->user_id = $user->id;
         $content->user_relation_id = $relation->id;
         $content->name = $request->name;
         $content->status = Content::STATUS_ACTIVE;
         $content->is_not_deleted = Content::IS_NOT_DELETED_FALSE;
-        $content->order = 0;
+        $content->order = $order;
         $content->save();
         $content->triggerInsertContentDetails();
         
@@ -192,7 +204,6 @@ class ContentController extends Controller
         $content->name = $request->name;
         $content->status = Content::STATUS_ACTIVE;
         $content->is_not_deleted = Content::IS_NOT_DELETED_FALSE;
-        $content->order = 0;
         $content->save();
         
         if ($content->user_relation_concept_id) {

@@ -15,12 +15,12 @@ use Illuminate\Http\Request;
 /**
  * with validation Content Type: application/json
  */
-//Route::get('trigger', function() {
-//    $userRelations = App\UserRelation::get();
-//    foreach ($userRelations as $userRelation) {
-//        $userRelation->femaleUser->insertFirstContentData();
-//    }
-//});
+Route::get('trigger', function() {
+    $userRelations = App\UserRelation::get();
+    foreach ($userRelations as $userRelation) {
+        $userRelation->femaleUser->insertFirstContentData();
+    }
+});
 Route::group(['prefix' => 'v1'], function () {
     
     Route::group(['prefix' => 'auth'], function () {

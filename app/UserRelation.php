@@ -132,6 +132,7 @@ class UserRelation extends BaseModel
             })
             ->with(['content'])
             ->join('content', 'content.id', '=', 'content_detail.content_id')
+            ->whereNotNull('content.grouping')
             ->select([DB::raw('content_detail.*, SUM(content_detail.value) as value')])
             ->where('content_detail.is_cost', '=', 1)
             ->groupBy('content.grouping')

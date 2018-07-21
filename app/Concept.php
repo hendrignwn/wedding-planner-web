@@ -27,7 +27,8 @@ class Concept extends BaseModel
     const GROUPING_CINDERA_MATA = 13;
     const GROUPING_SESERAHAN = 14;
     const GROUPING_BULAN_MADU = 15;
-    const GROUPING_PENGISI_ACARA_MC= 16;
+    const GROUPING_PENGISI_ACARA= 16;
+    const GROUPING_MC= 17;
     
     /**
      * The table associated with the model.
@@ -94,7 +95,7 @@ class Concept extends BaseModel
                     'name' => 'Dekorasi',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 1,
                 ],
                 'content_details' => [
                     ['name' => 'Nama Dekorator', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -116,7 +117,7 @@ class Concept extends BaseModel
                     'name' => 'Lokasi Acara',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 2,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -134,7 +135,7 @@ class Concept extends BaseModel
                     'name' => 'Foto',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 3,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -152,7 +153,7 @@ class Concept extends BaseModel
                     'name' => 'Video',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 4,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -171,7 +172,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Pengantin',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 5,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -191,7 +192,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Keluarga',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 6,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -211,7 +212,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Panitia',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 7,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -230,7 +231,7 @@ class Concept extends BaseModel
                     'name' => 'Aksesoris',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 8,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -249,7 +250,7 @@ class Concept extends BaseModel
                     'name' => 'Perias Wajah',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 9,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -268,7 +269,7 @@ class Concept extends BaseModel
                     'name' => 'Katering',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 10,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -286,7 +287,7 @@ class Concept extends BaseModel
                     'name' => 'Undangan',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 11,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -305,7 +306,7 @@ class Concept extends BaseModel
                     'name' => 'Seserahan',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 12,
                 ],
                 'content_details' => [
                     ['name' => 'Lokasi', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -323,7 +324,7 @@ class Concept extends BaseModel
                     'name' => 'Kenang-kenangan',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 13,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -337,11 +338,29 @@ class Concept extends BaseModel
             [
                 'content' => [
                     'concept_id' => self::ACARA_LAMARAN,
-                    'grouping' => self::GROUPING_PENGISI_ACARA_MC,
-                    'name' => 'Pengisi Acara, MC',
+                    'grouping' => self::GROUPING_PENGISI_ACARA,
+                    'name' => 'Pengisi Acara',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 14,
+                ],
+                'content_details' => [
+                    ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
+                    ['name' => 'Kontak', 'status' => self::STATUS_ACTIVE, 'order' => 1],
+                    ['name' => 'Alamat', 'status' => self::STATUS_ACTIVE, 'order' => 2],
+                    ['name' => 'Biaya', 'status' => self::STATUS_ACTIVE, 'order' => 3, 'is_cost' => 1],
+                    ['name' => 'Foto', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
+                    ['name' => 'Catatan', 'status' => self::STATUS_ACTIVE, 'order' => 5, 'is_link' => 1, 'is_noted' => 1],
+                ]
+            ],
+            [
+                'content' => [
+                    'concept_id' => self::ACARA_LAMARAN,
+                    'grouping' => self::GROUPING_MC,
+                    'name' => 'MC',
+                    'description' => null,
+                    'status' => self::STATUS_ACTIVE,
+                    'order' => 15,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -378,7 +397,7 @@ class Concept extends BaseModel
                     'name' => 'Dekorasi',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 1,
                 ],
                 'content_details' => [
                     ['name' => 'Nama Dekorator', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -400,7 +419,7 @@ class Concept extends BaseModel
                     'name' => 'Lokasi Acara',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 2,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -418,7 +437,7 @@ class Concept extends BaseModel
                     'name' => 'Foto',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 3,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -436,7 +455,7 @@ class Concept extends BaseModel
                     'name' => 'Video',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 4,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -455,7 +474,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Pengantin',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 5,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -475,7 +494,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Keluarga',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 6,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -495,7 +514,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Panitia',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 7,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -515,7 +534,7 @@ class Concept extends BaseModel
                     'name' => 'Aksesoris',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 8,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -534,7 +553,7 @@ class Concept extends BaseModel
                     'name' => 'Perias Wajah',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 9,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -553,7 +572,7 @@ class Concept extends BaseModel
                     'name' => 'Katering',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 10,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -571,7 +590,7 @@ class Concept extends BaseModel
                     'name' => 'Undangan',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 11,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -590,7 +609,7 @@ class Concept extends BaseModel
                     'name' => 'Kenang-kenangan',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 12,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -604,11 +623,29 @@ class Concept extends BaseModel
             [
                 'content' => [
                     'concept_id' => self::ACARA_PENGAJIAN,
-                    'grouping' => self::GROUPING_PENGISI_ACARA_MC,
-                    'name' => 'Pengisi Acara, MC',
+                    'grouping' => self::GROUPING_PENGISI_ACARA,
+                    'name' => 'Pengisi Acara',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 13,
+                ],
+                'content_details' => [
+                    ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
+                    ['name' => 'Kontak', 'status' => self::STATUS_ACTIVE, 'order' => 1],
+                    ['name' => 'Alamat', 'status' => self::STATUS_ACTIVE, 'order' => 2],
+                    ['name' => 'Biaya', 'status' => self::STATUS_ACTIVE, 'order' => 3, 'is_cost' => 1],
+                    ['name' => 'Foto', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
+                    ['name' => 'Catatan', 'status' => self::STATUS_ACTIVE, 'order' => 5, 'is_link' => 1, 'is_noted' => 1],
+                ]
+            ],
+            [
+                'content' => [
+                    'concept_id' => self::ACARA_PENGAJIAN,
+                    'grouping' => self::GROUPING_MC,
+                    'name' => 'MC',
+                    'description' => null,
+                    'status' => self::STATUS_ACTIVE,
+                    'order' => 14,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -645,7 +682,7 @@ class Concept extends BaseModel
                     'name' => 'Dekorasi',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 1,
                 ],
                 'content_details' => [
                     ['name' => 'Nama Dekorator', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -667,7 +704,7 @@ class Concept extends BaseModel
                     'name' => 'Lokasi Acara',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 2,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -685,7 +722,7 @@ class Concept extends BaseModel
                     'name' => 'Foto',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 3,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -703,7 +740,7 @@ class Concept extends BaseModel
                     'name' => 'Video',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 4,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -722,7 +759,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Pengantin',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 5,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -742,7 +779,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Keluarga',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 6,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -762,7 +799,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Panitia',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 7,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -782,7 +819,7 @@ class Concept extends BaseModel
                     'name' => 'Aksesoris',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 8,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -801,7 +838,7 @@ class Concept extends BaseModel
                     'name' => 'Perias Wajah',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 9,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -820,7 +857,7 @@ class Concept extends BaseModel
                     'name' => 'Katering',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 10,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -838,7 +875,7 @@ class Concept extends BaseModel
                     'name' => 'Undangan',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 11,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -857,7 +894,7 @@ class Concept extends BaseModel
                     'name' => 'Kenang-kenangan',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 12,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -871,11 +908,29 @@ class Concept extends BaseModel
             [
                 'content' => [
                     'concept_id' => self::ACARA_SIRAMAN,
-                    'grouping' => self::GROUPING_PENGISI_ACARA_MC,
-                    'name' => 'Pengisi Acara, MC',
+                    'grouping' => self::GROUPING_PENGISI_ACARA,
+                    'name' => 'Pengisi Acara',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 13,
+                ],
+                'content_details' => [
+                    ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
+                    ['name' => 'Kontak', 'status' => self::STATUS_ACTIVE, 'order' => 1],
+                    ['name' => 'Alamat', 'status' => self::STATUS_ACTIVE, 'order' => 2],
+                    ['name' => 'Biaya', 'status' => self::STATUS_ACTIVE, 'order' => 3, 'is_cost' => 1],
+                    ['name' => 'Foto', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
+                    ['name' => 'Catatan', 'status' => self::STATUS_ACTIVE, 'order' => 5, 'is_link' => 1, 'is_noted' => 1],
+                ]
+            ],
+            [
+                'content' => [
+                    'concept_id' => self::ACARA_SIRAMAN,
+                    'grouping' => self::GROUPING_MC,
+                    'name' => 'MC',
+                    'description' => null,
+                    'status' => self::STATUS_ACTIVE,
+                    'order' => 14,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -913,7 +968,7 @@ class Concept extends BaseModel
                     'name' => 'Dekorasi',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 1,
                 ],
                 'content_details' => [
                     ['name' => 'Nama Dekorator', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -935,7 +990,7 @@ class Concept extends BaseModel
                     'name' => 'Lokasi Acara',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 2,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -953,7 +1008,7 @@ class Concept extends BaseModel
                     'name' => 'Foto',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 3,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -971,7 +1026,7 @@ class Concept extends BaseModel
                     'name' => 'Video',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 4,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -990,7 +1045,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Pengantin',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 5,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1010,7 +1065,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Keluarga',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 6,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1030,7 +1085,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Panitia',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 7,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1050,7 +1105,7 @@ class Concept extends BaseModel
                     'name' => 'Aksesoris',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 8,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1069,7 +1124,7 @@ class Concept extends BaseModel
                     'name' => 'Perias Wajah',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 9,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1088,7 +1143,7 @@ class Concept extends BaseModel
                     'name' => 'Makanan',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 10,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1126,7 +1181,7 @@ class Concept extends BaseModel
                     'name' => 'Dekorasi',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 1,
                 ],
                 'content_details' => [
                     ['name' => 'Nama Dekorator', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1148,7 +1203,7 @@ class Concept extends BaseModel
                     'name' => 'Lokasi Acara',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 2,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1166,7 +1221,7 @@ class Concept extends BaseModel
                     'name' => 'Foto',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 3,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1184,7 +1239,7 @@ class Concept extends BaseModel
                     'name' => 'Video',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 4,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1203,7 +1258,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Pengantin',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 5,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1223,7 +1278,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Keluarga',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 6,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1243,7 +1298,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Panitia',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 7,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1263,7 +1318,7 @@ class Concept extends BaseModel
                     'name' => 'Aksesoris',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 8,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1282,7 +1337,7 @@ class Concept extends BaseModel
                     'name' => 'Perias Wajah',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 9,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1301,7 +1356,7 @@ class Concept extends BaseModel
                     'name' => 'Makanan',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 10,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1320,7 +1375,7 @@ class Concept extends BaseModel
                     'name' => 'Undangan',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 11,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1339,7 +1394,7 @@ class Concept extends BaseModel
                     'name' => 'Kenang-kenangan',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 12,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1353,11 +1408,29 @@ class Concept extends BaseModel
             [
                 'content' => [
                     'concept_id' => self::ACARA_AKAD_NIKAH,
-                    'grouping' => self::GROUPING_PENGISI_ACARA_MC,
-                    'name' => 'Pengisi Acara, MC',
+                    'grouping' => self::GROUPING_PENGISI_ACARA,
+                    'name' => 'Pengisi Acara',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 13,
+                ],
+                'content_details' => [
+                    ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
+                    ['name' => 'Kontak', 'status' => self::STATUS_ACTIVE, 'order' => 1],
+                    ['name' => 'Alamat', 'status' => self::STATUS_ACTIVE, 'order' => 2],
+                    ['name' => 'Biaya', 'status' => self::STATUS_ACTIVE, 'order' => 3, 'is_cost' => 1],
+                    ['name' => 'Foto', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
+                    ['name' => 'Catatan', 'status' => self::STATUS_ACTIVE, 'order' => 5, 'is_link' => 1, 'is_noted' => 1],
+                ]
+            ],
+            [
+                'content' => [
+                    'concept_id' => self::ACARA_AKAD_NIKAH,
+                    'grouping' => self::GROUPING_MC,
+                    'name' => 'MC',
+                    'description' => null,
+                    'status' => self::STATUS_ACTIVE,
+                    'order' => 14,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1395,7 +1468,7 @@ class Concept extends BaseModel
                     'name' => 'Dekorasi',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 1,
                 ],
                 'content_details' => [
                     ['name' => 'Nama Dekorator', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1417,7 +1490,7 @@ class Concept extends BaseModel
                     'name' => 'Lokasi Acara',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 2,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1435,7 +1508,7 @@ class Concept extends BaseModel
                     'name' => 'Foto',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 3,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1453,7 +1526,7 @@ class Concept extends BaseModel
                     'name' => 'Video',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 4,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1472,7 +1545,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Pengantin',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 5,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1492,7 +1565,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Keluarga',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 6,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1512,7 +1585,7 @@ class Concept extends BaseModel
                     'name' => 'Busana Panitia',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 7,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1532,7 +1605,7 @@ class Concept extends BaseModel
                     'name' => 'Aksesoris',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 8,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1551,7 +1624,7 @@ class Concept extends BaseModel
                     'name' => 'Perias Wajah',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 9,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1570,7 +1643,7 @@ class Concept extends BaseModel
                     'name' => 'Makanan',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 10,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1589,7 +1662,7 @@ class Concept extends BaseModel
                     'name' => 'Undangan',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 11,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1608,7 +1681,7 @@ class Concept extends BaseModel
                     'name' => 'Seserahan',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 12,
                 ],
                 'content_details' => [
                     ['name' => 'Lokasi', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1626,7 +1699,7 @@ class Concept extends BaseModel
                     'name' => 'Kenang-kenangan',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 13,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
@@ -1640,11 +1713,29 @@ class Concept extends BaseModel
             [
                 'content' => [
                     'concept_id' => self::ACARA_RESEPSI,
-                    'grouping' => self::GROUPING_PENGISI_ACARA_MC,
-                    'name' => 'Pengisi Acara, MC',
+                    'grouping' => self::GROUPING_PENGISI_ACARA,
+                    'name' => 'Pengisi Acara',
                     'description' => null,
                     'status' => self::STATUS_ACTIVE,
-                    'order' => 0,
+                    'order' => 14,
+                ],
+                'content_details' => [
+                    ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],
+                    ['name' => 'Kontak', 'status' => self::STATUS_ACTIVE, 'order' => 1],
+                    ['name' => 'Alamat', 'status' => self::STATUS_ACTIVE, 'order' => 2],
+                    ['name' => 'Biaya', 'status' => self::STATUS_ACTIVE, 'order' => 3, 'is_cost' => 1],
+                    ['name' => 'Foto', 'status' => self::STATUS_ACTIVE, 'order' => 4, 'is_link' => 1, 'is_photo' => 1],
+                    ['name' => 'Catatan', 'status' => self::STATUS_ACTIVE, 'order' => 5, 'is_link' => 1, 'is_noted' => 1],
+                ]
+            ],
+            [
+                'content' => [
+                    'concept_id' => self::ACARA_RESEPSI,
+                    'grouping' => self::GROUPING_MC,
+                    'name' => 'MC',
+                    'description' => null,
+                    'status' => self::STATUS_ACTIVE,
+                    'order' => 15,
                 ],
                 'content_details' => [
                     ['name' => 'Nama', 'status' => self::STATUS_ACTIVE, 'order' => 0],

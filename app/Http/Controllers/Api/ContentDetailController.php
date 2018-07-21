@@ -163,7 +163,7 @@ class ContentDetailController extends Controller
         $contentDetail->value = $request->value;
         $contentDetail->status = ContentDetail::STATUS_ACTIVE;
         $contentDetail->is_not_deleted = ContentDetail::IS_NOT_DELETED_FALSE;
-        $contentDetail->order = 0;
+        $contentDetail->order = ContentDetail::getLastOrderByContentId($contentId) + 1;
         $contentDetail->save();
         
         $content = Content::whereId($contentDetail->content_id)->actived()->first();

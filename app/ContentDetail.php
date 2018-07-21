@@ -64,4 +64,17 @@ class ContentDetail extends BaseModel
     {
         return $this->is_cost == true;
     }
+    
+    public static function getLastOrderByContentId($id)
+    { 
+        $model = self::where('content_id', $id)
+                ->orderBy('id', 'desc')
+                ->limit(1)
+                ->first();
+        if (!$model) {
+            return 0;
+        }
+        
+        return (int)$model->order;
+    }
 }
