@@ -73,7 +73,7 @@ class ProcedurePreparation extends BaseModel
             $message->name = 'Persiapan: ' . $model->name;
             $message->description = 'Tanggal ' . Carbon::parse($model->preparation_at)->format('d M Y H:i') . ' dan bertempat di ' . $model->venue;
             $message->start_date = Carbon::parse($model->preparation_at)->toDateString();
-            $message->file = 'default.jpg';
+            $message->file = 'default.png';
             $message->end_date = Carbon::parse($model->preparation_at)->addDay()->toDateString();
             $message->is_all_date = 0;
             $message->status = self::STATUS_ACTIVE;

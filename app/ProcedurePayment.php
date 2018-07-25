@@ -103,7 +103,7 @@ class ProcedurePayment extends BaseModel
                 $message->user_relation_id = $model->user_relation_id;
                 $message->name = 'Pembayaran: ' . $model->name;
                 $message->description = $content;
-                $message->file = 'default.jpg';
+                $message->file = 'default.png';
                 $message->start_date = Carbon::now()->toDateString();
                 $message->end_date = Carbon::now()->addDay()->toDateString();
                 $message->is_all_date = 0;
