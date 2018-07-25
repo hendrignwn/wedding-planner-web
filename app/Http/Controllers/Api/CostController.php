@@ -24,11 +24,12 @@ class CostController extends Controller
 			], 401);
 		}
         
-        $models = ContentDetail::whereHas('content', function($query) {
-                $query->where('content.user_relation_id', '=', $this->id);
+        $models = ContentDetail::whereHas('content', function($query) use ($user) {
+                $query->where('content.user_relation_id', '=', $user->userRelation->id);
             })
             ->with(['content'])
             ->join('content', 'content.id', '=', 'content_detail.content_id')
+            ->whereIn('content.grouping', [1])
             ->select([DB::raw('content_detail.*, SUM(content_detail.value) as value')])
             ->where('content_detail.is_cost', '=', 1)
             ->groupBy('content.grouping')

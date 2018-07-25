@@ -51,7 +51,7 @@ abstract class BaseModel extends Model {
      * @return query
      */
     public function scopeOrdered($query) {
-        return $query->orderBy($this->table . '.order');
+        return $query->orderBy($this->table . '.order', 'asc');
     }
 
     /**
