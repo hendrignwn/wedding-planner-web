@@ -21,6 +21,9 @@ use Illuminate\Http\Request;
 //        $userRelation->femaleUser->insertFirstContentData();
 //    }
 //});
+Route::get('test', function() {
+App\ProcedurePreparation::sendPushNotification();
+});
 Route::group(['prefix' => 'v1'], function () {
     
     Route::group(['prefix' => 'auth'], function () {
@@ -38,6 +41,11 @@ Route::group(['prefix' => 'v1'], function () {
     
     Route::get('/procedure', 'Api\RequestController@procedure');
     Route::get('/page/{category}', 'Api\RequestController@getPage');
+    
+    Route::group(['prefix' => 'vendor'], function () {
+        Route::get('/', 'Api\VendorController@index');
+        Route::get('/{id}', 'Api\VendorController@show');
+    });
     
     Route::group(['middleware' => ['jwt.auth']], function () {
                        
@@ -76,13 +84,7 @@ Route::group(['prefix' => 'v1'], function () {
             Route::patch('/{id}', 'Api\ProcedurePreparationController@update');
             Route::delete('/{id}', 'Api\ProcedurePreparationController@delete');
         });
-        
-        
-        Route::group(['prefix' => 'vendor'], function () {
-            Route::get('/', 'Api\VendorController@index');
-            Route::get('/{id}', 'Api\VendorController@show');
-        });
-        
+                
         Route::group(['prefix' => 'content-details'], function () {
             Route::get('/{contentId}', 'Api\ContentDetailController@index');
             Route::post('/store/{contentId}', 'Api\ContentDetailController@store');
@@ -104,6 +106,7 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('/upload-photo/{code}', 'Api\UserController@updatePhoto');
             Route::delete('/delete-photo/{code}', 'Api\UserController@deletePhoto');
             Route::patch('/re-send-relation/{id}', 'Api\UserController@resendRegisterRelation');
+            Route::patch('/update/relation/{code}', 'Api\UserController@updateRelation');
         });
     });
     

@@ -88,8 +88,8 @@ class UserController extends Controller
                 'required',
                 \Illuminate\Validation\Rule::unique('user')->ignore($user->id)
             ],
-            //'gender' => 'required|in:'.User::GENDER_MALE.','.User::GENDER_FEMALE,
-            'phone' => 'required',
+            'gender' => 'nullable|in:'.User::GENDER_MALE.','.User::GENDER_FEMALE,
+            'phone' => 'nullable',
             'wedding_day' => 'required',
             'venue' => 'required',
         ]);
@@ -108,6 +108,7 @@ class UserController extends Controller
             //'gender',
             'phone',
         ]));
+        $user->gender_label = $request->gender;
         $user->save();
         $user->userRelation->fill($request->only([
             'wedding_day',
@@ -122,6 +123,83 @@ class UserController extends Controller
             unset($relation['male_user']);
             unset($relation['female_user']);
         } else {
+            $relation = $user->femaleUserRelation->toArray();
+            $relation['partner'] = $relation['male_user'];
+            unset($user->femaleUserRelation);
+            unset($relation['male_user']);
+            unset($relation['female_user']);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Update Success',
+            'data' => array_merge($user->toArray(), [
+                'relation' => $relation
+            ]),
+        ], 200);
+    }
+    
+    /**
+     * update profile
+     * 
+     * @param type $code
+     * @param Request $request
+     * @return json
+     */
+    public function updateRelation($code, Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        if ($user->id != $code) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Invalid credentials'
+            ], 401);
+        }
+		
+		if ($user->token != JWTAuth::getToken()) {
+			return response()->json([
+				'status' => 401,
+				'message' => 'Invalid credentials'
+			], 401);
+		}
+        
+        $validator = \Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'email' => [
+                'required',
+                \Illuminate\Validation\Rule::unique('user')->ignore($user->id)
+            ],
+        ]);
+
+        if ($validator->fails()) {
+			return response()->json([
+				'status' => 400,
+				'message' => 'Some Parameters is required',
+				'validators' => FormatConverter::parseValidatorErrors($validator),
+			], 400);
+		}
+
+        if ($user->gender == User::GENDER_MALE) {
+            $relate = User::where('id', $user->userRelation->female_user_id)->first();
+            $relate->name = $request->name;
+            $relate->email = $request->email;
+            $relate->save();
+            
+            $user = User::where('id', $user->id)->first();
+            
+            $relation = $user->maleUserRelation->toArray();
+            $relation['partner'] = $relation['female_user'];
+            unset($user->maleUserRelation);
+            unset($relation['male_user']);
+            unset($relation['female_user']);
+        } else {
+            $relate = User::where('id', $user->userRelation->ale_user_id)->first();
+            $relate->name = $request->name;
+            $relate->email = $request->email;
+            $relate->save();
+            
+            $user = User::where('id', $user->id)->first();
+            
             $relation = $user->femaleUserRelation->toArray();
             $relation['partner'] = $relation['male_user'];
             unset($user->femaleUserRelation);
@@ -333,6 +411,7 @@ class UserController extends Controller
         }
         
         $validator = \Validator::make($request->all(), [
+            'name' => 'required',
             'email' => 'required|unique:user,email,'.$relationPartner->id,
         ]);
 
@@ -344,13 +423,14 @@ class UserController extends Controller
 			], 400);
 		}
         
+        $relationPartner->name = $request->name;
         $relationPartner->email = $request->email;
         $relationPartner->save();
         $relationPartner->sendNeedRegisterNotification();
         
         return response()->json([
             'status' => 200,
-            'message' => 'success',
+            'message' => 'Pendaftaran Sukses, Silahkan cek email yang telah didaftarkan',
             'data' => [],
         ], 200);
        

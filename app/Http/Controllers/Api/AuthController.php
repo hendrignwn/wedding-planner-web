@@ -131,16 +131,16 @@ class AuthController extends Controller
         $validator = \Validator::make($request->all(), [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:user,email',
-            'gender' => 'required|in:'.User::GENDER_MALE.','.User::GENDER_FEMALE,
-            'phone' => 'required',
+            'gender' => 'nullable|in:'.User::GENDER_MALE.','.User::GENDER_FEMALE,
+            //'phone' => 'required',
             'password' => 'required|min:6',
             'confirm_password' => 'required|min:6|same:password',
             'registered_device_number' => 'required',
             'firebase_token' => 'required',
-            'relation_name' => 'required',
-            'relation_email' => 'required|email|max:255|unique:user,email',
-            'wedding_day' => 'required',
-            'venue' => 'required',
+            //'relation_name' => 'required',
+            //'relation_email' => 'required|email|max:255|unique:user,email',
+            //'wedding_day' => 'required',
+            //'venue' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -155,11 +155,14 @@ class AuthController extends Controller
         $user->fill($request->only([
             'name',
             'email',
-            'gender',
-            'phone',
+            //'gender',
+            //'phone',
             'registered_device_number',
             'firebase_token',
         ]));
+        if (!$request->gender) {
+            $user->gender = User::GENDER_FEMALE;
+        }
         $user->password = bcrypt($request->password);
         $user->registered_at = Carbon::now()->toDateTimeString();
         $user->last_login_at = Carbon::now()->toDateTimeString();
@@ -176,8 +179,8 @@ class AuthController extends Controller
         
         if ($user->gender == User::GENDER_MALE) :
             $userFemale = new User();
-            $userFemale->name = $request->relation_name;
-            $userFemale->email = $request->relation_email;
+//            $userFemale->name = $request->relation_name;
+//            $userFemale->email = $request->relation_email;
             $userFemale->gender = User::GENDER_FEMALE;
             $userFemale->status = User::STATUS_NEED_REGISTER;
             $userFemale->role = User::ROLE_USER;
@@ -191,7 +194,7 @@ class AuthController extends Controller
             $userRelation->venue = $request->venue;
             $userRelation->save();
             
-            $userFemale->sendNeedRegisterNotification();
+            //$userFemale->sendNeedRegisterNotification();
         else:
             $userMale = new User();
             $userMale->name = $request->relation_name;
@@ -209,7 +212,7 @@ class AuthController extends Controller
             $userRelation->venue = $request->venue;
             $userRelation->save();
             
-            $userMale->sendNeedRegisterNotification();
+            //$userMale->sendNeedRegisterNotification();
         endif;
         
         $user->sendRegisterNotification();
@@ -233,7 +236,7 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 201,
-            'message' => 'Register success, please check your email',
+            'message' => 'Registrasi berhasil, silahkan daftarkan pasangan Anda',
             'data' => array_merge($user->toArray(), [
                 'relation' => $relation
             ]),
