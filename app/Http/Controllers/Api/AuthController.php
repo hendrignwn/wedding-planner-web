@@ -136,7 +136,8 @@ class AuthController extends Controller
             'password' => 'required|min:6',
             'confirm_password' => 'required|min:6|same:password',
             'registered_device_number' => 'required',
-            'firebase_token' => 'required',
+            'firebase_token' => 'nullable',
+            'user_id_token' => 'nullable',
             //'relation_name' => 'required',
             //'relation_email' => 'required|email|max:255|unique:user,email',
             //'wedding_day' => 'required',
@@ -160,7 +161,7 @@ class AuthController extends Controller
             'registered_device_number',
             'firebase_token',
         ]));
-        if (!$request->gender) {
+        if (!$request->gender || $request->gender == null) {
             $user->gender = User::GENDER_FEMALE;
         }
         $user->password = bcrypt($request->password);
@@ -173,6 +174,7 @@ class AuthController extends Controller
         $token = JWTAuth::fromUser($user);
         $user->last_login_at = Carbon::now()->toDateTimeString();
         $user->firebase_token = $request['firebase_token'];
+        $user->user_id_token = $request['user_id_token'];
         $user->device_number = $request['device_number'];
         $user->token = $token;
         $user->save();
@@ -254,7 +256,8 @@ class AuthController extends Controller
             'password' => 'required|min:6',
             'confirm_password' => 'required|min:6|same:password',
             'registered_device_number' => 'required',
-            'firebase_token' => 'required',
+            'firebase_token' => 'nullable',
+			'user_id_token' => 'nullable',
             'registered_token' => 'required',
         ]);
 
@@ -294,6 +297,7 @@ class AuthController extends Controller
         $token = JWTAuth::fromUser($user);
         $user->last_login_at = Carbon::now()->toDateTimeString();
         $user->firebase_token = $request['firebase_token'];
+        $user->user_id_token = $request['user_id_token'];
         $user->device_number = $request['device_number'];
         $user->token = $token;
         $user->save();

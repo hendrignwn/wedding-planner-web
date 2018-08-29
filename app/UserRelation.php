@@ -138,7 +138,22 @@ class UserRelation extends BaseModel
             ->groupBy('content.grouping')
             ->get();
             
-        return $models;
+        $result = [];
+        foreach ($models as $model) {
+            $model['details'] = Content::with(['concept'])
+            ->join('content_detail', 'content.id', '=', 'content_detail.content_id')
+            ->join('concept', 'concept.id', '=', 'content.concept_id')
+            ->where('content.user_relation_id', '=', $this->id)
+            ->select([DB::raw('content_detail.*, SUM(content_detail.value) as value'), 'concept.name'])
+            ->where('content_detail.is_cost', 1)
+            //->where('content.concept_id', $model->content->concept_id)
+            ->where('content.grouping', $model->content->grouping)
+            ->groupBy('content.concept_id')
+            ->get();
+            $result[] = $model;
+        }
+            
+        return $result;
     }
     
     public function deletePhoto()
